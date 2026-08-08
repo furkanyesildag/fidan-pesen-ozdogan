@@ -4,10 +4,12 @@ Tek sayfalık, görsel ağırlıklı bir özgeçmiş/biyografi sitesi.
 **Hiçbir harici kütüphane yok** — Three.js yok, WebGL yok, framework yok, CDN yok.
 Sadece HTML + CSS + vanilla JS.
 
+**Canlı:** https://fidan-pesen-ozdogan.vercel.app
+**Kaynak:** https://github.com/furkanyesildag/fidan-pesen-ozdogan
+
 ## Çalıştırma
 
 ```bash
-cd /Users/furkanyesildag/Documents/fidanabla
 python3 -m http.server 8080
 # → http://localhost:8080
 ```
@@ -136,6 +138,22 @@ Yayına almadan önce sahibiyle teyit edilmesi iyi olur:
   kullanıldı).
 - Görsellerin kullanım izni: dosyalar Doğal Markam'ın kendi sitesinden alındı,
   yani hak sahibi kendisi. Yine de yayına almadan önce onayı alınmalı.
+
+## Yayın
+
+Vercel projesi GitHub deposuna bağlı: **`main`'e her push otomatik olarak
+production'a çıkar.** Elle yayınlamak isterseniz:
+
+```bash
+vercel deploy --prod --scope furkanyesildags-projects
+```
+
+`vercel.json` içinde `/assets/*` için bir yıllık immutable önbellek ve temel
+güvenlik başlıkları (`X-Content-Type-Options`, `Referrer-Policy`,
+`X-Frame-Options`) tanımlı. Build adımı yok — tamamen statik.
+
+Kendi alan adını bağlamak için: Vercel panelinde proje → Settings → Domains,
+ya da `vercel domains add <alanadi> --scope furkanyesildags-projects`.
 
 ## Yasal not
 
