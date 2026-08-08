@@ -176,7 +176,10 @@
 
   /* ==================================================== 4b. PARALLAKS ÖĞELER */
   /* Portre ve tam genişlik bant, scroll'a göre hafifçe kayar. */
-  if (!azHareket) {
+  /* Parallaks yalnızca masaüstünde: küçük ekranda kaydırma sırasında kayan
+     görseller okumayı zorlaştırıyor. */
+  var darEkran = window.matchMedia('(max-width: 820px)').matches;
+  if (!azHareket && !darEkran) {
     var parcalar = [];
     var portre = document.querySelector('.portre');
     if (portre) parcalar.push({ el: portre, hiz: -0.06, sinir: 60 });

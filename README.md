@@ -48,7 +48,7 @@ değeriyle ayarlanır.
 
 `assets/js/scene.js` içinde küçük bir 3B boru hattı elle yazıldı:
 
-1. **Nokta bulutu** — 1700 parçacık (mobilde 700), `Float32Array` içinde x/y/z.
+1. **Nokta bulutu** — 1700 parçacık (mobilde 420), `Float32Array` içinde x/y/z.
 2. **Şekil üreteçleri** — `kure` (Fibonacci küresi), `alev` (girdap konisi),
    `halka` (torus), `dalga` (sinüs düzlemi), `kafes` (küp ızgarası),
    `sarmal` (çift sarmal), `dagilim` (toz bulutu).
@@ -102,11 +102,33 @@ bölümü, altlık):
 sayfasından alındı — değişirse tek yerden değil, `index.html` içinde üç yerden
 güncellenmesi gerekir (şerit, `#iletisim`, altlık).
 
+## Mobil katmanı
+
+Masaüstü ve mobil kasıtlı olarak **farklı yoğunlukta**. Küçük ekranda aynı anda
+çalışan efekt sayısı yorucu olduğu için `style.css` sonundaki
+`@media (max-width: 820px)` bloğu tek elden şunları yapar:
+
+- **Sahne geri çekilir** — parçacık sayısı 1700→420, opaklık %42'ye iner,
+  dönüş ve iç hareket yarı hıza düşer, film greni tamamen kapanır, vinyet
+  güçlenir. Sahne bir gösteri değil, arka plan dokusu olur.
+- **Sürekli hareket durur** — portredeki dönen ışık halkası ve scroll parallaksı
+  mobilde çalışmaz.
+- **Cam efektleri kalkar** — bütün kartlarda `backdrop-filter` kapanır, yerine
+  düz `#0a1610` yüzey gelir. Parıltı katmanları ve gölgeler kaldırılır.
+  Hem görsel gürültü hem GPU maliyeti düşer.
+- **Ritim değişir** — bölüm boşlukları artar, kart içleri sıkışır, giriş
+  animasyonunun yolu ve gecikme kuyruğu kısalır.
+- **İçerik seyrelir** — her ürün kartında en fazla 3 çip gösterilir
+  (`.cips span:nth-child(n+4)`), dokunma hedefleri 44px'e çıkar.
+
+Mobil davranışı değiştirmek isterseniz tek yer var: o blok. Masaüstü kurallarına
+dokunmadan çalışır.
+
 ## Erişilebilirlik & performans
 
 - `prefers-reduced-motion: reduce` → animasyon döngüsü çalışmaz, tek kare çizilir.
-- Mobil (≤820px): parçacık sayısı 1700→700, sprite boyutu ve sahne yoğunluğu
-  düşer, sahnenin yatay merkez kaydırması devre dışı kalır.
+- Mobil (≤820px): yukarıdaki mobil katmanı. Sahnenin yatay merkez kaydırması
+  da devre dışı kalır.
 - Sekme arka plana düşünce `requestAnimationFrame` döngüsü durur.
 - Dokunmatik cihazlarda hover/tilt etkileşimleri devre dışı; kartlar tıklanabilir.
 - Mizaç kartları klavye ile gezilebilir (`tabindex`, Enter/Space).
@@ -120,7 +142,6 @@ Sitedeki biyografik bilgiler kamuya açık kaynaklardan derlendi:
 - [dogalmarkam.com — Hakkımızda / marka değerleri, ürün aileleri](https://www.dogalmarkam.com/hakkimizda)
 - [mizaclar.com — Uzman Eczacı Fidan Pesen Özdoğan](https://www.mizaclar.com/fidan-pesen-ozdogan/)
 - [mizaclar.com — Mizaca göre beslenme](https://www.mizaclar.com/mizaca-gore-beslenme-fidan-pesen-acikliyor/)
-- [Kitapstore — "Geleneksel Tıbbın Temel Kaideleri"](https://www.kitapstore.com/urun/383857/kitap/geleneksel-tip-dernegi-yayinlari/fidan-pesen-ozdogan/geleneksel-tibbin-temel-kaideleri/)
 - [Instagram @fidanpesen](https://www.instagram.com/fidanpesen/) · [@dogalmarkambor](https://www.instagram.com/dogalmarkambor/)
 - [YouTube — Dr. Ecz. Fidan Pesen Özdoğan](https://www.youtube.com/@fidanpesen)
 - [TRT 1 — Alişan ile Hayata Gülümse konuk videoları](https://www.youtube.com/watch?v=2MnlY56bUrI)
@@ -130,10 +151,9 @@ Sitedeki biyografik bilgiler kamuya açık kaynaklardan derlendi:
 Yayına almadan önce sahibiyle teyit edilmesi iyi olur:
 
 - Doktoranın verildiği kurum (bazı kaynaklarda İstanbul Sağlık Bilimleri
-  Üniversitesi geçiyor; kendi sitesinde kurum adı belirtilmemiş) — şu an
-  sitede kurum adı yazmıyor, sadece yıl ve unvan var.
+  Üniversitesi geçiyor; kendi sitesinde kurum adı belirtilmemiş) — sitede
+  kurum adı ve tarih yazmıyor, sadece unvan var.
 - Yüksek lisans yılı: kendi sitesinde 2012, bazı derlemelerde 2011.
-- Kitabın baskı yılı/yayınevi künyesi.
 - Sosyal medya takipçi sayıları (sitede sayı verilmedi, "milyonu aşan" ifadesi
   kullanıldı).
 - Görsellerin kullanım izni: dosyalar Doğal Markam'ın kendi sitesinden alındı,

@@ -209,8 +209,10 @@
     this.ctx = canvas.getContext('2d', { alpha: true });
     this.dpr = Math.min(global.devicePixelRatio || 1, 2);
 
+    /* Mobilde sahne bir arka plan dokusudur, gösteri değil: parçacık sayısı
+       ciddi biçimde düşer — hem pil hem de görsel sakinlik için. */
     var dar = global.matchMedia('(max-width: 820px)').matches;
-    this.n = secenekler.sayi || (dar ? 700 : 1700);
+    this.n = secenekler.sayi || (dar ? 420 : 1700);
 
     this.rnd = makeRandom(20231984);
     this.R = 1;                       // birim yarıçap; ekran ölçeği ayrı
@@ -364,7 +366,8 @@
     this.merkezX = lerp(this.merkezX, this.hedefMerkezX, 1 - Math.pow(0.004, dt));
 
     var hareket = HAREKET[this.hedefSekil] || HAREKET.kure;
-    this.rotY += (hareket.spin + this.imlec.x * 0.22) * dt;
+    var yavas = this.w < 820 ? 0.5 : 1;          // mobilde daha ağır dönüş
+    this.rotY += (hareket.spin * yavas + this.imlec.x * 0.22) * dt;
   };
 
   Sahne.prototype.ciz = function () {
@@ -373,7 +376,7 @@
     if (this.yogunluk < 0.02) return;
 
     var hareket = HAREKET[this.hedefSekil] || HAREKET.kure;
-    var t = this.time * hareket.hiz;
+    var t = this.time * hareket.hiz * (w < 820 ? 0.6 : 1);
     var ax = hareket.amp[0], ay = hareket.amp[1], az = hareket.amp[2];
 
     var cosY = Math.cos(this.rotY), sinY = Math.sin(this.rotY);
@@ -387,7 +390,7 @@
 
     /* Dar ekranda içerik ortada durduğu için sahne metnin üstüne biniyor;
        yoğunluğu bir tık kısarak okunurluğu koruyoruz. */
-    var ekranKatsayi = w < 820 ? 0.72 : 1;
+    var ekranKatsayi = w < 820 ? 0.42 : 1;
 
     var yeni = this.spriteler[this.paletAdi];
     var eski = this.spriteler[this.oncekiPalet];
