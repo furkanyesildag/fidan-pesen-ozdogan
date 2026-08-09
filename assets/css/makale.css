@@ -66,6 +66,10 @@
   padding: clamp(44px, 6vw, 70px) clamp(18px, 4vw, 46px) 40px;
   align-items: start;
 }
+/* Izgara öğelerinin varsayılan min-width:auto değeri, içindeki geniş tablonun
+   min-content genişliğini sütuna dayatıyor ve sayfayı yatayda taşırıyordu.
+   min-width:0 ile sütun daralabilir; tablo kendi kabında kayar. */
+.makale-duzen > * { min-width: 0; }
 @media (max-width: 940px) { .makale-duzen { grid-template-columns: 1fr; } }
 
 /* ----------------------------------------------------------- 4. İÇİNDEKİLER */
