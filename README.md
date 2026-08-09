@@ -204,10 +204,92 @@ Yayına almadan önce sahibiyle teyit edilmesi iyi olur:
 
 ## Fidan'ın Asistanı (`/asistan`)
 
-Serbest metinle yazılan ihtiyacı Doğal Markam kataloğuyla eşleştiren, sonuçları
-mağazadaki ürün sayfalarına yönlendiren bir bulucu. **Tamamen tarayıcıda
-çalışır**: sunucu yok, API yok, harici kütüphane yok. Kullanıcının yazdığı
-metin hiçbir yere gönderilmez.
+DeepSeek üzerinde çalışan, Doğal Markam kataloğuna bağlı bir sohbet asistanı.
+
+### Mimari
+
+```
+tarayıcı  ──POST /api/sohbet──▶  Vercel Function
+                                   ├─ katalogdan en alakalı 10 ürünü seç
+                                   ├─ sistem istemini kur
+                                   ├─ DeepSeek'e sor (stream)
+                                   └─ SSE ile geri akıt + konuşmayı kaydet
+```
+
+| Dosya | İş |
+|---|---|
+| `api/sohbet.js` | Uç nokta. Hız sınırı, güvenlik taraması, akış, ürün kartı çıkarımı. |
+| `api/_istem.mjs` | Sistem istemi, niyet sözlüğü, ürün getirme, acil/dikkat listeleri. |
+| `api/_urunler.mjs` | Tam açıklamalı katalog. **Yalnızca sunucu.** |
+| `api/_kayit.mjs` | Konuşma kaydı. |
+| `assets/js/asistan.js` | Sohbet arayüzü, SSE okuyucu, ürün kartları. |
+
+`api/` altında **alt çizgiyle başlayan dosyalar uç nokta olarak yayınlanmaz**;
+dışarıdan istendiğinde 404 döner. Ürün açıklamaları bu yüzden oraya konuldu.
+
+### API anahtarı
+
+Anahtar **depoda yoktur ve tarayıcıya gitmez.** Yalnızca Vercel ortam
+değişkeninde durur:
+
+```bash
+vercel env add DEEPSEEK_API_KEY production
+```
+
+Tarayıcıdan doğrudan DeepSeek'e istek atılsaydı anahtar sayfanın kaynağında
+herkese görünür olur, bakiye dakikalar içinde boşaltılabilirdi. Sunucusuz
+fonksiyon tam olarak bunu engellemek için var.
+
+İsteğe bağlı: `DEEPSEEK_MODEL` (varsayılan `deepseek-chat`).
+
+### Asistanın sınırları
+
+Sistem istemi (`api/_istem.mjs`) şunları **zorunlu** kılar:
+
+- Kendini Fidan Hanım olarak tanıtmaz. Doğrudan sorulursa "onun asistanıyım" der.
+- Yalnızca katalogdaki ürünleri önerir; rakip marka, eczane ilacı, jenerik
+  takviye önermez. Katalogda yoksa açıkça söyler.
+- Teşhis koymaz, "tedavi eder / iyileştirir / geçirir" demez, hekimin verdiği
+  ilacı bırakmayı önermez.
+- Yapay aciliyet ve baskı yasaktır ("stoklar bitiyor" gibi).
+- Önce anlamak için soru sorar, ürünü ancak yeterli bilgi toplayınca önerir.
+- Destek bilgisi olarak gerçek WhatsApp hattı ve gerçek çalışma saatleri verilir.
+
+Kod tarafındaki iki katman istemden bağımsız çalışır:
+
+| Durum | Davranış |
+|---|---|
+| Acil belirti | Modele hiç gidilmez. Sabit 112 yanıtı döner, ürün gösterilmez. |
+| Gebelik, emzirme, bebek, onkoloji, organ yetmezliği, düzenli ilaç, ameliyat, diyabet | Sisteme uyarı enjekte edilir; cevap hekim/eczacı uyarısıyla başlar. |
+
+Listeleri genişletmek için `ACIL` ve `DIKKAT` dizilerine satır eklemek yeterli.
+
+### Ürün kartları
+
+Model, ürün önerdiğinde mesajın sonuna `ÜRÜN: <tam ad>` satırları yazar.
+Sunucu bu adları katalogla eşleştirip kart verisi üretir, istemci satırları
+metinden ayıklar ve kartı çizer. Böylece model serbest metin yazarken arayüz
+yapılandırılmış veri alır.
+
+### Konuşma kaydı
+
+`api/_kayit.mjs` üç hedefi destekler; hangisi tanımlıysa oraya yazar:
+
+1. **Vercel KV / Upstash** — `KV_REST_API_URL` + `KV_REST_API_TOKEN`.
+   Konuşmalar `sohbet:kayit` listesine eklenir. Vercel panelinde
+   Storage → Create → KV ile 2 dakikada bağlanır.
+2. **Webhook** — `SOHBET_WEBHOOK`. Konuşma JSON olarak POST edilir
+   (Google Apps Script, Make, Zapier veya kendi sunucunuz).
+3. **Çalışma zamanı günlüğü** — her zaman yazılır, ama Hobby planında
+   kalıcı değildir. Tek başına yeterli sayılmamalı.
+
+**Şu an 1 ve 2 tanımlı değil**, yani kayıtlar kalıcı tutulmuyor. Kalıcı kayıt
+için yukarıdaki iki seçenekten biri kurulmalı.
+
+KVKK: sayfada kayıt tutulduğu açıkça yazar ve kullanıcıdan kimlik/iletişim
+bilgisi paylaşmaması istenir. IP adresi ham hâlde saklanmaz; yalnızca tekrar
+eden ziyaretçiyi ayırt etmeye yarayan tek yönlü bir özet (`KAYIT_TUZU` ile
+tuzlanmış SHA-256'nın ilk 12 karakteri) tutulur.
 
 ### Katalog
 
@@ -215,42 +297,9 @@ metin hiçbir yere gönderilmez.
 node tools/urunleri-guncelle.mjs
 ```
 
-dogalmarkam.com'un kendi `product.xml` site haritasını okur, her ürün sayfasının
-`Product` JSON-LD'sinden ad, görsel ve kategoriyi alır, `data/urunler.json`
-dosyasını üretir. Şu an **169 ürün, 22 kategori** (~113 KB, gzip ile ~20 KB).
-
-**Ürün açıklamaları bilinçli olarak saklanmaz.** İki sebeple: aynı metnin iki
-alan adında bulunması ikisinin de arama başarımını düşürür, ve o metinler yer
-yer takviye edici gıda mevzuatının yasakladığı sağlık ifadeleri içeriyor.
-Açıklama yalnızca arama anahtarı üretmek için işlenir; sayfada kullanıcıya
-sadece ürün adı, kategorisi ve mağaza bağlantısı gösterilir.
-
-### Eşleştirme
-
-`assets/js/asistan.js` içinde:
-
-1. **Türkçe sadeleştirme** — büyük İ/I ayrımı doğru yapılır, aksan kaldırılır.
-2. **Kaba gövdeleme** — "saçımın" ile "saç" eşleşsin diye kelime sonu kırpılır.
-3. **Niyet sözlüğü** — kullanıcının dili katalog anahtarlarına çevrilir
-   ("saçlarım döküyor" → `sac, dokulme, serum, dolgunlastirici, sampuan`).
-   Yeni ifade eklemek için `NIYET` dizisine bir satır yazmak yeterli.
-4. **Puanlama** — tam eşleşme 3, önek eşleşmesi 2, kategori eşleşmesi +4 puan.
-
-`?s=` parametresiyle arama önceden doldurulup çalıştırılabilir:
-`/asistan?s=saç dökülmesi` (paylaşılabilir bağlantı).
-
-### Güvenlik katmanı
-
-Bu bir sağlık danışmanı değil, ürün bulucudur. Bu ayrımı korumak için:
-
-| Durum | Davranış |
-|---|---|
-| **Acil belirti** (göğüs ağrısı, nefes darlığı, felç, kanama, intihar, zehirlenme…) | Hiçbir ürün gösterilmez. Kırmızı kart ve 112 çağrısı. |
-| **Dikkat** (gebelik, emzirme, bebek/çocuk, onkoloji, böbrek/karaciğer yetmezliği, ilaç kullanımı, ameliyat, diyabet) | Sonuçların üstünde turuncu uyarı kartı: önce hekime danışın. |
-| Normal | Sonuçlar, "sıralama tıbbi uygunluğa göre değil metin benzerliğine göredir" notuyla. |
-
-Listeler `ACIL` ve `DIKKAT` dizilerinde; genişletmek kolaydır. Sayfa altında
-kalıcı sorumluluk reddi bulunur.
+169 ürün, 30 kategori. İki dosya üretir: `data/urunler.json` (herkese açık,
+açıklamasız) ve `api/_urunler.mjs` (sunucu, tam açıklamalı). Yeni ürün
+eklendiğinde bu komutu çalıştırıp commit'lemek yeterli.
 
 ## Video entegrasyonu
 
