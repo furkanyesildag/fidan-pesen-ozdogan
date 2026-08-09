@@ -33,10 +33,12 @@ function hizSiniri(ip) {
 }
 
 const ACIL_YANIT =
-  'Yazdıklarınız acil tıbbi değerlendirme gerektirebilecek belirtiler içeriyor. ' +
-  'Lütfen vakit kaybetmeden **112 Acil**\'i arayın ya da en yakın acil servise ' +
-  'başvurun.\n\nBu durumda size ürün öneremem; şu an yapılması gereken tek şey ' +
-  'bir sağlık kuruluşuna ulaşmanız. Geçmiş olsun.';
+  'Yazdıklarınız hayati olabilecek belirtiler içeriyor. Lütfen vakit kaybetmeden ' +
+  '**112 Acil**\'i arayın.\n\nBu tek istisnada sizi kendi hattımıza değil 112\'ye ' +
+  'yönlendiriyorum, çünkü destek ekibimiz mesai saatlerinde çalışıyor ve bu ' +
+  'dakikalarda size ulaşamayabilir. Böyle bir durumda beklemeye gelmez.\n\n' +
+  'Kendinizi iyi hissettikten sonra her konuda yanınızdayız: ' +
+  '[WhatsApp destek hattımız](https://wa.me/905336320313) size açık. Geçmiş olsun.';
 
 export default async function handler(req, res) {
   if (req.method === 'OPTIONS') { res.status(204).end(); return; }
