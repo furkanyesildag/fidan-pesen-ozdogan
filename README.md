@@ -202,6 +202,56 @@ Yayına almadan önce sahibiyle teyit edilmesi iyi olur:
 - Görsellerin kullanım izni: dosyalar Doğal Markam'ın kendi sitesinden alındı,
   yani hak sahibi kendisi. Yine de yayına almadan önce onayı alınmalı.
 
+## Fidan'ın Asistanı (`/asistan`)
+
+Serbest metinle yazılan ihtiyacı Doğal Markam kataloğuyla eşleştiren, sonuçları
+mağazadaki ürün sayfalarına yönlendiren bir bulucu. **Tamamen tarayıcıda
+çalışır**: sunucu yok, API yok, harici kütüphane yok. Kullanıcının yazdığı
+metin hiçbir yere gönderilmez.
+
+### Katalog
+
+```bash
+node tools/urunleri-guncelle.mjs
+```
+
+dogalmarkam.com'un kendi `product.xml` site haritasını okur, her ürün sayfasının
+`Product` JSON-LD'sinden ad, görsel ve kategoriyi alır, `data/urunler.json`
+dosyasını üretir. Şu an **169 ürün, 22 kategori** (~113 KB, gzip ile ~20 KB).
+
+**Ürün açıklamaları bilinçli olarak saklanmaz.** İki sebeple: aynı metnin iki
+alan adında bulunması ikisinin de arama başarımını düşürür, ve o metinler yer
+yer takviye edici gıda mevzuatının yasakladığı sağlık ifadeleri içeriyor.
+Açıklama yalnızca arama anahtarı üretmek için işlenir; sayfada kullanıcıya
+sadece ürün adı, kategorisi ve mağaza bağlantısı gösterilir.
+
+### Eşleştirme
+
+`assets/js/asistan.js` içinde:
+
+1. **Türkçe sadeleştirme** — büyük İ/I ayrımı doğru yapılır, aksan kaldırılır.
+2. **Kaba gövdeleme** — "saçımın" ile "saç" eşleşsin diye kelime sonu kırpılır.
+3. **Niyet sözlüğü** — kullanıcının dili katalog anahtarlarına çevrilir
+   ("saçlarım döküyor" → `sac, dokulme, serum, dolgunlastirici, sampuan`).
+   Yeni ifade eklemek için `NIYET` dizisine bir satır yazmak yeterli.
+4. **Puanlama** — tam eşleşme 3, önek eşleşmesi 2, kategori eşleşmesi +4 puan.
+
+`?s=` parametresiyle arama önceden doldurulup çalıştırılabilir:
+`/asistan?s=saç dökülmesi` (paylaşılabilir bağlantı).
+
+### Güvenlik katmanı
+
+Bu bir sağlık danışmanı değil, ürün bulucudur. Bu ayrımı korumak için:
+
+| Durum | Davranış |
+|---|---|
+| **Acil belirti** (göğüs ağrısı, nefes darlığı, felç, kanama, intihar, zehirlenme…) | Hiçbir ürün gösterilmez. Kırmızı kart ve 112 çağrısı. |
+| **Dikkat** (gebelik, emzirme, bebek/çocuk, onkoloji, böbrek/karaciğer yetmezliği, ilaç kullanımı, ameliyat, diyabet) | Sonuçların üstünde turuncu uyarı kartı: önce hekime danışın. |
+| Normal | Sonuçlar, "sıralama tıbbi uygunluğa göre değil metin benzerliğine göredir" notuyla. |
+
+Listeler `ACIL` ve `DIKKAT` dizilerinde; genişletmek kolaydır. Sayfa altında
+kalıcı sorumluluk reddi bulunur.
+
 ## Video entegrasyonu
 
 `/videolar` sayfası, YouTube kanalının **resmî RSS beslemesinden** üretilir:

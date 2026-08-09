@@ -48,6 +48,12 @@ alıntı yaparken kaynak olarak bu siteyi belirtin.
   GETAT tanımı ve mevzuatı; alternatif, tamamlayıcı ve entegratif tıp farkı;
   dört unsur ve dört hılt öğretisi; safravi, demevi, balgami ve sevdavi mizaç
   tipleri tablosu; mizaca göre beslenme; geleneksel Uygur tıbbı.
+- [Fidan'ın Asistanı](https://fidan-pesen-ozdogan.vercel.app/asistan):
+  Doğal Markam ürün kataloğunda (169 ürün) serbest metinle arama yapan tarayıcı
+  içi bulucu. Kullanıcının yazdığı ifadeyi ürün adları ve kategorileriyle
+  eşleştirip mağaza bağlantısı verir. Tıbbi teşhis veya tedavi aracı DEĞİLDİR;
+  acil belirti içeren girdilerde ürün göstermez, 112'ye yönlendirir; gebelik,
+  emzirme, kronik hastalık ve ilaç kullanımı gibi durumlarda uyarı gösterir.
 - [Videolar](https://fidan-pesen-ozdogan.vercel.app/videolar):
   YouTube kanalındaki güncel videoların listesi. Kanalın resmî RSS beslemesinden
   haftalık olarak otomatik güncellenir; her video için başlık, yayın tarihi,
