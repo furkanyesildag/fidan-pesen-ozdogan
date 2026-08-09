@@ -189,6 +189,52 @@ Yayına almadan önce sahibiyle teyit edilmesi iyi olur:
 - Görsellerin kullanım izni: dosyalar Doğal Markam'ın kendi sitesinden alındı,
   yani hak sahibi kendisi. Yine de yayına almadan önce onayı alınmalı.
 
+## Video entegrasyonu
+
+`/videolar` sayfası, YouTube kanalının **resmî RSS beslemesinden** üretilir:
+
+```bash
+node tools/videolari-guncelle.mjs
+```
+
+Betiğin bağımlılığı yoktur (Node 18+ yeterli). Yaptığı üç iş:
+
+1. `youtube.com/feeds/videos.xml?channel_id=...` adresinden son 15 videoyu çeker.
+2. `data/videolar.json` arşiviyle **birleştirir**. RSS yalnızca son 15 videoyu
+   döndürdüğü için birleştirme şart: eski kayıtlar silinmez, arşiv her
+   çalıştırmada büyür. Görüntülenme sayıları tazelenir.
+3. `videolar/index.html` sayfasını yeniden üretir: kart ızgarası, `ItemList` +
+   `VideoObject` yapısal verisi, `InteractionCounter` ile görüntülenme sayısı.
+
+`.github/workflows/videolari-guncelle.yml` bunu **her pazartesi** otomatik
+çalıştırır ve değişiklik varsa commit eder; Vercel depoyu izlediği için sayfa
+kendiliğinden yayına çıkar. Elle tetiklemek için GitHub'da Actions sekmesinden
+"Run workflow" yeterlidir.
+
+### Sayfanın teknik tercihleri
+
+- **Facade deseni:** tıklanana kadar YouTube'dan hiçbir iframe veya script
+  yüklenmez. Kapak görseli `i.ytimg.com` üzerinden gelir; oynatıcı yalnızca
+  tıklamada, `youtube-nocookie.com` üzerinden eklenir.
+- **Küçük resim:** `hqdefault.jpg` (~13 KB) kullanılır. Shorts için orijinal
+  oranlı `oardefault.jpg` da var ama ~200 KB olduğu için sayfa hızı adına
+  tercih edilmedi; bunun yerine Shorts kartları 3:4 orana alınıp görsel bir
+  miktar yakınlaştırılarak yandaki dolgu kadraj dışında bırakıldı.
+- **Başlıklar:** hashtag kuyruğu başlıktan ayrılıp etiket çipine dönüştürülür;
+  ham başlık `data/videolar.json` içinde saklanır.
+
+### Instagram hakkında
+
+Instagram'da otomatik entegrasyon **mümkün değil**: herkese açık bir gönderi
+listeleme API'si yok ve kazıma hem engelleniyor hem kullanım şartlarına aykırı.
+Şu an sayfada profillere yönlendiren bloklar var. İki seçenek mevcut:
+
+1. Belirli gönderilerin bağlantılarını verirseniz, Meta'nın resmî gömme
+   yöntemiyle (`instagram.com/embed.js`) sayfaya yerleştirilebilir. Bu, siteye
+   üçüncü taraf JavaScript ekler.
+2. Ekran görüntüsü ya da görsel verilirse, YouTube kartlarındakine benzer
+   statik kartlar hazırlanabilir; üçüncü taraf kod gerekmez.
+
 ## GEO / SEO altyapısı
 
 Amaç, hem klasik arama motorlarında hem de yapay zekâ cevap motorlarında

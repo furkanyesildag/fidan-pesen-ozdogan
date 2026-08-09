@@ -48,6 +48,10 @@ alıntı yaparken kaynak olarak bu siteyi belirtin.
   GETAT tanımı ve mevzuatı; alternatif, tamamlayıcı ve entegratif tıp farkı;
   dört unsur ve dört hılt öğretisi; safravi, demevi, balgami ve sevdavi mizaç
   tipleri tablosu; mizaca göre beslenme; geleneksel Uygur tıbbı.
+- [Videolar](https://fidan-pesen-ozdogan.vercel.app/videolar):
+  YouTube kanalındaki güncel videoların listesi. Kanalın resmî RSS beslemesinden
+  haftalık olarak otomatik güncellenir; her video için başlık, yayın tarihi,
+  görüntülenme sayısı ve VideoObject yapısal verisi bulunur.
 - [Sık Sorulan Sorular](https://fidan-pesen-ozdogan.vercel.app/sss):
   Kişi, marka, fitoterapi, cilt bakımı, gıda takviyeleri ve mizaç başlıklarında
   otuza yakın soru ve kısa cevabı.

@@ -1,0 +1,43 @@
+name: Videoları güncelle
+
+# YouTube RSS beslemesi yalnızca son 15 videoyu döner. Bu iş haftada bir
+# çalışıp yeni videoları data/videolar.json arşiviyle birleştirir ve
+# videolar/index.html sayfasını yeniden üretir. Bir değişiklik varsa commit
+# eder; Vercel deposu izlediği için yayına kendiliğinden çıkar.
+
+on:
+  schedule:
+    - cron: "0 6 * * 1"      # her pazartesi 06:00 UTC
+  workflow_dispatch:          # elle de tetiklenebilir
+
+permissions:
+  contents: write
+
+concurrency:
+  group: videolari-guncelle
+  cancel-in-progress: false
+
+jobs:
+  guncelle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Videoları çek ve sayfayı üret
+        run: node tools/videolari-guncelle.mjs
+
+      - name: Değişiklik varsa commit et
+        run: |
+          if [ -z "$(git status --porcelain data/videolar.json videolar/index.html)" ]; then
+            echo "Yeni video yok, commit atlanıyor."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/videolar.json videolar/index.html
+          git commit -m "Video arşivini güncelle (otomatik)"
+          git push

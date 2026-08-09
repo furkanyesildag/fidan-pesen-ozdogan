@@ -42,6 +42,13 @@
   </url>
 
   <url>
+    <loc>https://fidan-pesen-ozdogan.vercel.app/videolar</loc>
+    <lastmod>2026-08-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
     <loc>https://fidan-pesen-ozdogan.vercel.app/sss</loc>
     <lastmod>2026-08-09</lastmod>
     <changefreq>monthly</changefreq>

@@ -906,6 +906,11 @@ main { position: relative; z-index: 10; }
   will-change: transform;
 }
 .medya-kart.genis { grid-column: span 2; }
+.medya-kart.vurgu-medya {
+  border-color: rgba(var(--aksan-rgb), .38);
+  background: linear-gradient(150deg, rgba(var(--aksan-rgb), .1), rgba(9,20,14,.6));
+}
+.medya-kart.vurgu-medya:hover { border-color: rgba(var(--aksan-rgb), .6); }
 @media (max-width: 700px) { .medya-kart.genis { grid-column: span 1; } }
 .medya-kart:hover { border-color: var(--cizgi-kuv); box-shadow: 0 26px 60px -34px rgba(0,0,0,.95); }
 .medya-tur {
