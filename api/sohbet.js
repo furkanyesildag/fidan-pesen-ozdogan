@@ -11,7 +11,7 @@
  * istemciye aktarılır → konuşma kaydedilir.
  * ---------------------------------------------------------------------------
  */
-import { urunGetir, guvenlikTara, istemKur, URUNLER } from './_istem.mjs';
+import { urunGetir, guvenlikTara, istemKur, sade, URUNLER } from './_istem.mjs';
 import { kaydet } from './_kayit.mjs';
 
 const API = 'https://api.deepseek.com/chat/completions';
@@ -90,7 +90,7 @@ export default async function handler(req, res) {
   /* --- acil durum: modele hiç gitmeden sabit yanıt --- */
   if (guvenlik.acil) {
     gonder('parca', ACIL_YANIT);
-    gonder('bitti', { urunler: [], acil: true });
+    gonder('bitti', { urunler: [], acil: true, whatsapp: 'https://wa.me/905336320313' });
     res.end();
     await kaydet({ oturum, ip, mesajlar, yanit: ACIL_YANIT, acil: true, urunler: [] });
     return;
@@ -152,19 +152,45 @@ export default async function handler(req, res) {
     tamYanit += mesaj;
   }
 
-  /* --- ÜRÜN: satırlarını karta çevir --- */
-  const adlar = [...tamYanit.matchAll(/^\s*ÜRÜN:\s*(.+?)\s*$/gm)].map((m) => m[1]);
+  /* --- Ürün kartlarını çıkar ---
+     Birincil yol: modelin yazdığı "ÜRÜN: <ad>" satırları.
+     Yedek yol: model o satırı yazmayı unutursa, yanıt metninde katalogdaki
+     ürün adı geçiyor mu diye bakılır. Böylece kullanıcı hiçbir durumda
+     bağlantısız kalmaz. */
   const kartlar = [];
-  for (const ad of adlar) {
-    const u = URUNLER.find((x) => x.ad === ad)
-      || URUNLER.find((x) => x.ad.toLocaleLowerCase('tr').includes(ad.toLocaleLowerCase('tr')))
-      || secilen.find((x) => x.ad.toLocaleLowerCase('tr').includes(ad.toLocaleLowerCase('tr')));
+  const ekle = (u) => {
     if (u && !kartlar.some((k) => k.bag === u.bag)) {
       kartlar.push({ ad: u.ad, kategori: u.kategori, bag: u.bag, gorsel: u.gorsel, fiyat: u.fiyat });
     }
+  };
+
+  for (const ad of [...tamYanit.matchAll(/^\s*ÜRÜN:\s*(.+?)\s*$/gm)].map((m) => m[1])) {
+    const n = sade(ad);
+    ekle(
+      URUNLER.find((x) => x.ad === ad) ||
+      URUNLER.find((x) => sade(x.ad) === n) ||
+      URUNLER.find((x) => sade(x.ad).includes(n) || n.includes(sade(x.ad))) ||
+      secilen.find((x) => sade(x.ad).includes(n))
+    );
   }
 
-  gonder('bitti', { urunler: kartlar.slice(0, 3), uyari: guvenlik.uyari });
+  if (!kartlar.length) {
+    const govdeMetni = sade(tamYanit.replace(/^\s*ÜRÜN:.*$/gm, ''));
+    for (const u of secilen) {
+      const n = sade(u.ad);
+      // "Doğalmarkam" ön ekini atınca kalan ayırt edici kısım da denenir
+      const kisa = n.replace(/^dogalmarkam\s+/, '').replace(/^fp pharma\s+/, '');
+      if ((n.length > 12 && govdeMetni.includes(n)) ||
+          (kisa.length > 12 && govdeMetni.includes(kisa))) ekle(u);
+      if (kartlar.length >= 3) break;
+    }
+  }
+
+  gonder('bitti', {
+    urunler: kartlar.slice(0, 3),
+    uyari: guvenlik.uyari,
+    whatsapp: 'https://wa.me/905336320313',
+  });
   res.end();
 
   await kaydet({

@@ -148,11 +148,13 @@ const KURALLAR = `
 - Aradığı şey katalogda yoksa bunu kısaca söyle ve HEMEN WhatsApp hattına
   yönlendir: ekibimiz kişiye özel çözüm çıkarabilir.
 - Fiyat söyleyeceksen yalnızca katalogdaki fiyatı söyle.
-- Bir ürün önerdiğinde mesajının EN SONUNA, her biri ayrı satırda olacak
-  şekilde şu biçimde yaz (en fazla 3 tane):
+- ZORUNLU: Metninde bir ürün adı geçiriyorsan, mesajının EN SONUNA o ürünü
+  ayrı bir satır olarak MUTLAKA şu biçimde yazacaksın (en fazla 3 tane):
   ÜRÜN: <katalogdaki tam ürün adı>
-  Bu satırları kullanıcı görmez; arayüz onları ürün kartına çevirir. Ürün adını
-  katalogdaki gibi harfi harfine yaz. Ürün önermiyorsan bu satırları hiç yazma.
+  Bu satırlar kullanıcıya gösterilmez; arayüz onları tıklanabilir ürün kartına
+  çevirir. Bu satırı yazmazsan kullanıcı ürüne ulaşamaz. Ürün adını katalogdaki
+  gibi harfi harfine kopyala, kısaltma, değiştirme. Hiç ürün anmadıysan bu
+  satırları yazma.
 
 YÖNLENDİRME KURALI (ÇOK ÖNEMLİ)
 - Tek yönlendirme adresin Doğal Markam WhatsApp destek hattıdır:

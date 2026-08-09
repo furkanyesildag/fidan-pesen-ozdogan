@@ -90,6 +90,27 @@
     return d;
   }
 
+  var WA = 'https://wa.me/905336320313';
+
+  /* Her asistan mesajının altında duran eylem satırı: önerilen ürünlerin
+     bağlantıları ve doğrudan WhatsApp sohbeti. */
+  function eylemSatiri(urunler, acil) {
+    var h = '<div class="sohbet-eylem">';
+    if (urunler && urunler.length) {
+      h += urunler.map(function (u) {
+        return '<a class="se-urun" href="' + kacir(u.bag) + '" target="_blank" rel="noopener">' +
+          'Ürünü incele<span aria-hidden="true"> ↗</span></a>';
+      }).join('');
+    }
+    h += '<a class="se-wa" href="' + WA + '" target="_blank" rel="noopener">' +
+      '<svg viewBox="0 0 24 24" aria-hidden="true">' +
+      '<path d="M20.5 11.6a8.5 8.5 0 0 1-12.6 7.5L3.5 20.5l1.4-4.3a8.5 8.5 0 1 1 15.6-4.6Z"/>' +
+      '<path d="M8.9 8.4c.3-.6.6-.5.9-.5h.7c.2 0 .5 0 .7.5l.8 1.9c.1.3 0 .5-.1.7l-.4.5c-.1.2-.3.3-.1.6.5.9 1.4 1.8 2.4 2.3.3.2.5.1.7-.1l.5-.5c.2-.2.4-.2.7-.1l1.7.9c.4.2.5.4.5.6 0 .5-.3 1.5-1.4 1.7-1 .2-2.5-.2-4.4-1.5-1.9-1.3-2.9-3-3.2-3.9-.3-.9-.2-2 .1-2.6Z" fill="currentColor" stroke="none"/></svg>' +
+      (acil ? 'Destek hattı' : 'WhatsApp\u2019tan yaz') + '</a>';
+    h += '</div>';
+    return h;
+  }
+
   function urunKartlari(urunler) {
     if (!urunler || !urunler.length) return '';
     return '<div class="sohbet-urunler">' + urunler.map(function (u) {
@@ -165,11 +186,15 @@
             if (tur === 'parca') { biriken += j; yazdir(); }
             else if (tur === 'bitti') {
               if (!balon) yazdir();
+              var kap = balon.querySelector('.balon-govde');
               if (j.urunler && j.urunler.length) {
                 var k = document.createElement('div');
                 k.innerHTML = urunKartlari(j.urunler);
-                balon.querySelector('.balon-govde').appendChild(k.firstChild);
+                kap.appendChild(k.firstChild);
               }
+              var e = document.createElement('div');
+              e.innerHTML = eylemSatiri(j.urunler, j.acil);
+              kap.appendChild(e.firstChild);
               if (j.acil) balon.classList.add('acil');
               enAlta();
             }
@@ -180,9 +205,9 @@
       return oku();
     }).catch(function (e) {
       if (yaziyor) { yaziyor.remove(); yaziyor = null; }
-      balonEkle('asistan', '<p>Bağlantıda bir aksaklık oldu. Birazdan tekrar deneyebilir ' +
-        'ya da doğrudan <a href="https://wa.me/905336320313" target="_blank" rel="noopener">' +
-        'WhatsApp destek hattımıza</a> yazabilirsiniz.</p>', 'hata');
+      balonEkle('asistan', '<p>Bağlantıda bir aksaklık oldu. Birazdan tekrar ' +
+        'deneyebilir ya da doğrudan destek hattımıza yazabilirsiniz.</p>' +
+        eylemSatiri(null, false), 'hata');
       console.error(e);
     }).then(function () {
       var son = urunSatirlariniAt(biriken);

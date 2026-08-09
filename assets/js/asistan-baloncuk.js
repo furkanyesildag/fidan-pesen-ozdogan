@@ -16,7 +16,7 @@
   a.href = '/asistan';
   a.setAttribute('aria-label', "Fidan'ın Asistanı ile sohbet başlat");
   a.innerHTML =
-    '<img src="/assets/img/portre-atolye.jpg" alt="" width="38" height="38" loading="lazy" decoding="async">' +
+    '<img src="/assets/img/asistan-avatar.jpg" alt="" width="38" height="38" loading="lazy" decoding="async">' +
     '<span class="bal-yazi">' +
       '<b>Fidan’ın Asistanı</b>' +
       '<i><span class="bal-nokta"></span>Size nasıl yardımcı olabilirim?</i>' +
