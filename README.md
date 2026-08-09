@@ -50,7 +50,7 @@ kendi arşivi. Kullanıldıkları yerler:
 | `portre-kirmizi.jpg` | İletişim künye kartı, rehber sayfalarındaki yazar kartı ve künye satırı |
 | `saha-cicek.jpg` · `saha-dag.jpg` · `saha-selale.jpg` | Kaynaklar bölümündeki saha şeridi |
 | `atolye.webp` | Kronoloji sonrası tam genişlik parallakslı bant |
-| `dogalmarkam-logo.jpg` · `drfidans-logo.jpg` | Markalar bölümü, beyaz levha üzerinde |
+| `dogalmarkam-logo.jpg` | Doğal Markam bölümü, beyaz kart üzerinde |
 
 Portre ve saha fotoğrafları Dr. Ecz. Fidan Pesen Özdoğan'ın kendi arşivinden;
 `atolye.webp` ve logo Doğal Markam sitesinden alındı.
@@ -308,18 +308,6 @@ açıldığında **her sayfadaki** `sameAs` dizisine eklenmelidir.
   sayfa listesi ve açıklamaları, doğrulanmış hesaplar, alıntı sınırları.
 
 ### Marka mimarisi
-
-Kişi bir, marka iki:
-
-| Varlık | `@id` | Not |
-|---|---|---|
-| Dr. Ecz. Fidan Pesen Özdoğan | `/#fidan-pesen-ozdogan` | `brand` ve `founder` alanları iki markayı da işaret eder |
-| Doğal Markam | `dogalmarkam.com/#organization` | `Organization` + `HealthAndBeautyBusiness`, kendi alan adı var |
-| Dr Fidan's | `/#dr-fidans` | `Organization` + `Brand`, henüz kendi alan adı yok |
-
-Dr Fidan's için bir web sitesi veya ayrı sosyal hesap açıldığında iki yer
-güncellenmeli: ana sayfadaki JSON-LD'de bu düğümün `url` ve `sameAs` alanları,
-bir de `#marka` bölümündeki kartın bağlantısı.
 
 Bu site, `dogalmarkam.com` ile **rekabet etmez**. Ürün kopyası burada
 tekrarlanmaz; ürün aileleri aile düzeyinde anlatılıp mağazaya yönlendirilir.
