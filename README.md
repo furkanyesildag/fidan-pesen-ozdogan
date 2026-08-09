@@ -92,6 +92,15 @@ Her `<section class="bolum">` üzerindeki `data-*` öznitelikleri sahneyi sürü
 
 Yeni bir bölüm eklerken bunları vermek yeterli; `main.js` gerisini yapar.
 
+### Yatay galeriler
+
+Saha fotoğrafları ve konu rehberleri `.yatay-galeri` sınıfını paylaşır:
+`grid-auto-flow: column` + `scroll-snap-type: x proximity` ile kaydırılabilir
+bir şerit olur. Kenarda bir sonraki kartın ucu bilerek görünür bırakılır ki
+kaydırılabildiği anlaşılsın; dar ekranda üstünde "Kaydırın" ipucu belirir.
+Kart genişliği `grid-auto-columns` ile ayarlanır (masaüstü sabit, mobilde
+yüzde). Alt alta yığmak yerine bu tercih edildi.
+
 Sahneyi süren tek bir sözleşme var: **`data-unsur` + `data-sekil` taşıyan her
 öğe** (mizaç kartı, keyfiyet kadranı) sahneyi değiştirebilir. Karta tıklanınca
 palet o unsura **kilitlenir** ve tüm sayfanın aksan rengi
