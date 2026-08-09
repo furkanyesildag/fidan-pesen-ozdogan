@@ -319,7 +319,8 @@
 .video-kart.dikey .video-kapak { aspect-ratio: 3 / 4; }
 .video-kart.dikey .video-kapak img { transform: scale(1.18); }
 .video-kart.dikey:hover .video-kapak img { transform: scale(1.24); }
-.video-kart.dikey .video-cerceve { aspect-ratio: 3 / 4; }
+/* Shorts 9:16 çekilir; oynatıcı da o oranda olsun ki siyah bant kalmasın. */
+.video-kart.dikey .video-cerceve { aspect-ratio: 9 / 16; }
 .video-oynat {
   position: absolute; left: 50%; top: 50%;
   width: 54px; height: 54px; margin: -27px 0 0 -27px;

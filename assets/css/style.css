@@ -760,6 +760,42 @@ main { position: relative; z-index: 10; }
   .eksen-etiket.sol, .eksen-etiket.sag { display: none; }
 }
 
+/* ------------------------------------------------------- 13b. SAHA ŞERİDİ */
+/* Kaynaklar bölümünde: yazma kaynağın karşısına arazi çalışması. */
+.saha-serit { margin: clamp(40px, 6vw, 62px) 0 0; }
+.saha-izgara {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+/* Genişlemesi için: bölüm kabı 780px, üç dikey kare orada dar kalıyor. */
+@media (min-width: 900px) {
+  .saha-serit { width: calc(100% + 200px); margin-left: -100px; }
+}
+.saha-izgara img {
+  /* height="800" özniteliği sunum ipucu olarak height:800px veriyor ve
+     aspect-ratio'yu etkisiz kılıyordu; height:auto ile oran geri alınır. */
+  width: 100%; height: auto; aspect-ratio: 3 / 4;
+  object-fit: cover; display: block;
+  border-radius: 14px;
+  border: 1px solid var(--cizgi);
+  filter: saturate(.9) brightness(.86);
+  transition: filter .6s var(--yumusak), transform .6s var(--yumusak);
+}
+.saha-izgara img:hover { filter: saturate(1) brightness(1); transform: translateY(-4px); }
+/* orta kare hafifçe öne çıksın */
+.saha-izgara img:nth-child(2) { aspect-ratio: 3 / 4.4; margin-top: -18px; }
+.saha-serit figcaption {
+  margin-top: 20px; max-width: 62ch;
+  font-size: 14.5px; color: var(--sis); line-height: 1.62;
+}
+.saha-serit figcaption b { color: var(--ink-2); }
+@media (max-width: 620px) {
+  .saha-izgara { gap: 8px; }
+  .saha-izgara img { border-radius: 10px; }
+  .saha-izgara img:nth-child(2) { margin-top: 0; aspect-ratio: 3 / 4; }
+  .saha-serit figcaption { font-size: 13.5px; }
+}
+
 /* ------------------------------------------------------------ 14. AKADEMİ */
 .akademi-izgara {
   display: grid;

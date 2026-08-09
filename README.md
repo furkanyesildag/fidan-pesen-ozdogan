@@ -46,10 +46,14 @@ kendi arşivi. Kullanıldıkları yerler:
 
 | Dosya | Nerede |
 |---|---|
-| `fidan-portre.webp` | Açılış — kemerli portre çerçevesi, parçacık küresi arkasında hâle yapıyor |
-| `fidan-portre-acik.jpg` | İletişim bölümündeki künye kartı |
+| `portre-atolye.jpg` | Açılış: kemerli portre çerçevesi, parçacık küresi arkasında hâle yapıyor |
+| `portre-kirmizi.jpg` | İletişim künye kartı, rehber sayfalarındaki yazar kartı ve künye satırı |
+| `saha-cicek.jpg` · `saha-dag.jpg` · `saha-selale.jpg` | Kaynaklar bölümündeki saha şeridi |
 | `atolye.webp` | Kronoloji sonrası tam genişlik parallakslı bant |
 | `dogalmarkam-logo.jpg` | Doğal Markam bölümü, beyaz kart üzerinde |
+
+Portre ve saha fotoğrafları Dr. Ecz. Fidan Pesen Özdoğan'ın kendi arşivinden;
+`atolye.webp` ve logo Doğal Markam sitesinden alındı.
 
 Değiştirmek isterseniz aynı isimle üzerine yazmak yeterli; boyut/oran CSS'te
 `object-fit: cover` ile yönetiliyor. Portrenin kadrajı
@@ -197,14 +201,27 @@ Yayına almadan önce sahibiyle teyit edilmesi iyi olur:
 node tools/videolari-guncelle.mjs
 ```
 
-Betiğin bağımlılığı yoktur (Node 18+ yeterli). Yaptığı üç iş:
+Betiğin bağımlılığı yoktur (Node 18+ yeterli). İki kaynaktan besleniyor:
 
-1. `youtube.com/feeds/videos.xml?channel_id=...` adresinden son 15 videoyu çeker.
-2. `data/videolar.json` arşiviyle **birleştirir**. RSS yalnızca son 15 videoyu
-   döndürdüğü için birleştirme şart: eski kayıtlar silinmez, arşiv her
-   çalıştırmada büyür. Görüntülenme sayıları tazelenir.
-3. `videolar/index.html` sayfasını yeniden üretir: kart ızgarası, `ItemList` +
-   `VideoObject` yapısal verisi, `InteractionCounter` ile görüntülenme sayısı.
+| Kaynak | Ne verir | Güvenilirlik |
+|---|---|---|
+| Resmî RSS beslemesi | Son 15 video: başlık, **kesin tarih**, açıklama, **kesin görüntülenme** | Yüksek, belgelenmiş uç nokta |
+| Kanalın `/shorts` sekmesi | ~48 Shorts: kimlik, başlık, yaklaşık görüntülenme | Düşük, YouTube'un iç JSON'u |
+
+Shorts sekmesi bir **zenginleştirmedir**: okunamazsa hata verilmez, uyarı
+basılıp yalnızca RSS ile devam edilir. Sonra:
+
+1. İki kaynak `data/videolar.json` arşiviyle **birleştirilir** (önce Shorts,
+   sonra RSS yazılır ki kesin veri üste gelsin). Eski kayıtlar silinmez.
+2. Tarihi olmayan videoların yayın tarihi, **yalnızca ilk keşifte** kendi
+   sayfalarından bir kez çekilir ve arşive yazılır; sonraki çalıştırmalarda
+   tekrar istenmez.
+3. `videolar/index.html` yeniden üretilir: kart ızgarası, `ItemList` +
+   `VideoObject` yapısal verisi. `InteractionCounter` yalnızca RSS'ten gelen
+   **kesin** sayılar için yazılır; Shorts sekmesinin yuvarlanmış değerleri
+   ("140 B görüntüleme") sadece ekranda gösterilir.
+
+Şu an arşivde **53 video** var, bunların **48'i Shorts**.
 
 `.github/workflows/videolari-guncelle.yml` bunu **her pazartesi** otomatik
 çalıştırır ve değişiklik varsa commit eder; Vercel depoyu izlediği için sayfa

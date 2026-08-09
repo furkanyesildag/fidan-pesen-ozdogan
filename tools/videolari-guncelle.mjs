@@ -2,9 +2,16 @@
 /**
  * videolari-guncelle.mjs
  * ---------------------------------------------------------------------------
- * YouTube'un resmî RSS beslemesinden son videoları çeker, data/videolar.json
- * arşiviyle BİRLEŞTİRİR (eskiler silinmez, arşiv büyür) ve videolar/index.html
- * sayfasını yeniden üretir.
+ * İki kaynaktan veri toplar:
+ *   1. Resmî RSS beslemesi  — güvenilir taban. Son 15 video; başlık, tarih,
+ *      açıklama ve KESİN görüntülenme sayısı verir.
+ *   2. Kanalın /shorts sekmesi — zenginleştirme. Yaklaşık 48 Shorts'un kimliği
+ *      ve başlığı. YouTube'un iç JSON'u olduğu için kırılgandır; hata alırsa
+ *      sessizce atlanır ve RSS tek başına yeter.
+ *
+ * Sonuçlar data/videolar.json arşiviyle BİRLEŞTİRİLİR (eskiler silinmez, arşiv
+ * büyür), eksik yayın tarihleri yalnızca YENİ videolar için tek seferlik
+ * doldurulur ve videolar/index.html yeniden üretilir.
  *
  * Bağımlılık yok. Node 18+ yeterlidir (global fetch).
  *
@@ -22,6 +29,10 @@ import { fileURLToPath } from 'node:url';
 const KOK_DIZIN = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const KANAL_ID = 'UCKNR5SBIbxZtwIE0zauo28Q';
 const RSS = `https://www.youtube.com/feeds/videos.xml?channel_id=${KANAL_ID}`;
+const SHORTS_SEKME = 'https://www.youtube.com/@fidanpesen/shorts';
+const TARAYICI_UA =
+  'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 ' +
+  '(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36';
 const SITE = 'https://fidan-pesen-ozdogan.vercel.app';
 const ARSIV = path.join(KOK_DIZIN, 'data', 'videolar.json');
 const CIKTI = path.join(KOK_DIZIN, 'videolar', 'index.html');
@@ -83,8 +94,74 @@ async function rssOku() {
   }).filter((v) => v.id);
 }
 
+/* --------------------------------------------------- Shorts sekmesi (opsiyonel) */
+/* YouTube'un iç veri yapısı haber vermeden değişebilir. Bu yüzden burada
+   olabilecek her hata yutulur: zenginleştirme başarısız olursa sayfa yine
+   RSS ile üretilir. */
+async function shortsOku() {
+  try {
+    const yanit = await fetch(SHORTS_SEKME, { headers: { 'user-agent': TARAYICI_UA } });
+    if (!yanit.ok) throw new Error(`HTTP ${yanit.status}`);
+    const html = await yanit.text();
+    const m = html.match(/var ytInitialData = (\{.*?\});<\/script>/s);
+    if (!m) throw new Error('ytInitialData bulunamadı');
+    const veri = JSON.parse(m[1]);
+
+    const bulunan = [];
+    const gez = (o) => {
+      if (Array.isArray(o)) { o.forEach(gez); return; }
+      if (!o || typeof o !== 'object') return;
+      const lk = o.shortsLockupViewModel;
+      if (lk && typeof lk === 'object') {
+        const id = (JSON.stringify(lk).match(/"videoId":"([\w-]{11})"/) || [])[1];
+        const om = lk.overlayMetadata || {};
+        const baslik = om.primaryText?.content || lk.accessibilityText;
+        const izlenme = om.secondaryText?.content || null;
+        if (id && baslik) bulunan.push({ id, hamBaslik: baslik.trim(), izlenmeMetni: izlenme });
+      }
+      Object.values(o).forEach(gez);
+    };
+    gez(veri);
+
+    const benzersiz = new Map();
+    for (const v of bulunan) if (!benzersiz.has(v.id)) benzersiz.set(v.id, v);
+    return [...benzersiz.values()].map((v) => {
+      const { baslik, etiketler } = basligiAyir(v.hamBaslik);
+      return {
+        id: v.id,
+        baslik,
+        hamBaslik: v.hamBaslik,
+        etiketler,
+        izlenmeMetni: v.izlenmeMetni,
+        bag: `https://www.youtube.com/shorts/${v.id}`,
+        kisa: true,
+        kucukResim: `https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`,
+      };
+    });
+  } catch (e) {
+    console.warn(`Shorts sekmesi okunamadı (${e.message}); yalnızca RSS kullanılacak.`);
+    return [];
+  }
+}
+
+/* Yayın tarihi yalnızca YENİ videolar için, videonun kendi sayfasından bir kez
+   çekilir; arşivde saklandığı için sonraki çalıştırmalarda tekrar istenmez. */
+async function tarihGetir(id) {
+  try {
+    const yanit = await fetch(`https://www.youtube.com/watch?v=${id}`, {
+      headers: { 'user-agent': TARAYICI_UA },
+    });
+    if (!yanit.ok) return null;
+    const html = await yanit.text();
+    const m = html.match(/"uploadDate":"([0-9T:+\-]+)"/);
+    return m ? new Date(m[1]).toISOString() : null;
+  } catch { return null; }
+}
+
+const bekle = (ms) => new Promise((r) => setTimeout(r, ms));
+
 /* ------------------------------------------------------------- birleştirme */
-async function arsiviBirlestir(yeniler) {
+async function arsiviBirlestir(rssVideolar, shortsVideolar) {
   let eskiler = [];
   if (existsSync(ARSIV)) {
     try { eskiler = JSON.parse(await readFile(ARSIV, 'utf8')).videolar ?? []; }
@@ -92,11 +169,28 @@ async function arsiviBirlestir(yeniler) {
   }
   const harita = new Map(eskiler.map((v) => [v.id, v]));
   let eklenen = 0;
-  for (const v of yeniler) {
+
+  // Önce Shorts sekmesi (zayıf veri), sonra RSS (güçlü veri) yazılır ki
+  // RSS'in kesin tarihi ve görüntülenmesi üste gelsin.
+  for (const v of [...shortsVideolar, ...rssVideolar]) {
     if (!harita.has(v.id)) eklenen++;
-    harita.set(v.id, { ...harita.get(v.id), ...v });   // görüntülenme tazelensin
+    harita.set(v.id, { ...harita.get(v.id), ...v });
   }
-  const hepsi = [...harita.values()].sort((a, b) => (a.yayin < b.yayin ? 1 : -1));
+
+  // Tarihi olmayanlar yalnızca ilk keşifte doldurulur.
+  const tarihsiz = [...harita.values()].filter((v) => !v.yayin);
+  if (tarihsiz.length) {
+    console.log(`${tarihsiz.length} videonun yayın tarihi çekiliyor...`);
+    for (const v of tarihsiz) {
+      const t = await tarihGetir(v.id);
+      if (t) harita.set(v.id, { ...harita.get(v.id), yayin: t });
+      await bekle(220);                       // nazik olalım
+    }
+  }
+
+  const hepsi = [...harita.values()]
+    .filter((v) => v.yayin)
+    .sort((a, b) => (a.yayin < b.yayin ? 1 : -1));
   await mkdir(path.dirname(ARSIV), { recursive: true });
   await writeFile(ARSIV, JSON.stringify({
     kanal: 'Dr. Ecz. Fidan Pesen Özdoğan',
@@ -126,7 +220,9 @@ function sayfaUret(videolar, guncelleme) {
             <h3><a href="${kacir(v.bag)}" target="_blank" rel="noopener">${kacir(v.baslik)}</a></h3>
             <p class="video-ust">
               <time datetime="${kacir(v.yayin.slice(0, 10))}">${tarihYaz(v.yayin)}</time>
-              ${v.gorunum ? `<span>·</span><span>${sayiYaz(v.gorunum)} görüntülenme</span>` : ''}
+              ${v.gorunum
+                ? `<span>·</span><span>${sayiYaz(v.gorunum)} görüntülenme</span>`
+                : v.izlenmeMetni ? `<span>·</span><span>${kacir(v.izlenmeMetni)}</span>` : ''}
             </p>
             ${v.etiketler.length ? `<p class="video-etiket">${v.etiketler.slice(0, 4).map((e) => `<span>#${kacir(e)}</span>`).join('')}</p>` : ''}
           </div>
@@ -235,7 +331,7 @@ function sayfaUret(videolar, guncelleme) {
 <meta property="og:url" content="${url}">
 <meta property="og:title" content="${baslik}">
 <meta property="og:description" content="${aciklama}">
-<meta property="og:image" content="${SITE}/assets/img/fidan-portre.webp">
+<meta property="og:image" content="${SITE}/assets/img/portre-atolye.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@PesenFidan">
 <link rel="preconnect" href="https://i.ytimg.com" crossorigin>
@@ -284,8 +380,8 @@ ${JSON.stringify(ld, null, 2)}
         güncellenir.
       </p>
       <div class="makale-kimlik">
-        <img src="/assets/img/fidan-portre-acik.jpg" alt="Dr. Ecz. Fidan Pesen Özdoğan" width="40" height="40" loading="lazy" decoding="async">
-        <span><b>${videolar.length}</b> video listeleniyor</span>
+        <img src="/assets/img/portre-kirmizi.jpg" alt="Dr. Ecz. Fidan Pesen Özdoğan" width="40" height="40" loading="lazy" decoding="async">
+        <span><b>${videolar.length}</b> video · ${videolar.filter((v) => v.kisa).length} Shorts</span>
         <span>Güncelleme: <time datetime="${guncelleme}">${tarihYaz(guncelleme)}</time></span>
       </div>
     </div>
@@ -394,10 +490,14 @@ document.querySelectorAll('.video-kapak').forEach(function (d) {
 }
 
 /* --------------------------------------------------------------- çalıştır */
-const yeniler = await rssOku();
-const { hepsi, eklenen } = await arsiviBirlestir(yeniler);
+const rssVideolar = await rssOku();
+const shortsVideolar = await shortsOku();
+const { hepsi, eklenen } = await arsiviBirlestir(rssVideolar, shortsVideolar);
 const guncelleme = new Date().toISOString().slice(0, 10);
 await mkdir(path.dirname(CIKTI), { recursive: true });
 await writeFile(CIKTI, sayfaUret(hepsi, guncelleme), 'utf8');
-console.log(`RSS: ${yeniler.length} video · yeni: ${eklenen} · arşiv toplam: ${hepsi.length}`);
+const kisaSayi = hepsi.filter((v) => v.kisa).length;
+console.log(
+  `RSS: ${rssVideolar.length} · Shorts sekmesi: ${shortsVideolar.length} · ` +
+  `yeni: ${eklenen} · arşiv: ${hepsi.length} (${kisaSayi} Shorts)`);
 console.log(`Yazıldı: ${path.relative(KOK_DIZIN, CIKTI)} ve ${path.relative(KOK_DIZIN, ARSIV)}`);
