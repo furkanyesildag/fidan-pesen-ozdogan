@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Fidan&rsquo;ın Asistanı | Ürün Bulucu | Dr. Ecz. Fidan Pesen Özdoğan</title>
-<meta name="description" content="Ne aradığınızı kendi cümlelerinizle yazın, Doğal Markam kataloğunda eşleşen ürünleri bulup mağazadaki sayfasına yönlendirelim. Sağlık danışmanlığı değildir.">
+<meta name="description" content="Doğal Markam ürün asistanı. Durumunuzu anlatın, size uygun ürünü nedeniyle birlikte gösterelim. Otomatik asistandır, tıbbi teşhis koymaz.">
 <link rel="canonical" href="https://fidan-pesen-ozdogan.vercel.app/asistan">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <meta name="author" content="Dr. Ecz. Fidan Pesen Özdoğan">
@@ -43,13 +43,13 @@
       "@type": "WebApplication",
       "@id": "https://fidan-pesen-ozdogan.vercel.app/asistan/#uygulama",
       "name": "Fidan'ın Asistanı",
-      "applicationCategory": "UtilitiesApplication",
+      "applicationCategory": "BusinessApplication",
       "operatingSystem": "Web",
       "browserRequirements": "JavaScript gerektirir",
       "inLanguage": "tr-TR",
       "isAccessibleForFree": true,
       "offers": { "@type": "Offer", "price": "0", "priceCurrency": "TRY" },
-      "description": "Serbest metinle yazılan ihtiyacı Doğal Markam ürün kataloğuyla eşleştirip mağaza bağlantısı veren araç. Tarayıcıda çalışır, yazılan metin hiçbir sunucuya gönderilmez. Tıbbi teşhis veya tedavi aracı değildir.",
+      "description": "Doğal Markam ürün kataloğu üzerinde çalışan sohbet tabanlı ürün asistanı. Dr. Ecz. Fidan Pesen Özdoğan'ın yaklaşımıyla soru sorar ve uygun ürünü gerekçesiyle gösterir. Otomatik bir asistandır; tıbbi teşhis veya tedavi aracı değildir.",
       "author": { "@id": "https://fidan-pesen-ozdogan.vercel.app/#fidan-pesen-ozdogan" }
     },
     {
@@ -117,81 +117,97 @@
       </ol>
       <h1>Fidan&rsquo;ın Asistanı</h1>
       <p class="makale-ozet">
-        Ne aradığınızı <b>kendi cümlelerinizle</b> yazın. Doğal Markam
-        kataloğundaki 169 ürün arasından eşleşenleri bulup mağazadaki
-        sayfasına yönlendirelim. Arama tamamen tarayıcınızda çalışır;
-        yazdıklarınız hiçbir yere gönderilmez.
+        Cildiniz, saçınız ya da genel olarak kendinizi nasıl hissettiğinizle
+        ilgili ne varsa rahatça anlatın. Asistan önce sizi anlamak için soru
+        sorar, sonra Doğal Markam kataloğundan size uygun olanı <b>neden uygun
+        olduğunu açıklayarak</b> gösterir. Teşhis koymaz, ilaç önermez.
       </p>
     </div>
   </div>
 
   <div class="kap dar asistan-kap">
 
-    <form class="asistan-form" id="asistanForm" autocomplete="off">
-      <label for="asistanGirdi">Ne arıyorsunuz?</label>
-      <textarea id="asistanGirdi" name="soru" rows="3"
-                placeholder="Örnek: saçlarım çok döküyor, dolgunlaştırıcı bir şey arıyorum"
-                maxlength="400" required></textarea>
-      <div class="asistan-alt">
-        <button class="dugme birincil" type="submit">Katalogda ara</button>
-        <span class="asistan-gizlilik">Tarayıcıda çalışır, veri gönderilmez</span>
+    <div class="sohbet-kutu">
+      <div class="sohbet-basi">
+        <img src="/assets/img/portre-atolye.jpg" alt="" width="44" height="44" loading="lazy" decoding="async">
+        <div>
+          <b>Fidan&rsquo;ın Asistanı</b>
+          <i>Dr. Ecz. Fidan Pesen Özdoğan&rsquo;ın yaklaşımıyla · otomatik asistan</i>
+        </div>
+        <span class="sohbet-canli" title="Çevrim içi"></span>
       </div>
-    </form>
 
-    <div class="asistan-cipler" id="asistanCipler">
-      <span class="asistan-cip-etiket">Hızlı başlangıç</span>
-      <button type="button" data-ornek="saç dökülmesi">Saç dökülmesi</button>
-      <button type="button" data-ornek="cildimde leke var">Cilt lekesi</button>
-      <button type="button" data-ornek="akne ve sivilce">Akne</button>
-      <button type="button" data-ornek="kırışıklık karşıtı bakım">Kırışıklık</button>
-      <button type="button" data-ornek="göz altı morluğu">Göz altı</button>
-      <button type="button" data-ornek="uçucu yağ">Uçucu yağ</button>
-      <button type="button" data-ornek="bitkisel çay">Bitkisel çay</button>
-      <button type="button" data-ornek="nemlendirici krem">Nemlendirici</button>
+      <div class="sohbet-akis" id="sohbetAkis" role="log" aria-live="polite" aria-label="Sohbet"></div>
+
+      <div class="sohbet-cipler" id="sohbetCipler">
+        <button type="button" data-ornek="Saçlarım çok döküyor, ne yapmalıyım?">Saç dökülmesi</button>
+        <button type="button" data-ornek="Yüzümde koyu lekeler var, uzun süredir geçmiyor.">Cilt lekesi</button>
+        <button type="button" data-ornek="Akne sorunum var, cildim de yağlı.">Akne</button>
+        <button type="button" data-ornek="Göz altı morluğum ve torbalanma var.">Göz altı</button>
+        <button type="button" data-ornek="Sürekli yorgun hissediyorum.">Yorgunluk</button>
+      </div>
+
+      <form class="sohbet-form" id="sohbetForm" autocomplete="off">
+        <label class="gizli-metin" for="sohbetGirdi">Mesajınız</label>
+        <textarea id="sohbetGirdi" rows="1" maxlength="1500"
+                  placeholder="Durumunuzu anlatın... (Enter ile gönderin)"></textarea>
+        <button class="sohbet-gonder" id="sohbetGonder" type="submit" aria-label="Gönder">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+        </button>
+      </form>
+
+      <p class="sohbet-kvkk">
+        Bu bir <b>otomatik asistandır</b>, Dr. Ecz. Fidan Pesen Özdoğan&rsquo;ın kendisi değildir
+        ve tıbbi teşhis koymaz. Hizmet kalitesi için <b>konuşmalar kaydedilir</b>;
+        lütfen kimlik ve iletişim bilgisi paylaşmayın.
+        Kişisel veriler hakkında bilgi: <a href="mailto:iletisim@dogalmarkam.com">iletisim@dogalmarkam.com</a>
+      </p>
     </div>
-
-    <p class="asistan-durum" id="asistanDurum" role="status" aria-live="polite"></p>
-    <div id="asistanCikti"></div>
 
     <noscript>
       <div class="not-kutu uyari-kutu">
         <b>JavaScript kapalı</b>
-        <p>Bu araç tarayıcıda çalıştığı için JavaScript gerektirir. Ürünlere
-        doğrudan <a href="https://www.dogalmarkam.com/" target="_blank" rel="noopener">dogalmarkam.com</a>
-        üzerinden ulaşabilirsiniz.</p>
+        <p>Asistan JavaScript gerektirir. Ürünlere doğrudan
+        <a href="https://www.dogalmarkam.com/" target="_blank" rel="noopener">dogalmarkam.com</a>
+        üzerinden ulaşabilir, sorularınız için
+        <a href="https://wa.me/905336320313" target="_blank" rel="noopener">WhatsApp destek hattına</a>
+        yazabilirsiniz.</p>
       </div>
     </noscript>
 
     <section class="asistan-nasil">
-      <h2>Bu araç ne yapar, ne yapmaz?</h2>
+      <h2>Bu asistan ne yapar, ne yapmaz?</h2>
       <div class="asistan-ikili">
         <div>
           <h3>Yapar</h3>
           <ul>
-            <li>Yazdığınız ifadeyi ürün kataloğundaki adlar ve kategorilerle eşleştirir.</li>
-            <li>Eşleşen ürünleri mağazadaki kendi sayfasına bağlar.</li>
-            <li>Her şeyi tarayıcınızda yapar; hiçbir veri sunucuya gitmez.</li>
+            <li>Durumunuzu anlamak için sorular sorar, acele etmez.</li>
+            <li>Doğal Markam kataloğundaki 169 ürün arasından size uygun olanı,
+                neden uygun olduğunu içeriğiyle açıklayarak gösterir.</li>
+            <li>Kullanım şeklini anlatır ve destek hattına yönlendirir.</li>
           </ul>
         </div>
         <div>
           <h3>Yapmaz</h3>
           <ul>
-            <li>Teşhis koymaz, tedavi önermez, ilaç yerine geçecek bir şey söylemez.</li>
-            <li>Sıralamayı tıbbi uygunluğa göre değil, yalnızca metin benzerliğine göre yapar.</li>
-            <li>Acil belirti tespit ederse ürün göstermez, sizi 112'ye yönlendirir.</li>
+            <li>Teşhis koymaz, hastalık adı söylemez, tahlil yorumlamaz.</li>
+            <li>Hekiminizin verdiği ilacı bırakmanızı veya değiştirmenizi önermez.</li>
+            <li>Katalog dışında hiçbir marka veya ürün önermez.</li>
+            <li>Acil belirti fark ederse ürün göstermez, sizi 112&rsquo;ye yönlendirir.</li>
           </ul>
         </div>
       </div>
     </section>
 
     <p class="sorumluluk">
-      <b>Sorumluluk reddi.</b> Bu sayfa bir ürün bulucudur; tıbbi teşhis, tedavi
-      ya da reçete yerine geçmez ve bir sağlık danışmanlığı hizmeti değildir.
-      Listelenen ürünler ilaç değildir; hastalıkları önleme, tedavi etme veya
-      iyileştirme amacıyla kullanılamaz. Gebelik, emzirme, kronik hastalık,
-      düzenli ilaç kullanımı ve planlanmış ameliyat durumlarında bitkisel ürün
-      kullanmadan önce hekiminize ve eczacınıza danışın. Şikâyetiniz sürüyor
-      veya artıyorsa bir sağlık kuruluşuna başvurun.
+      <b>Sorumluluk reddi.</b> Bu sayfadaki asistan bir yapay zekâ uygulamasıdır;
+      Dr. Ecz. Fidan Pesen Özdoğan&rsquo;ın kendisi değildir ve verdiği bilgiler
+      tıbbi teşhis, tedavi ya da reçete yerine geçmez. Önerilen ürünler ilaç
+      değildir; hastalıkları önleme, tedavi etme veya iyileştirme amacıyla
+      kullanılamaz. Gebelik, emzirme, kronik hastalık, düzenli ilaç kullanımı ve
+      planlanmış ameliyat durumlarında bitkisel ürün kullanmadan önce hekiminize
+      ve eczacınıza danışın. Şikâyetiniz sürüyor veya artıyorsa bir sağlık
+      kuruluşuna başvurun. Acil durumlarda 112&rsquo;yi arayın.
     </p>
   </div>
 </main>
