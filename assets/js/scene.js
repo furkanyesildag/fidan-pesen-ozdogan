@@ -283,12 +283,24 @@
     var c = this.canvas;
     var w = c.clientWidth || global.innerWidth;
     var h = c.clientHeight || global.innerHeight;
-    this.dpr = Math.min(global.devicePixelRatio || 1, 2);
-    c.width = Math.round(w * this.dpr);
-    c.height = Math.round(h * this.dpr);
+    var dpr = Math.min(global.devicePixelRatio || 1, 2);
+
+    /* Mobil tarayıcılarda adres çubuğu açılıp kapandıkça viewport yüksekliği
+       değişir. Buna her seferinde yeniden ölçeklenirsek sahne kendi kendine
+       "zoom" yapıyormuş gibi görünür. İki önlem:
+         1) boyut gerçekten değişmediyse hiçbir şey yapma,
+         2) dar ekranda ölçeği yalnızca GENİŞLİKTEN türet — yükseklik oynasa da
+            parçacıkların büyüklüğü sabit kalsın.
+       (Katmanın kendisi CSS'te 100lvh ile sabitlendiği için h zaten sabittir;
+        bu, o desteklenmediğinde de doğru davranmayı garantiler.) */
+    if (this.w === w && this.h === h && this.dpr === dpr) return;
+
+    this.dpr = dpr;
+    c.width = Math.round(w * dpr);
+    c.height = Math.round(h * dpr);
     this.w = w; this.h = h;
     this.cx = w / 2; this.cy = h / 2;
-    this.ekranOlcek = Math.min(w, h) * (w < 820 ? 0.42 : 0.36);
+    this.ekranOlcek = w < 820 ? w * 0.50 : Math.min(w, h) * 0.36;
     this.ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
   };
 
@@ -309,10 +321,14 @@
   };
 
   Sahne.prototype.kameraAyarla = function (opt) {
-    if (opt.zoom != null) this.hedefZoom = opt.zoom;
+    /* Dar ekranda bölümler arası zoom ve merkez kaydırması yapılmaz: küçük
+       ekranda sürekli ölçek değiştiren bir arka plan "sayfa kendi kendine
+       yakınlaşıyor" gibi okunuyor. Sadece yoğunluk değişir. */
+    var dar = this.w < 820;
+    if (opt.zoom != null) this.hedefZoom = dar ? 1 : opt.zoom;
     if (opt.yogunluk != null) this.hedefYogunluk = opt.yogunluk;
     if (opt.egim != null) this.temelRotX = opt.egim;
-    if (opt.merkez != null) this.hedefMerkezX = opt.merkez;
+    if (opt.merkez != null) this.hedefMerkezX = dar ? 0.5 : opt.merkez;
   };
 
   Sahne.prototype.imlecAyarla = function (nx, ny) {

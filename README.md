@@ -118,8 +118,26 @@ Masaüstü ve mobil kasıtlı olarak **farklı yoğunlukta**. Küçük ekranda a
   Hem görsel gürültü hem GPU maliyeti düşer.
 - **Ritim değişir** — bölüm boşlukları artar, kart içleri sıkışır, giriş
   animasyonunun yolu ve gecikme kuyruğu kısalır.
-- **İçerik seyrelir** — her ürün kartında en fazla 3 çip gösterilir
-  (`.cips span:nth-child(n+4)`), dokunma hedefleri 44px'e çıkar.
+- **Kartlar yan yana gelir** — mizaçlar, akademi kartları ve ürün aileleri
+  2 sütuna geçer. Dört mizaç tek bakışta karşılaştırılır, toplam kaydırma
+  yarıya iner. Ürün alt kategori çipleri gizlenir (tam liste zaten markanın
+  sitesinde), dokunma hedefleri 44px'e çıkar.
+
+### Mobilde "kendi kendine zoom" sorunu
+
+Mobil tarayıcılarda adres çubuğu kaydırmayla açılıp kapandığı için viewport
+yüksekliği sürekli değişir. Sahne buna her seferinde yeniden ölçeklendiğinde
+sayfa kendi kendine yakınlaşıyormuş gibi görünüyordu. Üç katmanlı çözüm:
+
+1. `.sahne-katman` yüksekliği `100lvh` ile sabitlendi — katman artık adres
+   çubuğuyla birlikte boyutlanmıyor.
+2. `Sahne.olcekle()` boyut gerçekten değişmediyse erken çıkıyor; dar ekranda
+   parçacık ölçeği yalnızca **genişlikten** türetiliyor, yükseklikten değil.
+3. `kameraAyarla()` dar ekranda `data-zoom` ve `data-merkez` değerlerini yok
+   sayıyor — bölümler arası kamera yakınlaşması mobilde hiç çalışmıyor.
+
+Ayrıca `body { touch-action: manipulation }` ile çift dokunuşta tarayıcının
+kendi yakınlaştırması engellendi (parmakla yakınlaştırma çalışmaya devam eder).
 
 Mobil davranışı değiştirmek isterseniz tek yer var: o blok. Masaüstü kurallarına
 dokunmadan çalışır.
