@@ -466,6 +466,7 @@ ${JSON.stringify(ld, null, 2)}
 </footer>
 
 <script src="/assets/js/sayfa.js"></script>
+<script src="/assets/js/asistan-baloncuk.js" defer></script>
 <script>
 /* Tıklanana kadar YouTube'dan hiçbir şey yüklenmez (facade deseni):
    kapak görseli i.ytimg.com'dan gelir, oynatıcı yalnızca tıklamada eklenir. */
