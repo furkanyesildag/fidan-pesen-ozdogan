@@ -1,0 +1,285 @@
+/* ===========================================================================
+   makale.css — konu rehberleri ve SSS sayfaları
+   style.css'in üstüne biner: aynı jetonlar, farklı düzen.
+   Bu sayfalarda canvas sahnesi YOK; hız ve okunabilirlik önceliklidir.
+   =========================================================================== */
+
+.makale-govde { padding-top: 0; }
+
+/* -------------------------------------------------------------- 1. ZEMİN */
+.makale-zemin {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(90vw 60vh at 78% -12%, rgba(216,180,95,.10), transparent 60%),
+    radial-gradient(70vw 50vh at 8% 108%, rgba(216,180,95,.06), transparent 60%);
+}
+
+/* --------------------------------------------------------- 2. SAYFA BAŞI */
+.makale-basi {
+  position: relative; z-index: 10;
+  padding: clamp(120px, 17vh, 180px) clamp(18px, 4vw, 46px) clamp(34px, 5vw, 54px);
+  border-bottom: 1px solid var(--cizgi);
+}
+.kirinti {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+  margin: 0 0 26px; padding: 0; list-style: none;
+  font-size: 12.5px; color: var(--sis-2);
+}
+.kirinti li { display: flex; align-items: center; gap: 8px; }
+.kirinti li + li::before { content: "/"; color: rgba(139,163,150,.4); }
+.kirinti a { color: var(--sis); transition: color .3s; }
+.kirinti a:hover { color: var(--aksan); }
+
+.makale-basi h1 {
+  font-family: var(--serif); font-weight: 400;
+  font-size: clamp(32px, 6.2vw, 62px);
+  line-height: 1.06; letter-spacing: -.028em;
+  margin: 0 0 22px; max-width: 20ch;
+}
+.makale-ozet {
+  font-size: clamp(16px, 2vw, 19.5px);
+  line-height: 1.66; color: var(--ink-2);
+  max-width: 66ch; margin: 0;
+}
+.makale-ozet b { color: var(--ink); font-weight: 600; }
+
+.makale-kimlik {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px;
+  margin-top: 28px;
+  font-size: 12.5px; color: var(--sis-2);
+}
+.makale-kimlik img {
+  width: 40px; height: 40px; border-radius: 50%;
+  object-fit: cover; object-position: 66% 22%;
+  border: 1px solid var(--cizgi-kuv);
+}
+.makale-kimlik b { color: var(--ink-2); font-weight: 600; }
+.makale-kimlik a { color: var(--aksan); }
+
+/* ------------------------------------------------------------- 3. DÜZEN */
+.makale-duzen {
+  position: relative; z-index: 10;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 244px;
+  gap: clamp(30px, 5vw, 66px);
+  max-width: var(--kap); margin: 0 auto;
+  padding: clamp(44px, 6vw, 70px) clamp(18px, 4vw, 46px) 40px;
+  align-items: start;
+}
+@media (max-width: 940px) { .makale-duzen { grid-template-columns: 1fr; } }
+
+/* ----------------------------------------------------------- 4. İÇİNDEKİLER */
+.icindekiler {
+  position: sticky; top: 96px;
+  padding: 22px 20px;
+  border: 1px solid var(--cizgi); border-radius: 16px;
+  background: rgba(9, 20, 14, .5);
+}
+.icindekiler h2 {
+  font-size: 10.5px; letter-spacing: .24em; text-transform: uppercase;
+  color: var(--sis-2); margin: 0 0 14px; font-weight: 500; font-family: var(--sans);
+}
+.icindekiler ol { list-style: none; margin: 0; padding: 0; counter-reset: ic; }
+.icindekiler li { counter-increment: ic; }
+.icindekiler a {
+  display: block; padding: 7px 0 7px 26px; position: relative;
+  font-size: 13.5px; line-height: 1.45; color: var(--sis);
+  transition: color .3s;
+}
+.icindekiler a::before {
+  content: counter(ic, decimal-leading-zero);
+  position: absolute; left: 0; top: 7px;
+  font-family: var(--mono); font-size: 10.5px; color: var(--sis-2);
+}
+.icindekiler a:hover, .icindekiler a.aktif { color: var(--aksan-ac); }
+.icindekiler a.aktif::before { color: var(--aksan); }
+@media (max-width: 940px) {
+  .icindekiler { position: static; order: -1; }
+}
+
+/* --------------------------------------------------------------- 5. METİN */
+.makale { max-width: 74ch; }
+.makale section { scroll-margin-top: 92px; }
+.makale h2 {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(24px, 3.4vw, 34px);
+  line-height: 1.16; letter-spacing: -.016em;
+  margin: clamp(50px, 6vw, 70px) 0 18px;
+}
+.makale section:first-of-type h2 { margin-top: 0; }
+.makale h3 {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(18px, 2.3vw, 22px);
+  margin: 34px 0 12px;
+}
+.makale p { margin: 0 0 18px; color: var(--ink-2); }
+.makale p b, .makale li b { color: var(--ink); font-weight: 600; }
+.makale a:not(.dugme) {
+  color: var(--aksan);
+  border-bottom: 1px solid rgba(var(--aksan-rgb), .34);
+  transition: color .3s, border-color .3s;
+}
+.makale a:not(.dugme):hover { color: var(--aksan-ac); border-color: var(--aksan-ac); }
+
+.makale ul, .makale ol { margin: 0 0 20px; padding-left: 0; list-style: none; }
+.makale ul li, .makale ol li {
+  position: relative; padding-left: 22px; margin-bottom: 10px;
+  color: var(--ink-2);
+}
+.makale ul li::before {
+  content: ""; position: absolute; left: 2px; top: .68em;
+  width: 5px; height: 5px; border-radius: 50%; background: var(--aksan); opacity: .8;
+}
+.makale ol { counter-reset: sira; }
+.makale ol li { counter-increment: sira; }
+.makale ol li::before {
+  content: counter(sira) ".";
+  position: absolute; left: 0; top: 0;
+  font-family: var(--mono); font-size: 12.5px; color: var(--aksan);
+}
+
+/* kısa cevap kutusu: motorların doğrudan alıntılayacağı özet */
+.kisa-cevap {
+  margin: 0 0 30px;
+  padding: 22px 24px;
+  border-left: 2px solid var(--aksan);
+  border-radius: 0 14px 14px 0;
+  background: linear-gradient(100deg, rgba(var(--aksan-rgb), .09), transparent 70%);
+}
+.kisa-cevap p { margin: 0; color: var(--ink); font-size: 16.5px; line-height: 1.62; }
+.kisa-cevap p + p { margin-top: 12px; }
+
+/* uyarı kutusu */
+.not-kutu {
+  margin: 26px 0;
+  padding: 18px 20px;
+  border: 1px solid var(--cizgi); border-radius: 14px;
+  background: rgba(9, 20, 14, .5);
+  font-size: 14.5px; color: var(--ink-2);
+}
+.not-kutu b { display: block; margin-bottom: 6px; color: var(--aksan-ac); }
+.not-kutu.uyari-kutu { border-color: rgba(255,122,47,.3); }
+.not-kutu.uyari-kutu b { color: #ffb37a; }
+.not-kutu p:last-child { margin-bottom: 0; }
+
+/* tablo */
+.tablo-sar { overflow-x: auto; margin: 0 0 26px; -webkit-overflow-scrolling: touch; }
+.makale table {
+  width: 100%; min-width: 460px;
+  border-collapse: collapse;
+  font-size: 14.5px;
+}
+.makale th, .makale td {
+  text-align: left; padding: 12px 14px;
+  border-bottom: 1px solid var(--cizgi);
+  vertical-align: top;
+}
+.makale th {
+  font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--aksan); font-weight: 600;
+  border-bottom-color: var(--cizgi-kuv);
+}
+.makale td { color: var(--ink-2); }
+.makale tbody tr:hover td { background: rgba(255,255,255,.025); }
+
+/* ----------------------------------------------------------------- 6. SSS */
+.sss-liste { margin: 0 0 30px; }
+.sss-liste details {
+  border: 1px solid var(--cizgi); border-radius: 14px;
+  background: rgba(9, 20, 14, .5);
+  margin-bottom: 10px;
+  transition: border-color .4s;
+}
+.sss-liste details[open] { border-color: var(--cizgi-kuv); }
+.sss-liste summary {
+  list-style: none; cursor: pointer;
+  padding: 17px 46px 17px 20px; position: relative;
+  font-family: var(--serif); font-size: 17.5px; font-weight: 500;
+  color: var(--ink); line-height: 1.4;
+}
+.sss-liste summary::-webkit-details-marker { display: none; }
+.sss-liste summary::after {
+  content: ""; position: absolute; right: 20px; top: 50%;
+  width: 9px; height: 9px; margin-top: -6px;
+  border-right: 1.6px solid var(--aksan); border-bottom: 1.6px solid var(--aksan);
+  transform: rotate(45deg);
+  transition: transform .35s var(--yumusak);
+}
+.sss-liste details[open] summary::after { transform: rotate(-135deg); margin-top: -2px; }
+.sss-liste .sss-cevap { padding: 0 20px 18px; }
+.sss-liste .sss-cevap p { margin: 0 0 12px; font-size: 15px; }
+.sss-liste .sss-cevap p:last-child { margin-bottom: 0; }
+
+/* -------------------------------------------------------- 7. SAYFA SONU */
+.makale-son {
+  margin-top: clamp(56px, 7vw, 80px);
+  padding-top: 30px; border-top: 1px solid var(--cizgi);
+}
+.yazar-kart {
+  display: grid; grid-template-columns: 88px 1fr; gap: 20px;
+  align-items: start;
+  padding: 24px; border: 1px solid var(--cizgi); border-radius: 16px;
+  background: rgba(9, 20, 14, .55);
+}
+.yazar-kart img {
+  width: 88px; height: 88px; border-radius: 14px;
+  object-fit: cover; object-position: 66% 20%;
+}
+.yazar-kart h2 {
+  font-family: var(--serif); font-size: 19px; font-weight: 500;
+  margin: 0 0 6px;
+}
+.yazar-kart p { margin: 0 0 10px; font-size: 14px; color: var(--ink-2); }
+.yazar-kart .yazar-baglar { display: flex; flex-wrap: wrap; gap: 14px; font-size: 13px; }
+@media (max-width: 560px) {
+  .yazar-kart { grid-template-columns: 1fr; }
+  .yazar-kart img { width: 72px; height: 72px; }
+}
+
+.ilgili { margin-top: 34px; }
+.ilgili h2 {
+  font-size: 10.5px; letter-spacing: .24em; text-transform: uppercase;
+  color: var(--sis-2); margin: 0 0 14px; font-family: var(--sans); font-weight: 500;
+}
+.ilgili-izgara { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; }
+.ilgili-izgara a {
+  display: block; padding: 16px 18px;
+  border: 1px solid var(--cizgi); border-radius: 14px;
+  background: rgba(9, 20, 14, .5);
+  font-family: var(--serif); font-size: 16.5px;
+  transition: border-color .4s, background .4s, transform .4s var(--yumusak);
+}
+.ilgili-izgara a:hover {
+  border-color: var(--cizgi-kuv); background: rgba(15,32,22,.75);
+  transform: translateY(-3px);
+}
+.ilgili-izgara span {
+  display: block; font-family: var(--sans); font-size: 12.5px;
+  color: var(--sis-2); margin-top: 4px;
+}
+
+.sorumluluk {
+  margin-top: 30px; padding: 18px 20px;
+  border: 1px dashed var(--cizgi-kuv); border-radius: 14px;
+  font-size: 13px; color: var(--sis); line-height: 1.62;
+}
+.sorumluluk b { color: var(--ink-2); }
+
+/* ---------------------------------------------------------- 8. MOBİL */
+@media (max-width: 820px) {
+  .makale-zemin { opacity: .7; }
+  .icindekiler, .sss-liste details, .not-kutu, .yazar-kart, .ilgili-izgara a {
+    backdrop-filter: none; -webkit-backdrop-filter: none;
+    background: #0a1610;
+  }
+  .makale-basi { padding-top: 108px; }
+  .makale-basi h1 { max-width: none; }
+  .makale h2 { margin-top: 44px; }
+  .makale p, .makale ul li, .makale ol li { font-size: 15.5px; }
+  .kisa-cevap { padding: 18px 18px; }
+  .kisa-cevap p { font-size: 15.5px; }
+  .sss-liste summary { font-size: 16px; padding: 15px 42px 15px 16px; }
+  .sss-liste .sss-cevap { padding: 0 16px 16px; }
+  .makale table { font-size: 13.5px; }
+  .makale th, .makale td { padding: 10px 11px; }
+}

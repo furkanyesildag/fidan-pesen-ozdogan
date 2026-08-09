@@ -20,12 +20,24 @@ yolları göreli, `file://` üzerinden de çalışır).
 ## Dosya yapısı
 
 ```
-index.html                 — tüm içerik ve bölümler
+index.html                 — özgeçmiş ana sayfası
+fitoterapi/index.html      — rehber: Fitoterapi Nedir?
+cilt-bakimi/index.html     — rehber: Doğal Cilt Bakımı
+gida-takviyeleri/index.html— rehber: Bitkisel Gıda Takviyeleri
+geleneksel-tip/index.html  — rehber: GETAT ve Mizaç
+sss/index.html             — Sık Sorulan Sorular
+robots.txt · sitemap.xml · llms.txt
 assets/css/style.css       — tasarım sistemi, düzen, animasyonlar
+assets/css/makale.css      — rehber sayfalarının makale düzeni
 assets/js/scene.js         — "Unsur Motoru": Canvas 2D üzerinde 3B parçacık sahnesi
-assets/js/main.js          — scroll orkestrasyonu, mizaç etkileşimi, tilt, parallaks, menü
+assets/js/main.js          — ana sayfa: scroll orkestrasyonu, mizaç etkileşimi, tilt
+assets/js/sayfa.js         — rehber sayfaları: menü + içindekiler vurgusu
 assets/img/                — görseller (aşağıya bakın)
 ```
+
+Rehber sayfalarında canvas sahnesi **yoktur**; bu sayfalarda sayfa hızı ve
+okunabilirlik önceliklidir. Ana sayfa ile ortak tasarım jetonlarını
+`style.css` üzerinden paylaşırlar.
 
 ## Görseller
 
@@ -176,6 +188,82 @@ Yayına almadan önce sahibiyle teyit edilmesi iyi olur:
   kullanıldı).
 - Görsellerin kullanım izni: dosyalar Doğal Markam'ın kendi sitesinden alındı,
   yani hak sahibi kendisi. Yine de yayına almadan önce onayı alınmalı.
+
+## GEO / SEO altyapısı
+
+Amaç, hem klasik arama motorlarında hem de yapay zekâ cevap motorlarında
+(ChatGPT, Perplexity, Google AI Overviews, Claude) **Fidan Pesen Özdoğan** ve
+**Doğal Markam** varlıklarının doğru tanınması ve alıntılanabilmesi.
+
+### Varlık (entity) tanımı
+
+Her sayfada `schema.org` JSON-LD `@graph` bulunur. Grafın omurgası sabit
+`@id`'lerle birbirine bağlanmış üç düğümdür:
+
+| Düğüm | `@id` | Rolü |
+|---|---|---|
+| `Person` | `/#fidan-pesen-ozdogan` | Kişi varlığı: unvanlar, `alumniOf`, `hasCredential`, `knowsAbout`, `knowsLanguage`, `sameAs` |
+| `Organization` + `HealthAndBeautyBusiness` | `dogalmarkam.com/#organization` | Marka varlığı: `legalName`, adres, telefon, çalışma saatleri, `founder` → Person |
+| `WebSite` | `/#website` | Site varlığı, `publisher` → Person |
+
+Rehber sayfaları buna `Article`, `WebPage`, `BreadcrumbList` ve `FAQPage`
+düğümlerini ekler. Toplam 7 düğüm, hepsi çapraz referanslı.
+
+`sameAs` listesi kritik: cevap motorları bir kişinin farklı platformlardaki
+hesaplarını bu alan üzerinden tek varlıkta birleştirir. Yeni bir hesap
+açıldığında **her sayfadaki** `sameAs` dizisine eklenmelidir.
+
+### Cevap motorları için içerik biçimi
+
+- Her rehberin ilk bölümü, motorların doğrudan alıntılayabileceği
+  **`.kisa-cevap` kutusuyla** açılır: tek paragrafta, 40-60 kelimede net tanım.
+- Karşılaştırmalar **tablo** olarak verilir; tablolar çıkarım için en kolay
+  biçimdir.
+- Her rehberde `FAQPage` işaretlemeli soru-cevap bölümü vardır. SSS sayfasında
+  otuza yakın soru tek `FAQPage` altında toplanır.
+- Başlıklar soru cümlesi biçimindedir ("Fitoterapi nedir?", "Cilt tipimi nasıl
+  belirlerim?"), çünkü sorgular bu biçimde gelir.
+- Mevzuat atıfları tarih ve sayı ile verilir (örn. RG 27.10.2014 / 29158),
+  bu doğrulanabilirliği artırır.
+
+### Tarama dosyaları
+
+- `robots.txt` — GPTBot, OAI-SearchBot, PerplexityBot, ClaudeBot,
+  Google-Extended, Applebot-Extended, CCBot dahil tüm yapay zekâ tarayıcılarına
+  açık; sitemap referansı içerir.
+- `sitemap.xml` — 6 URL, `lastmod` ve görsel etiketleriyle.
+- `llms.txt` — dil modelleri için sadeleştirilmiş site özeti: kimlik bilgileri,
+  sayfa listesi ve açıklamaları, doğrulanmış hesaplar, alıntı sınırları.
+
+### Marka mimarisi
+
+Bu site, `dogalmarkam.com` ile **rekabet etmez**. Ürün kopyası burada
+tekrarlanmaz; ürün aileleri aile düzeyinde anlatılıp mağazaya yönlendirilir.
+Bu site yetki/biyografi merkezi, `dogalmarkam.com` ticaret merkezi olarak
+konumlanır. İki alan adı birbirine `sameAs` ve doğrudan bağlantılarla
+bağlanmıştır.
+
+### Sıralama hakkında dürüst not
+
+Bu altyapı **görünürlük olasılığını artırır, sıralama garantisi vermez.**
+Hiçbir teknik çalışma "en üst sıra" sözü veremez. Bundan sonraki en büyük
+kazanç teknikten değil şunlardan gelir:
+
+1. **Özel alan adı.** `*.vercel.app` altındaki bir site, kendi alan adına sahip
+   bir siteye göre otorite biriktirmekte dezavantajlıdır. İlk yapılacak iş bu.
+2. **Google Search Console ve Bing Webmaster Tools** kaydı; sitemap'in elle
+   gönderilmesi.
+3. **Dış atıf.** Haber, röportaj, üniversite ve dernek sayfalarından gelen
+   bağlantılar. Cevap motorları için tek başına en belirleyici sinyal budur.
+4. **Google Business Profile** kaydı (Ankara Çankaya adresi ile).
+5. **Düzenli güncelleme.** `dateModified` alanları gerçek güncellemelerle
+   birlikte tazelenmelidir.
+
+### Sayfa eklerken
+
+Rehber sayfaları elle bakılan statik HTML'dir. Yeni sayfa eklerken:
+`sitemap.xml`, `llms.txt`, ana sayfadaki `#rehberler` bölümü, üst menü ve
+altlık menüsü güncellenmelidir.
 
 ## Yayın
 

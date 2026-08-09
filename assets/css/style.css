@@ -848,6 +848,46 @@ main { position: relative; z-index: 10; }
   background: linear-gradient(165deg, rgba(var(--aksan-rgb), .12), rgba(9,20,14,.6));
 }
 
+/* ---------------------------------------------------------- 15b. REHBERLER */
+.rehber-izgara {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(272px, 1fr));
+  gap: 16px;
+  perspective: 1200px;
+}
+.rehber {
+  position: relative; display: block;
+  padding: 30px 26px 28px;
+  border: 1px solid var(--cizgi); border-radius: 16px;
+  background:
+    linear-gradient(165deg, rgba(255,255,255,.04), transparent 45%),
+    rgba(9, 20, 14, .55);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  transform-style: preserve-3d;
+  transition: border-color .5s, box-shadow .6s, transform .6s var(--yay),
+              opacity .9s var(--yumusak);
+  will-change: transform;
+}
+.rehber:hover { border-color: var(--cizgi-kuv); box-shadow: 0 26px 60px -34px rgba(0,0,0,.95); }
+.rehber-etiket {
+  display: inline-block; margin-bottom: 14px;
+  padding: 4px 11px; border-radius: 99px;
+  border: 1px solid rgba(var(--aksan-rgb), .34);
+  font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--aksan-ac);
+  transition: color .8s, border-color .8s;
+}
+.rehber h3 {
+  font-family: var(--serif); font-weight: 500; font-size: 22px;
+  margin: 0 0 10px; letter-spacing: -.005em;
+}
+.rehber p { margin: 0; font-size: 14.5px; color: var(--ink-2); }
+.rehber:hover .ok { color: var(--aksan); transform: translate(3px, -3px); }
+.rehber.vurgu-rehber {
+  border-color: rgba(var(--aksan-rgb), .4);
+  background: linear-gradient(165deg, rgba(var(--aksan-rgb), .1), rgba(9,20,14,.6));
+}
+
 /* -------------------------------------------------------------- 16. MEDYA */
 .medya-izgara {
   display: grid;
@@ -1221,13 +1261,17 @@ main { position: relative; z-index: 10; }
   /* ---- kart kromu: cam + parıltı yerine düz, sakin yüzeyler ----
      backdrop-filter mobilde hem pahalı hem görsel olarak gürültülü. */
   .kart-yuz, .urun, .medya-kart, .deger, .varak, .kunye-kart,
-  .marka-kunye, .kanal, .akademi, .dip, .ust-bar.kondu {
+  .marka-kunye, .kanal, .akademi, .rehber, .dip, .ust-bar.kondu {
     backdrop-filter: none; -webkit-backdrop-filter: none;
   }
-  .kart-yuz, .urun, .medya-kart, .deger, .akademi, .kanal, .kunye-kart, .marka-kunye {
+  .kart-yuz, .urun, .medya-kart, .deger, .akademi, .rehber,
+  .kanal, .kunye-kart, .marka-kunye {
     background: #0a1610;
     box-shadow: none;
   }
+  .rehber { padding: 22px 18px; }
+  .rehber h3 { font-size: 19px; }
+  .rehber p { font-size: 13.5px; }
   .kart-yuz { background-image: none; }
   .kart-parilti { display: none; }
   .urun::before, .kart-yuz::before { display: none; }
