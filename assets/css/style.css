@@ -704,110 +704,7 @@ main { position: relative; z-index: 10; }
 .akademi p { margin: 0; font-size: 14.5px; color: var(--ink-2); }
 .akademi p b { color: var(--ink); }
 
-/* ---------------------------------------------------------- 15. REHBERLER */
-/* Bilinçli olarak sakin: bu bölüm sayfanın yıldızı değil, bir yön levhası. */
-.rehberler { padding-block: clamp(58px, 8vh, 92px); }
-
-/* ince asistan çizgisi */
-.asistan-cizgi {
-  display: grid; grid-template-columns: 46px 1fr auto;
-  align-items: center; gap: 16px;
-  padding: 14px 16px;
-  border: 1px solid rgba(var(--aksan-rgb), .34); border-radius: 99px;
-  background: linear-gradient(110deg, rgba(var(--aksan-rgb), .12), rgba(9,20,14,.55) 62%);
-  transition: border-color .4s, transform .4s var(--yumusak), box-shadow .4s;
-}
-.asistan-cizgi:hover {
-  border-color: rgba(var(--aksan-rgb), .65);
-  transform: translateY(-2px);
-  box-shadow: 0 22px 46px -30px rgba(var(--aksan-rgb), .55);
-}
-.ac-avatar { position: relative; width: 46px; height: 46px; }
-.ac-avatar img {
-  width: 46px; height: 46px; border-radius: 50%;
-  object-fit: cover; object-position: 62% 20%;
-  border: 1px solid rgba(var(--aksan-rgb), .45);
-}
-.ac-avatar i {
-  position: absolute; right: 0; bottom: 1px;
-  width: 11px; height: 11px; border-radius: 50%;
-  background: #6ee7a8; border: 2px solid #0a1610;
-}
-.ac-metin b {
-  display: block; font-family: var(--serif); font-weight: 500;
-  font-size: 17.5px; line-height: 1.2;
-}
-.ac-metin i {
-  display: block; font-style: normal; font-size: 13.5px;
-  color: var(--sis); margin-top: 2px;
-}
-.ac-dugme {
-  display: inline-flex; align-items: center; gap: 8px; white-space: nowrap;
-  padding: 10px 20px; border-radius: 99px;
-  background: linear-gradient(100deg, var(--aksan-ac), var(--aksan));
-  color: #0b1a12; font-weight: 600; font-size: 13.5px;
-}
-.ac-dugme i { font-style: normal; transition: transform .4s var(--yay); }
-.asistan-cizgi:hover .ac-dugme i { transform: translateX(3px); }
-
-/* başlık: küçük ve yatay */
-.rehber-ust {
-  display: flex; align-items: baseline; gap: 14px;
-  margin: clamp(38px, 5vw, 54px) 0 4px;
-}
-.rehber-ust .numara {
-  font-family: var(--mono); font-size: 11px; letter-spacing: .3em;
-  color: var(--aksan); opacity: .8;
-}
-.rehber-ust h2 {
-  font-family: var(--serif); font-weight: 500;
-  font-size: clamp(21px, 2.6vw, 26px); margin: 0; letter-spacing: -.01em;
-}
-
-/* rehber listesi: kart değil, ince satırlar */
-.rehber-liste {
-  list-style: none; margin: 0; padding: 0;
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 0 clamp(20px, 3vw, 40px);
-}
-@media (max-width: 900px) { .rehber-liste { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 560px) { .rehber-liste { grid-template-columns: 1fr; } }
-
-.rehber-liste a {
-  display: flex; align-items: center; gap: 12px;
-  min-height: 56px; padding: 14px 2px;
-  border-top: 1px solid var(--cizgi);
-  transition: border-color .4s, padding-left .4s var(--yumusak);
-}
-.rehber-liste a:hover { border-top-color: rgba(var(--aksan-rgb), .5); padding-left: 8px; }
-.rehber-liste b {
-  font-family: var(--serif); font-weight: 500; font-size: 16px;
-  color: var(--ink); line-height: 1.25;
-}
-.rehber-liste i {
-  font-style: normal; font-size: 11.5px; color: var(--sis-2);
-  margin-left: auto; text-align: right; white-space: nowrap;
-}
-.rehber-liste span {
-  font-size: 13px; color: var(--sis-2);
-  transition: color .35s, transform .35s var(--yay);
-}
-.rehber-liste a:hover span { color: var(--aksan); transform: translate(2px, -2px); }
-@media (max-width: 700px) {
-  .rehber-liste i { display: none; }
-  .rehber-liste span { margin-left: auto; }
-}
-@media (max-width: 620px) {
-  /* dar ekranda hap biçimi metni sıkıştırıyor; karta dönüşüp düğme alta iner */
-  .asistan-cizgi {
-    grid-template-columns: 46px 1fr; row-gap: 14px;
-    border-radius: 18px; padding: 16px;
-  }
-  .ac-dugme { grid-column: 1 / -1; justify-content: center; padding: 12px 20px; font-size: 14px; }
-  .ac-metin i { font-size: 13px; }
-}
-
-/* ------------------------------------------------- 15b. ASİSTAN BALONCUĞU */
+/* -------------------------------------------------- 15. ASİSTAN BALONCUĞU */
 /* Her sayfada sağ altta duran kalıcı giriş noktası. */
 .asistan-baloncuk {
   position: fixed; right: 22px; bottom: 22px; z-index: 55;
@@ -1231,17 +1128,14 @@ main { position: relative; z-index: 10; }
   /* ---- kart kromu: cam + parıltı yerine düz, sakin yüzeyler ----
      backdrop-filter mobilde hem pahalı hem görsel olarak gürültülü. */
   .kart-yuz, .medya-kart, .kunye-kart,
-  .marka-kunye, .kanal, .akademi, .rehber, .dip, .ust-bar.kondu {
+  .marka-kart, .kanal, .akademi, .dip, .ust-bar.kondu {
     backdrop-filter: none; -webkit-backdrop-filter: none;
   }
-  .kart-yuz, .medya-kart, .akademi, .rehber,
+  .kart-yuz, .medya-kart, .akademi,
   .kanal, .kunye-kart, .marka-kunye {
     background: #0a1610;
     box-shadow: none;
   }
-  .rehber { padding: 22px 18px; }
-  .rehber h3 { font-size: 19px; }
-  .rehber p { font-size: 13.5px; }
   .kart-yuz { background-image: none; }
   .kart-parilti { display: none; }
   .kart-yuz::before { display: none; }
