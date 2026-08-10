@@ -52,7 +52,15 @@
 /* --------------------------------------------------------------- 2. TEMEL */
 *, *::before, *::after { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  /* Sayfanın kendisi yatayda hiç kaymasın. `clip`, `hidden`in aksine
+     kaydırma kutusu oluşturmaz; iOS'ta parmakla yana sürüklemeyi de keser.
+     Desteklemeyen tarayıcı `hidden`e düşer. */
+  overflow-x: hidden;
+  overflow-x: clip;
+}
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
 body {
@@ -64,6 +72,8 @@ body {
   line-height: 1.72;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  overflow-x: clip;
+  max-width: 100%;
   /* çift dokunuşta tarayıcının kendi yakınlaştırmasını engeller */
   touch-action: manipulation;
 }
@@ -1158,29 +1168,42 @@ main { position: relative; z-index: 10; }
   .bolum-basi h2 { font-size: clamp(28px, 8vw, 36px); }
   .unsur-ust, .medya-tur, .akademi-yil, .kunye-dl dt, .numara { letter-spacing: .16em; }
 
-  /* ---- yatay kaydırılabilir şeritler ----
-     Dar ekranda kartları alt alta yığmak yerine yana kaydırıyoruz: sayfa
-     kısalıyor, kenarda görünen sonraki kartın ucu kaydırılabildiğini
-     anlatıyor, tutunma (scroll-snap) her kartı yerine oturtuyor. */
-  .unsur-izgara, .medya-izgara {
-    display: grid;
-    grid-auto-flow: column;
+  /* ---- Dört Unsur: soldan sağa kaydırılabilir şerit ----
+     Grid yerine FLEX kullanıyoruz: her tarayıcıda tek satırda kalması
+     garanti, grid-auto-flow yorumundaki farklılıklara açık değil.
+     Negatif kenar boşluğu YOK; şerit kabın içinde kalır ki sayfanın
+     kendisi yana kaymasın. */
+  .unsur-izgara {
+    display: flex;
     grid-template-columns: none;
-    grid-auto-columns: 78%;
     gap: 10px;
     overflow-x: auto;
     overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
     scroll-snap-type: x mandatory;
     padding: 2px 2px 14px;
-    margin-inline: calc(clamp(18px, 4vw, 46px) * -1);
-    padding-inline: clamp(18px, 4vw, 46px);
     scrollbar-width: none;
   }
-  .unsur-izgara::-webkit-scrollbar, .medya-izgara::-webkit-scrollbar { display: none; }
-  .unsur-izgara > *, .medya-izgara > * { scroll-snap-align: center; }
-  .medya-kart.genis { grid-column: auto; }
+  .unsur-izgara::-webkit-scrollbar { display: none; }
+  .unsur-izgara > .unsur-kart {
+    flex: 0 0 80%;
+    scroll-snap-align: center;
+  }
 
-  /* kaydırma ipucu */
+  /* ---- Ekranda ve Ağda: mobilde ikili ızgara ---- */
+  .medya-izgara {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .medya-kart.genis { grid-column: 1 / -1; }
+  .medya-kart { padding: 16px 14px; }
+  .medya-tur { font-size: 9px; letter-spacing: .14em; padding: 3px 8px; margin-bottom: 10px; }
+  .medya-kart h3 { font-size: 15.5px; line-height: 1.28; margin-bottom: 7px; }
+  .medya-kart p { font-size: 12.5px; line-height: 1.5; }
+  .medya-kart .ok { top: 14px; right: 13px; font-size: 13px; }
+
+  /* kaydırma ipucu yalnızca gerçekten kayan şeritte */
   .kaydir-ipucu {
     display: flex; align-items: center; gap: 8px;
     margin: 0 0 12px;
@@ -1191,20 +1214,7 @@ main { position: relative; z-index: 10; }
     content: ""; width: 24px; height: 1px;
     background: linear-gradient(90deg, var(--aksan), transparent);
   }
-  .unsur-kart .kart-yuz { padding: 18px 15px 17px; border-radius: 14px; }
-  .unsur-simge { width: 25px; height: 25px; margin-bottom: 12px; }
-  .unsur-ust { font-size: 9px; letter-spacing: .13em; margin-bottom: 3px; }
-  .unsur-kart h3 { font-size: 20px; margin-bottom: 11px; }
-  .unsur-keyf { gap: 5px; margin-bottom: 12px; padding-bottom: 12px; }
-  .unsur-keyf span { font-size: 9.5px; letter-spacing: .05em; padding: 3px 7px; }
-  .unsur-liste { margin-bottom: 12px; }
-  .unsur-liste li {
-    font-size: 12.5px; line-height: 1.42;
-    padding-left: 11px; margin-bottom: 7px;
-  }
-  .unsur-liste li::before { width: 4px; height: 4px; top: .6em; }
-  .unsur-denge { font-size: 11.5px; line-height: 1.45; }
-  .unsur-denge b { display: block; margin-bottom: 1px; }
+  .medya .kaydir-ipucu { display: none; }
 
   /* ---- akademi kartları da 2×2 ---- */
   .akademi-izgara { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
