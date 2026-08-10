@@ -36,9 +36,23 @@
     });
   }
 
-  /* Küçük bir markdown alt kümesi: **kalın**, satır başı, madde işareti. */
+  /* Arayüz WhatsApp düğmesini zaten gösteriyor; modelin metne yazdığı çıplak
+     wa.me adresi ve telefonu tekrar olur, temizliyoruz. */
+  function baglantiTemizle(m) {
+    return String(m)
+      .replace(/\(?\s*https?:\/\/(?:www\.)?wa\.me\/\d+\s*\)?/gi, '')
+      .replace(/[:\-–—]\s*$/gm, '')
+      .replace(/\s{2,}/g, ' ');
+  }
+
+  /* Küçük bir markdown alt kümesi: **kalın**, satır başı, madde işareti.
+     Kalan http bağlantıları tıklanabilir hâle getirilir. */
   function bicimle(metin) {
     var t = kacir(metin)
+      .replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
+        '<a href="$2" target="_blank" rel="noopener">$1</a>')
+      .replace(/(^|[\s(])(https?:\/\/[^\s<)]+)/g,
+        '$1<a href="$2" target="_blank" rel="noopener">$2</a>')
       .replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>')
       .replace(/(^|\s)\*([^*\n]+)\*(?=\s|$|[.,!?])/g, '$1<i>$2</i>');
     var satirlar = t.split('\n');
@@ -60,7 +74,8 @@
 
   /* ÜRÜN: satırları arayüz içindir, metinden ayıklanır. */
   function urunSatirlariniAt(metin) {
-    return metin.replace(/^\s*ÜRÜN:\s*.+$/gm, '').replace(/\n{3,}/g, '\n\n').trim();
+    return baglantiTemizle(metin.replace(/^\s*ÜRÜN:\s*.+$/gm, ''))
+      .replace(/\n{3,}/g, '\n\n').trim();
   }
 
   function enAlta() { akis.scrollTop = akis.scrollHeight; }
@@ -192,9 +207,12 @@
                 k.innerHTML = urunKartlari(j.urunler);
                 kap.appendChild(k.firstChild);
               }
-              var e = document.createElement('div');
-              e.innerHTML = eylemSatiri(j.urunler, j.acil);
-              kap.appendChild(e.firstChild);
+              // düğme satırı yalnızca anlamlıysa: ürün var ya da sunucu istedi
+              if ((j.urunler && j.urunler.length) || j.whatsapp) {
+                var e = document.createElement('div');
+                e.innerHTML = eylemSatiri(j.urunler, j.acil);
+                kap.appendChild(e.firstChild);
+              }
               if (j.acil) balon.classList.add('acil');
               enAlta();
             }

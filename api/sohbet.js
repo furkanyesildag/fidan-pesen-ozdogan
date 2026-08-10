@@ -90,7 +90,7 @@ export default async function handler(req, res) {
   /* --- acil durum: modele hiç gitmeden sabit yanıt --- */
   if (guvenlik.acil) {
     gonder('parca', ACIL_YANIT);
-    gonder('bitti', { urunler: [], acil: true, whatsapp: 'https://wa.me/905336320313' });
+    gonder('bitti', { urunler: [], acil: true, whatsapp: true });
     res.end();
     await kaydet({ oturum, ip, mesajlar, yanit: ACIL_YANIT, acil: true, urunler: [] });
     return;
@@ -186,10 +186,16 @@ export default async function handler(req, res) {
     }
   }
 
+  /* WhatsApp düğmesi her mesajda değil, yalnızca anlamlı olduğunda:
+     ürün önerildiyse, yanıtın kendisi destek hattından söz ediyorsa ya da
+     hassas bir durum tespit edildiyse. Selamlaşmaya düğme koymak itici. */
+  const destektenSozEtti = /whatsapp|wa\.me|destek hatt|ekibimiz|533\s?632/i.test(tamYanit);
+  const waGoster = kartlar.length > 0 || destektenSozEtti || guvenlik.uyari.length > 0;
+
   gonder('bitti', {
     urunler: kartlar.slice(0, 3),
     uyari: guvenlik.uyari,
-    whatsapp: 'https://wa.me/905336320313',
+    whatsapp: waGoster,
   });
   res.end();
 
