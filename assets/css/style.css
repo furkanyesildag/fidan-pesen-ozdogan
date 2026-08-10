@@ -448,10 +448,14 @@ main { position: relative; z-index: 10; }
 }
 .dev-baslik .satir {
   display: block;
-  /* degradenin boyandığı alanı harfin mürekkebinden geniş tutar;
-     negatif margin yerleşimi bozmadan geri alır */
+  /* background-clip:text yalnızca kutunun içine boya basar. Üstte Ö/Ü'nün
+     noktaları, ALTTA ğ/g/y/ş'nin kuyrukları kutunun dışında kalıp kesiliyordu.
+     İki yana da pay verilip negatif margin ile yerleşim geri alınıyor.
+     Alt pay daha büyük: kuyruklar noktalardan daha derine iniyor. */
   padding-top: .08em;
   margin-top: -.08em;
+  padding-bottom: .2em;
+  margin-bottom: -.2em;
 }
 .dev-baslik .vurgu, .vurgu {
   background: linear-gradient(100deg, var(--aksan-ac), var(--aksan) 46%, var(--aksan-koy));
@@ -795,7 +799,8 @@ main { position: relative; z-index: 10; }
   font-size: clamp(30px, 4.2vw, 42px); line-height: 1;
   background: linear-gradient(100deg, var(--aksan-ac), var(--aksan) 55%, var(--aksan-koy));
   -webkit-background-clip: text; background-clip: text; color: transparent;
-  padding-top: .06em;
+  /* φ ve υ'nin kuyrukları kutunun altına taşıyor; pay verilip geri alınıyor */
+  padding-top: .06em; padding-bottom: .22em; margin-bottom: -.22em;
 }
 .kok-tepe i {
   display: block; margin-top: 8px; font-style: normal;
@@ -896,6 +901,7 @@ main { position: relative; z-index: 10; }
 .zaman-ic.vurgulu h3 {
   background: linear-gradient(100deg, var(--altin-ac), var(--altin));
   -webkit-background-clip: text; background-clip: text; color: transparent;
+  padding-bottom: .16em; margin-bottom: -.16em;
 }
 .etiketler { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
 .etiket {
@@ -1154,7 +1160,7 @@ main { position: relative; z-index: 10; }
 .bant-yazi b {
   font-family: var(--serif); font-weight: 400; font-style: italic;
   font-size: clamp(26px, 5vw, 52px); letter-spacing: -.02em;
-  padding-top: .08em;
+  padding-top: .08em; padding-bottom: .2em; margin-bottom: -.2em;
   background: linear-gradient(100deg, #f6e7bb, #d8b45f 55%, #b18f3f);
   -webkit-background-clip: text; background-clip: text; color: transparent;
 }
