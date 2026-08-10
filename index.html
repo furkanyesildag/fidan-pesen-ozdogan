@@ -33,7 +33,8 @@
 <meta name="twitter:description" content="Uzman Eczacı, fitoterapi yüksek lisansı, Geleneksel ve Tamamlayıcı Tıp bilim doktoru.">
 <meta name="twitter:image" content="https://fidan-pesen-ozdogan.vercel.app/assets/img/portre-atolye.jpg">
 
-<link rel="stylesheet" href="/assets/css/style.css?v=9">
+<link rel="stylesheet" href="/assets/css/style.css?v=10">
+<link rel="stylesheet" href="/assets/css/makale.css?v=10">
 <link rel="preload" as="image" href="/assets/img/portre-atolye.jpg">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
 
@@ -270,7 +271,6 @@
   <div class="kapak-izgara">
 
     <div class="kapak-metin">
-      <p class="ust-etiket sol-etiket reveal">Türkiye'nin ilk Geleneksel ve Tamamlayıcı Tıp Bilim Doktoru</p>
       <h1 class="dev-baslik reveal" data-gecikme="1">
         <span class="satir">Fidan Pesen</span>
         <span class="satir vurgu">Özdoğan</span>
@@ -279,13 +279,8 @@
         Bir eczacının, dört unsurun ve asırlık bir tıp geleneğinin kesiştiği yerde
         kurduğu ömür. <em>Ateş, hava, su ve toprak:</em> bedeni okumanın en eski dili.
       </p>
-      <div class="kapak-rozetler reveal" data-gecikme="3">
-        <span>Hacettepe Eczacılık</span><i></i>
-        <span>Gazi · Fitoterapi</span><i></i>
-        <span>Doktora · 2023</span>
-      </div>
       <div class="kapak-eylem reveal" data-gecikme="4">
-        <a class="dugme birincil" href="/asistan">Asistana sor</a>
+        <a class="dugme birincil" href="/asistan" data-asistan-ac>Asistana sor</a>
         <a class="dugme" href="#yolculuk">Hikâyeyi oku</a>
       </div>
     </div>
@@ -795,9 +790,49 @@
   </div>
 </footer>
 
-<script src="/assets/js/scene.js?v=9"></script>
-<script src="/assets/js/main.js?v=9"></script>
-<script src="/assets/js/asistan-baloncuk.js?v=9" defer></script>
-<script src="/assets/js/tema.js?v=9"></script>
+<!-- ═══════════════════════════════════ ASİSTAN KATMANI (tam ekran sohbet) ══ -->
+<div class="asistan-katman" id="asistanKatman" hidden aria-hidden="true">
+  <div class="ak-perde" data-asistan-kapat></div>
+  <div class="ak-panel" role="dialog" aria-modal="true" aria-label="Fidan'ın Asistanı">
+    <div class="sohbet-kutu">
+      <div class="sohbet-basi">
+        <img src="/assets/img/asistan-avatar.jpg" alt="" width="44" height="44" loading="lazy" decoding="async">
+        <div>
+          <b>Fidan&rsquo;ın Asistanı</b>
+          <i>Dr. Ecz. Fidan Pesen Özdoğan Hocamızın asistanı</i>
+        </div>
+        <span class="sohbet-canli" title="Çevrim içi"></span>
+        <button class="ak-kapat" type="button" data-asistan-kapat aria-label="Kapat">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+
+      <div class="sohbet-akis" id="sohbetAkis" role="log" aria-live="polite" aria-label="Sohbet"></div>
+
+      <div class="sohbet-cipler" id="sohbetCipler">
+        <button type="button" data-ornek="Saçlarım çok döküyor, ne yapmalıyım?">Saç dökülmesi</button>
+        <button type="button" data-ornek="Yüzümde koyu lekeler var, uzun süredir geçmiyor.">Cilt lekesi</button>
+        <button type="button" data-ornek="Akne sorunum var, cildim de yağlı.">Akne</button>
+        <button type="button" data-ornek="Göz altı morluğum ve torbalanma var.">Göz altı</button>
+        <button type="button" data-ornek="Sürekli yorgun hissediyorum.">Yorgunluk</button>
+      </div>
+
+      <form class="sohbet-form" id="sohbetForm" autocomplete="off">
+        <label class="gizli-metin" for="sohbetGirdi">Mesajınız</label>
+        <textarea id="sohbetGirdi" rows="1" maxlength="1500" placeholder="Durumunuzu anlatın..."></textarea>
+        <button class="sohbet-gonder" id="sohbetGonder" type="submit" aria-label="Gönder">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="/assets/js/scene.js?v=10"></script>
+<script src="/assets/js/main.js?v=10"></script>
+<script src="/assets/js/asistan.js?v=10"></script>
+<script src="/assets/js/asistan-baloncuk.js?v=10" defer></script>
+<script src="/assets/js/tema.js?v=10"></script>
+
 </body>
 </html>

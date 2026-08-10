@@ -283,4 +283,45 @@
 
   var ilk = new URLSearchParams(location.search).get('s');
   if (ilk) setTimeout(function () { gonder(ilk.slice(0, 400)); }, 400);
+
+  /* ------------------------------------------------- tam ekran katman
+     Ana sayfada sohbet ayrı bir sayfaya gitmeden, ekranı kaplayan bir
+     katmanda açılır. Katman yoksa (asistan sayfasının kendisi) bu blok
+     hiçbir şey yapmaz ve bağlantılar normal çalışır. */
+  var katman = document.getElementById('asistanKatman');
+  if (!katman) return;
+
+  var sonOdak = null;
+
+  function katmanAc(e) {
+    if (e) e.preventDefault();
+    sonOdak = document.activeElement;
+    katman.hidden = false;
+    katman.setAttribute('aria-hidden', 'false');
+    document.documentElement.classList.add('katman-acik');
+    requestAnimationFrame(function () {
+      katman.classList.add('gorunur');
+      enAlta();
+      if (!window.matchMedia('(hover: none)').matches) alan.focus();
+    });
+  }
+
+  function katmanKapat() {
+    katman.classList.remove('gorunur');
+    katman.setAttribute('aria-hidden', 'true');
+    document.documentElement.classList.remove('katman-acik');
+    setTimeout(function () { katman.hidden = true; }, 260);
+    if (sonOdak && sonOdak.focus) sonOdak.focus();
+  }
+
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('[data-asistan-ac]')) { katmanAc(e); return; }
+    if (e.target.closest('[data-asistan-kapat]')) { e.preventDefault(); katmanKapat(); }
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !katman.hidden) katmanKapat();
+  });
+
+  window.asistanKatmaniAc = katmanAc;
 })();

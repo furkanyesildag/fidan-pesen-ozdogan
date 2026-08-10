@@ -23,6 +23,15 @@
     '</span>' +
     '<button class="bal-kapat" type="button" aria-label="Baloncuğu kapat">×</button>';
 
+  /* Sayfada tam ekran katman varsa baloncuk oraya yönlendirmez, katmanı açar. */
+  a.addEventListener('click', function (e) {
+    if (e.target.closest('.bal-kapat')) return;
+    if (document.getElementById('asistanKatman') && window.asistanKatmaniAc) {
+      e.preventDefault();
+      window.asistanKatmaniAc();
+    }
+  });
+
   a.querySelector('.bal-kapat').addEventListener('click', function (e) {
     e.preventDefault();
     e.stopPropagation();
