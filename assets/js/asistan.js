@@ -121,7 +121,7 @@
       '<svg viewBox="0 0 24 24" aria-hidden="true">' +
       '<path d="M20.5 11.6a8.5 8.5 0 0 1-12.6 7.5L3.5 20.5l1.4-4.3a8.5 8.5 0 1 1 15.6-4.6Z"/>' +
       '<path d="M8.9 8.4c.3-.6.6-.5.9-.5h.7c.2 0 .5 0 .7.5l.8 1.9c.1.3 0 .5-.1.7l-.4.5c-.1.2-.3.3-.1.6.5.9 1.4 1.8 2.4 2.3.3.2.5.1.7-.1l.5-.5c.2-.2.4-.2.7-.1l1.7.9c.4.2.5.4.5.6 0 .5-.3 1.5-1.4 1.7-1 .2-2.5-.2-4.4-1.5-1.9-1.3-2.9-3-3.2-3.9-.3-.9-.2-2 .1-2.6Z" fill="currentColor" stroke="none"/></svg>' +
-      (acil ? 'Destek hattı' : 'WhatsApp\u2019tan yaz') + '</a>';
+      (acil ? 'Hocamızın ekibi' : 'Hocamızın ekibine yaz') + '</a>';
     h += '</div>';
     return h;
   }
@@ -275,7 +275,7 @@
 
   /* açılış mesajı */
   balonEkle('asistan',
-    '<p>Merhaba, hoş geldiniz. Ben Fidan Hanım\u2019ın asistanıyım.</p>' +
+    '<p>Merhaba, hoş geldiniz. Ben Dr. Ecz. Fidan Pesen Özdoğan Hocamızın asistanıyım.</p>' +
     '<p>Size nasıl yardımcı olabilirim? Cildinizle, saçınızla ya da genel ' +
     'olarak kendinizi nasıl hissettiğinizle ilgili ne varsa rahatça anlatın. ' +
     'Acele etmeyin, önce sizi doğru anlamak istiyorum.</p>');
