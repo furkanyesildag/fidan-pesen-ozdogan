@@ -356,6 +356,7 @@ ${JSON.stringify(ld, null, 2)}
   <nav class="menu" id="menu">
     <a href="/fitoterapi">Fitoterapi</a>
     <a href="/cilt-bakimi">Cilt Bakımı</a>
+    <a href="/sac-bakimi">Saç Bakımı</a>
     <a href="/gida-takviyeleri">Gıda Takviyeleri</a>
     <a href="/geleneksel-tip">Geleneksel Tıp</a>
     <a href="/videolar">Videolar</a>
@@ -448,6 +449,8 @@ ${JSON.stringify(ld, null, 2)}
         <a href="/">Özgeçmiş</a>
         <a href="/fitoterapi">Fitoterapi</a>
         <a href="/cilt-bakimi">Cilt Bakımı</a>
+        <a href="/sac-bakimi">Saç Bakımı</a>
+        <a href="/ucucu-yaglar">Uçucu Yağlar</a>
         <a href="/gida-takviyeleri">Gıda Takviyeleri</a>
         <a href="/geleneksel-tip">Geleneksel Tıp</a>
         <a href="/videolar">Videolar</a>

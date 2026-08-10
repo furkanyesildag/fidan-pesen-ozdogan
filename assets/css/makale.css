@@ -473,7 +473,11 @@
 
 /* ------------------------------------------------------------------ akış */
 .sohbet-akis {
-  height: min(58vh, 520px); min-height: 340px;
+  /* dvh: mobilde klavye açılınca görünür alan küçülür, kutu da onunla
+     birlikte küçülsün ki giriş alanı klavyenin altında kalmasın. */
+  height: min(58vh, 520px);
+  height: min(58dvh, 520px);
+  min-height: 300px;
   overflow-y: auto; overscroll-behavior: contain;
   padding: 22px 20px 8px;
   display: flex; flex-direction: column; gap: 16px;
@@ -645,19 +649,42 @@
 .asistan-ikili > div:last-child li::before { background: #ffb37a; }
 
 @media (max-width: 620px) {
+  /* Sohbet mobilde sayfanın merkezi: başlık alanı kısalır, kutu ekranı
+     doldurur, giriş alanı alta yapışır. */
+  .makale-govde .makale-basi { padding: 96px 16px 22px; }
+  .makale-govde .makale-basi h1 { font-size: clamp(28px, 8vw, 34px); margin-bottom: 12px; }
+  .makale-govde .makale-ozet { font-size: 14.5px; line-height: 1.6; }
+  .asistan-kap { padding: 18px 12px 48px; }
+
   .sohbet-kutu, .asistan-ikili > div {
     backdrop-filter: none; -webkit-backdrop-filter: none; background: #0a1610;
   }
-  .sohbet-akis { height: min(62vh, 460px); padding: 18px 14px 6px; gap: 13px; }
-  .balon { max-width: 94%; }
-  .balon-govde { font-size: 15px; padding: 12px 15px; }
-  .sohbet-basi { padding: 13px 15px; }
-  .sohbet-form { padding: 12px; }
-  .sohbet-cipler { padding: 10px 14px 2px; }
-  .sohbet-kvkk { padding: 0 15px 15px; }
-  .sohbet-urun { grid-template-columns: 46px 1fr auto; gap: 10px; }
+  .sohbet-kutu { border-radius: 18px; }
+  .sohbet-akis {
+    height: min(56dvh, 440px); min-height: 260px;
+    padding: 16px 13px 6px; gap: 12px;
+  }
+  .balon { max-width: 95%; }
+  .balon-ad { font-size: 9.5px; margin-bottom: 5px; }
+  .balon-govde { font-size: 15px; padding: 12px 14px; line-height: 1.58; }
+  .sohbet-basi { padding: 12px 14px; gap: 11px; }
+  .sohbet-basi img { width: 38px; height: 38px; }
+  .sohbet-basi b { font-size: 15.5px; }
+  .sohbet-basi i { font-size: 10.5px; }
+
+  .sohbet-cipler { padding: 10px 12px 2px; gap: 6px; }
+  .sohbet-cipler button { font-size: 12px; padding: 6px 11px; }
+
+  .sohbet-form { padding: 10px 10px 12px; gap: 8px; margin-top: 8px; }
+  .sohbet-form textarea { min-height: 44px; padding: 11px 14px; border-radius: 12px; }
+  .sohbet-gonder { width: 44px; height: 44px; }
+  .sohbet-kvkk { padding: 0 14px 14px; font-size: 10.5px; }
+
+  .sohbet-urun { grid-template-columns: 46px 1fr auto; gap: 10px; padding: 9px 12px 9px 9px; }
   .sohbet-urun img, .sohbet-urun-bos { width: 46px; height: 46px; }
   .sohbet-urun-metin b { font-size: 14px; }
+  .sohbet-urun-metin i { font-size: 9px; }
+  .sohbet-urunler { margin-top: 12px; padding-top: 12px; }
 }
 
 /* eylem satırı: her asistan mesajının altında ürün ve WhatsApp bağlantısı */

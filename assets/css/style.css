@@ -245,6 +245,8 @@ main { position: relative; z-index: 10; }
   margin: clamp(56px, 8vw, 84px) 0 26px;
 }
 
+.kaydir-ipucu { display: none; }
+
 /* -------------------------------------------------------- 7. GİRİŞ ANİMASYON */
 .reveal {
   opacity: 0;
@@ -1156,9 +1158,39 @@ main { position: relative; z-index: 10; }
   .bolum-basi h2 { font-size: clamp(28px, 8vw, 36px); }
   .unsur-ust, .medya-tur, .akademi-yil, .kunye-dl dt, .numara { letter-spacing: .16em; }
 
-  /* ---- mizaçlar yan yana: alt alta dört uzun kart yerine 2×2 ızgara ----
-     Toplam kaydırma yarıya iner ve dört mizaç aynı bakışta karşılaştırılır. */
-  .unsur-izgara { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  /* ---- yatay kaydırılabilir şeritler ----
+     Dar ekranda kartları alt alta yığmak yerine yana kaydırıyoruz: sayfa
+     kısalıyor, kenarda görünen sonraki kartın ucu kaydırılabildiğini
+     anlatıyor, tutunma (scroll-snap) her kartı yerine oturtuyor. */
+  .unsur-izgara, .medya-izgara {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: none;
+    grid-auto-columns: 78%;
+    gap: 10px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    padding: 2px 2px 14px;
+    margin-inline: calc(clamp(18px, 4vw, 46px) * -1);
+    padding-inline: clamp(18px, 4vw, 46px);
+    scrollbar-width: none;
+  }
+  .unsur-izgara::-webkit-scrollbar, .medya-izgara::-webkit-scrollbar { display: none; }
+  .unsur-izgara > *, .medya-izgara > * { scroll-snap-align: center; }
+  .medya-kart.genis { grid-column: auto; }
+
+  /* kaydırma ipucu */
+  .kaydir-ipucu {
+    display: flex; align-items: center; gap: 8px;
+    margin: 0 0 12px;
+    font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--sis-2);
+  }
+  .kaydir-ipucu::after {
+    content: ""; width: 24px; height: 1px;
+    background: linear-gradient(90deg, var(--aksan), transparent);
+  }
   .unsur-kart .kart-yuz { padding: 18px 15px 17px; border-radius: 14px; }
   .unsur-simge { width: 25px; height: 25px; margin-bottom: 12px; }
   .unsur-ust { font-size: 9px; letter-spacing: .13em; margin-bottom: 3px; }

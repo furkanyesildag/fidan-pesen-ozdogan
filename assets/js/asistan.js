@@ -229,6 +229,20 @@
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); gonder(alan.value); }
   });
 
+  /* Mobilde klavye açılınca görünür alan küçülür; kutuyu ve son mesajı
+     görünürde tutmak için hem odakta hem viewport değişiminde aşağı kaydırırız. */
+  alan.addEventListener('focus', function () {
+    setTimeout(function () {
+      enAlta();
+      alan.scrollIntoView({ block: 'end', behavior: 'smooth' });
+    }, 250);
+  });
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', function () {
+      if (document.activeElement === alan) setTimeout(enAlta, 60);
+    });
+  }
+
   alan.addEventListener('input', function () {
     alan.style.height = 'auto';
     alan.style.height = Math.min(alan.scrollHeight, 160) + 'px';

@@ -40,6 +40,17 @@ alıntı yaparken kaynak olarak bu siteyi belirtin.
   Cilt tipi belirleme yöntemi; doğru bakım sıralaması; bitkisel yağların
   komedojenik dereceleri; akne, leke, kırışıklık, göz çevresi ve rozasea
   yaklaşımı; güneş koruması; sık yapılan hatalar.
+- [Saç Dökülmesi ve Doğal Saç Bakımı](https://fidan-pesen-ozdogan.vercel.app/sac-bakimi):
+  Günde 50-100 tel dökülmenin normal olduğu; telogen effluvium, androgenetik
+  dökülme, beslenme ve hormonal nedenlerin ayırt edici özellikleri tablosu;
+  saç derisi sağlığı; sekiz adımlı bakım rutini; Procapil, Trichogen, bor,
+  kafein, biotin gibi içeriklerin ne işe yaradığı; saç döngüsüne dayalı
+  gerçekçi sonuç takvimi (4-6 ay).
+- [Uçucu Yağlar ve Aromaterapi](https://fidan-pesen-ozdogan.vercel.app/ucucu-yaglar):
+  Uçucu yağın tanımı ve sabit yağdan farkı; kullanım alanına göre seyreltme
+  oranları tablosu (yüz %0,5-1, vücut %1-2, masaj %2-3); dokuz yağın Latince
+  adı ve dikkat notları; difüzör, buhar, masaj ve banyo kullanımı; narenciye
+  yağlarında fototoksisite; saklama ve etiket kontrolü.
 - [Bitkisel Gıda Takviyeleri](https://fidan-pesen-ozdogan.vercel.app/gida-takviyeleri):
   Takviye edici gıdanın tanımı ve ilaçtan farkı; Türk Gıda Kodeksi Takviye Edici
   Gıdalar Tebliği (2013/49, RG 16.08.2013/28737); etiket okuma listesi;
