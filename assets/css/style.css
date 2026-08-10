@@ -264,21 +264,25 @@ a { color: inherit; text-decoration: none; }
   padding-top: 12px; padding-bottom: 12px;
 }
 
-.marka { display: flex; align-items: center; gap: 12px; }
+.marka { display: flex; align-items: center; gap: 13px; }
+/* Amblem bir fidan: adın kendisi. Halkası ve dört unsuru işaret eden dört
+   noktası SVG'nin içinde olduğu için CSS'te ayrıca çerçeve çizilmez. */
 .marka-mim {
-  width: 34px; height: 34px; flex: none;
+  width: 38px; height: 38px; flex: none;
   display: grid; place-items: center;
-  border: 1px solid var(--cizgi-kuv);
+  color: var(--aksan);
   border-radius: 50%;
-  transition: border-color .6s, box-shadow .6s;
+  transition: color .8s, transform .5s var(--yay), filter .5s;
 }
-.marka:hover .marka-mim { box-shadow: 0 0 22px rgba(var(--aksan-rgb), .35); }
-.marka-mim svg { width: 20px; height: 20px; fill: none; stroke: var(--aksan); stroke-width: 1.6; stroke-linecap: round; transition: stroke .8s; }
-.marka-yazi { display: flex; flex-direction: column; line-height: 1.2; }
-.marka-yazi b { font-family: var(--serif); font-size: 16px; letter-spacing: .01em; font-weight: 600; }
-.marka-yazi i {
-  font-style: normal; font-size: 10.5px; letter-spacing: .22em;
-  text-transform: uppercase; color: var(--sis-2);
+.marka:hover .marka-mim {
+  transform: rotate(-4deg) scale(1.05);
+  filter: drop-shadow(0 0 12px rgba(var(--aksan-rgb), .45));
+}
+.marka-mim svg { width: 100%; height: 100%; display: block; }
+.marka-yazi { display: block; line-height: 1.15; }
+.marka-yazi b {
+  font-family: var(--serif); font-size: 17.5px;
+  letter-spacing: -.005em; font-weight: 500;
 }
 
 .menu { display: flex; gap: 2px; margin-left: auto; }
