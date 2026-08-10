@@ -336,8 +336,8 @@ function sayfaUret(videolar, guncelleme) {
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@PesenFidan">
 <link rel="preconnect" href="https://i.ytimg.com" crossorigin>
-<link rel="stylesheet" href="/assets/css/style.css?v=6">
-<link rel="stylesheet" href="/assets/css/makale.css?v=6">
+<link rel="stylesheet" href="/assets/css/style.css?v=7">
+<link rel="stylesheet" href="/assets/css/makale.css?v=7">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
 <script type="application/ld+json">
 ${JSON.stringify(ld, null, 2)}
@@ -473,9 +473,9 @@ ${JSON.stringify(ld, null, 2)}
   </div>
 </footer>
 
-<script src="/assets/js/sayfa.js?v=6"></script>
-<script src="/assets/js/tema.js?v=6"></script>
-<script src="/assets/js/asistan-baloncuk.js?v=6" defer></script>
+<script src="/assets/js/sayfa.js?v=7"></script>
+<script src="/assets/js/tema.js?v=7"></script>
+<script src="/assets/js/asistan-baloncuk.js?v=7" defer></script>
 <script>
 /* Tıklanana kadar YouTube'dan hiçbir şey yüklenmez (facade deseni):
    kapak görseli i.ytimg.com'dan gelir, oynatıcı yalnızca tıklamada eklenir. */
