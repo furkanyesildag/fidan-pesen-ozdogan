@@ -189,9 +189,21 @@ YÖNLENDİRME KURALI (ÇOK ÖNEMLİ)
   değerlendirme isteyen HER konuda bu hatta yönlendir.
 - Sipariş, kargo, iade, stok, kampanya, toplu alım, kullanım süresi, birlikte
   kullanım gibi tüm sorularda da bu hatta yönlendir.
-- Eczane, hastane, doktor, dermatolog, başka bir web sitesi veya başka bir
-  marka ÖNERME. "Bir uzmana görünün", "doktorunuza sorun", "eczanenizden
-  alabilirsiniz" gibi cümleler KURMA. Bunun yerine ekibimize yönlendir.
+- DIŞARIYA HİÇBİR YÖNLENDİRME YAPMA. Aşağıdaki kelime ve kalıpların hiçbirini
+  cümlelerinde kullanma:
+  doktor · hekim · eczane · eczacı · dermatolog · uzman · "uzmana görünün" ·
+  "sağlık profesyoneli" · "sağlık kuruluşu" · hastane · poliklinik · muayene ·
+  "kontrole gidin" · "tahlil yaptırın" · "bir profesyonele danışın"
+  Başka marka, başka web sitesi veya katalog dışı ürün de önerme.
+- Böyle bir cümle kuracak olursan onun yerine ŞUNU yaz: "Bu konuda Hocamızın
+  ekibi size özel olarak yardımcı olabilir; WhatsApp hattımızdan yazmanız
+  yeterli."
+- Örnek. YANLIŞ: "Baş ağrınız için bir sağlık profesyoneline danışmanız en
+  doğrusu olur." DOĞRU: "Bu şikâyeti kişiye göre değerlendirmek gerekiyor;
+  Hocamızın ekibi sizi dinleyip en uygun desteği belirleyecektir. WhatsApp
+  hattımızdan yazabilirsiniz."
+- Katalogda o şikâyete uygun ürün yoksa ürün uydurma; ama kimseyi dışarı da
+  gönderme. Durumu kısaca söyle ve Hocamızın ekibine yönlendir.
 - Tek istisna aşağıdaki ACİL DURUM maddesidir.
 - Yönlendirirken kuru olma; Hocamızın ekibinin kişiye özel yardım edeceğini,
   kullanım boyunca yanında olacağını sıcak bir dille söyle.
@@ -240,14 +252,24 @@ DESTEK BİLGİSİ (gerçek bilgiler, uydurma)
 `.trim();
 
 export function istemKur(urunler, uyarilar) {
+  /* En alakalı ilk dörde açıklamanın TAMAMI verilir; asistanın içerik listesini
+     ve kullanım şeklini eksiksiz aktarabilmesi için gerekli. Geri kalanlar
+     yalnızca alternatif olarak dursun diye kısa tutulur. */
   const katalog = urunler.length
-    ? urunler.map((u) => [
-        `• ${u.ad}`,
-        `  Kategori: ${u.kategori}`,
-        u.fiyat ? `  Fiyat: ${u.fiyat.toLocaleString('tr-TR')} TL` : null,
-        u.stokta ? null : '  DURUM: stokta yok, önerme',
-        u.aciklama ? `  Bilgi: ${u.aciklama.slice(0, 700)}` : null,
-      ].filter(Boolean).join('\n')).join('\n\n')
+    ? urunler.map((u, i) => {
+        const tam = i < 4;
+        const bilgi = u.aciklama
+          ? (tam ? u.aciklama.slice(0, 2600)
+                 : u.aciklama.slice(0, 420) + (u.aciklama.length > 420 ? '…' : ''))
+          : null;
+        return [
+          `• ${u.ad}`,
+          `  Kategori: ${u.kategori}`,
+          u.fiyat ? `  Fiyat: ${u.fiyat.toLocaleString('tr-TR')} TL` : null,
+          u.stokta ? null : '  DURUM: stokta yok, önerme',
+          bilgi ? `  Bilgi: ${bilgi}` : null,
+        ].filter(Boolean).join('\n');
+      }).join('\n\n')
     : '(Bu mesaj için eşleşen ürün bulunamadı. Ürün önermek yerine soru sorarak ' +
       'kişiyi daha iyi anlamaya çalış veya destek hattına yönlendir.)';
 
@@ -257,7 +279,7 @@ export function istemKur(urunler, uyarilar) {
       'yapılması gerektiğini belirterek başla, sonra Dr. Ecz. Fidan Pesen ' +
       'Özdoğan Hocamızın ekibinin WhatsApp hattına yönlendir ve ekibin ' +
       'yardımcı olacağını söyle. ' +
-      'Doktora veya eczaneye yönlendirme yapma.'
+      'Doktor, eczane veya başka bir yere yönlendirme yapma; tek adres Hocamızın ekibi.'
     : '';
 
   return `${KIMLIK}\n\n${KURALLAR}\n\nKATALOG (bu konuşma için seçilmiş ürünler):\n\n${katalog}\n\nTÜM KATEGORİLER: ${KATEGORILER.join(', ')}${uyariBlok}`;

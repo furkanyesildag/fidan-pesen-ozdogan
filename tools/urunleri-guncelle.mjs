@@ -68,7 +68,9 @@ function anahtarUret(...metinler) {
 function aciklamaTemizle(ham, ad) {
   let a = String(ham ?? '').replace(/\s+/g, ' ').trim();
   if (a.toLowerCase().startsWith(ad.toLowerCase())) a = a.slice(ad.length).trim();
-  return a.replace(/^[-–—:.,\s]+/, '').slice(0, 900);
+  // Kırpma YOK: açıklama eksiksiz saklanır. Asistanın doğru bilgi verebilmesi
+  // için içerik listesi ve kullanım şekli sonuna kadar gerekli.
+  return a.replace(/^[-–—:.,\s]+/, '');
 }
 
 function ldCikar(html) {

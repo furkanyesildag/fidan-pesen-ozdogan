@@ -1,6 +1,6 @@
 {
   "kaynak": "https://www.dogalmarkam.com/",
-  "guncelleme": "2026-08-09",
+  "guncelleme": "2026-08-10",
   "not": "Ürün açıklamaları bu dosyada bilinçli olarak yer almaz.",
   "kategoriler": [
     "Bitkisel Yağlar · Sabit Yağlar",
@@ -1746,7 +1746,7 @@
       "ad": "Doğalmarkam Nemlendirici Krem 100 ml",
       "kategori": "Diğer",
       "bag": "https://www.dogalmarkam.com/dogalmarkam-nemlendirici-krem-100-ml",
-      "gorsel": "https://www.dogalmarkam.com/dogalmarkam-nemlendirici-krem-100-ml-dogal-markam-6209-48-O.jpg",
+      "gorsel": "https://www.dogalmarkam.com/dogalmarkam-nemlendirici-krem-100-ml-dogal-markam-6512-48-O.jpg",
       "fiyat": 550,
       "stokta": true,
       "anahtar": [
@@ -2342,7 +2342,7 @@
       "ad": "Doğalmarkam Vitanem's Bomb ve Doğalmarkam Güneş Kremi İkili Set",
       "kategori": "Cilt Bakımı · Kırışıklık Karşıtı",
       "bag": "https://www.dogalmarkam.com/dogalmarkam-vitanems-bomb-ve-dogalmarkam-gunes-kremi-ikili-set",
-      "gorsel": "https://www.dogalmarkam.com/dogalmarkam-vitanems-bomb-ve-dogalmarkam-gunes-kremi-ikili-set-kirisiklik-karsiti-dogal-markam-6152-49-O.jpg",
+      "gorsel": "https://www.dogalmarkam.com/dogalmarkam-vitanems-bomb-ve-dogalmarkam-gunes-kremi-ikili-set-kirisiklik-karsiti-dogal-markam-6524-49-O.jpg",
       "fiyat": 1655,
       "stokta": true,
       "anahtar": [
@@ -2462,7 +2462,7 @@
       "ad": "Doğalmarkam Gözaltı Mor Halka & Torba Görünüm Düzeltici Krem ve Doğalmarkam Göz Çevresi ve Yüz Kırışıklığı Bakım Serumu İkili Set",
       "kategori": "Cilt Bakımı · Kırışıklık Karşıtı",
       "bag": "https://www.dogalmarkam.com/dogalmarkam-gozalti-mor-halka-torba-gorunum-duzeltici-krem-ve-dogalmarkam-goz-cevresi-ve-yuz-kirisikligi-bakim-serumu-ikili-set",
-      "gorsel": "https://www.dogalmarkam.com/dogalmarkam-gozalti-mor-halka-torba-gorunum-duzeltici-krem-ve-dogalmarkam-goz-cevresi-ve-yuz-kirisikligi-bakim-serumu-ikili-set-kirisiklik-karsiti-dogal-markam-6211-49-O.jpg",
+      "gorsel": "https://www.dogalmarkam.com/dogalmarkam-gozalti-mor-halka-torba-gorunum-duzeltici-krem-ve-dogalmarkam-goz-cevresi-ve-yuz-kirisikligi-bakim-serumu-ikili-set-kirisiklik-karsiti-dogal-markam-6519-49-O.jpg",
       "fiyat": 2700,
       "stokta": true,
       "anahtar": [
@@ -2729,7 +2729,7 @@
       "ad": "Doğalmarkam Gözenek Sıkılaştırıcı Krem 50 ml , Doğalmarkam Granüllü Yüz Peeling 150 ml  2'Li Set",
       "kategori": "Cilt Bakımı · Gözenekli Ciltler",
       "bag": "https://www.dogalmarkam.com/gozenek-sikilastirici-krem-granullu-yuz-peeling-2li-set",
-      "gorsel": "https://www.dogalmarkam.com/gozenek-sikilastirici-krem-granullu-yuz-peeling-2li-set-gozenekli-ciltler-dogal-markam-6357-49-O.jpg",
+      "gorsel": "https://www.dogalmarkam.com/gozenek-sikilastirici-krem-granullu-yuz-peeling-2li-set-gozenekli-ciltler-dogal-markam-6516-49-O.jpg",
       "fiyat": 1665,
       "stokta": true,
       "anahtar": [
@@ -2781,15 +2781,6 @@
         "bakimi",
         "gozenekli",
         "ciltler",
-        "yuzde",
-        "meydana",
-        "gelen",
-        "gorunumunun",
-        "duzeltilmesi",
-        "sikilasmasina",
-        "yonelik",
-        "gelistirilmistir",
-        "ingredients",
         "icindekiler",
         "aqua",
         "water",
@@ -2802,14 +2793,23 @@
         "propylene",
         "glycol",
         "arnica",
-        "montana"
+        "montana",
+        "flower",
+        "camellia",
+        "sinensis",
+        "leaf",
+        "glyceryl",
+        "stearate",
+        "stearyl",
+        "alcohol",
+        "niacinamide"
       ]
     },
     {
       "ad": "Doğalmarkam Granüllü Yüz Peeling (150ML)",
       "kategori": "Cilt Bakımı · Gözenekli Ciltler",
       "bag": "https://www.dogalmarkam.com/granullu-yuz-peeling",
-      "gorsel": "https://www.dogalmarkam.com/granullu-yuz-peeling-gozenekli-ciltler-dogal-markam-6506-49-O.jpg",
+      "gorsel": "https://www.dogalmarkam.com/granullu-yuz-peeling-gozenekli-ciltler-dogal-markam-6511-49-O.jpg",
       "fiyat": 650,
       "stokta": true,
       "anahtar": [
@@ -4381,7 +4381,7 @@
       "ad": "Doğal Markam Göz Çevresi Komple Işık Dolgusu Seti",
       "kategori": "Cilt Bakımı · Göz Çevresi Kırışıklık",
       "bag": "https://www.dogalmarkam.com/dogal-markam-goz-cevresi-komple-isik-dolgusu-seti",
-      "gorsel": "https://www.dogalmarkam.com/dogal-markam-goz-cevresi-komple-isik-dolgusu-seti-goz-cevresi-kirisiklik-dogal-markam-6354-50-O.jpg",
+      "gorsel": "https://www.dogalmarkam.com/dogal-markam-goz-cevresi-komple-isik-dolgusu-seti-goz-cevresi-kirisiklik-dogal-markam-6520-50-O.jpg",
       "fiyat": 3590,
       "stokta": true,
       "anahtar": [
