@@ -50,7 +50,7 @@
 }
 .makale-kimlik img {
   width: 40px; height: 40px; border-radius: 50%;
-  object-fit: cover; object-position: 66% 22%;
+  object-fit: cover; object-position: center 10%;
   border: 1px solid var(--cizgi-kuv);
 }
 .makale-kimlik b { color: var(--ink-2); font-weight: 600; }
@@ -227,7 +227,7 @@
 }
 .yazar-kart img {
   width: 88px; height: 88px; border-radius: 14px;
-  object-fit: cover; object-position: 66% 20%;
+  object-fit: cover; object-position: center 12%;
 }
 .yazar-kart h2 {
   font-family: var(--serif); font-size: 19px; font-weight: 500;
