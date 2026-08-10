@@ -174,8 +174,9 @@ export default async function handler(req, res) {
     );
   }
 
+  const govdeMetni = sade(tamYanit.replace(/^\s*ÜRÜN:.*$/gm, ''));
+
   if (!kartlar.length) {
-    const govdeMetni = sade(tamYanit.replace(/^\s*ÜRÜN:.*$/gm, ''));
     for (const u of secilen) {
       const n = sade(u.ad);
       // "Doğalmarkam" ön ekini atınca kalan ayırt edici kısım da denenir
@@ -184,6 +185,17 @@ export default async function handler(req, res) {
           (kisa.length > 12 && govdeMetni.includes(kisa))) ekle(u);
       if (kartlar.length >= 3) break;
     }
+  }
+
+  /* SON EMNİYET AĞI
+     Model bazen ürünü adını vermeden anlatıyor ("öne çıkan bir ürünümüz var").
+     O zaman ne ÜRÜN: satırı ne de ad eşleşmesi oluyor, kullanıcı kart göremeyip
+     "ürün nerede" diye sormak zorunda kalıyor. Yanıt açıkça öneri dilindeyse ve
+     elde alakalı bir aday varsa, en iyi adayın kartı yine de gösterilir. */
+  if (!kartlar.length && secilen.length) {
+    const oneriDili = /(oneri|onerebilir|onerir|urunumuz|urunu|urun|kullanabilir|tuketebilir|hazirlanmis|iceriginde|formul)/
+      .test(govdeMetni);
+    if (oneriDili) ekle(secilen[0]);
   }
 
   /* WhatsApp düğmesi her mesajda değil, yalnızca anlamlı olduğunda:
