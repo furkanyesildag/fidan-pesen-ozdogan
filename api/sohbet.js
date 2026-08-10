@@ -11,7 +11,7 @@
  * istemciye aktarılır → konuşma kaydedilir.
  * ---------------------------------------------------------------------------
  */
-import { urunGetir, guvenlikTara, istemKur, sade, URUNLER } from './_istem.mjs';
+import { urunGetirPuanli, guvenlikTara, istemKur, sade, URUNLER } from './_istem.mjs';
 import { kaydet } from './_kayit.mjs';
 
 const API = 'https://api.deepseek.com/chat/completions';
@@ -97,7 +97,8 @@ export default async function handler(req, res) {
   }
 
   /* --- ürün getirme: son mesaj ağırlıklı, geçmiş destekleyici --- */
-  const secilen = urunGetir(`${sonMesaj} ${sonMesaj} ${tumMetin}`, 10);
+  const puanli = urunGetirPuanli(`${sonMesaj} ${sonMesaj} ${tumMetin}`, 10);
+  const secilen = puanli.map((x) => x.u);
   const sistem = istemKur(secilen, guvenlik.uyari);
 
   let tamYanit = '';
@@ -188,14 +189,25 @@ export default async function handler(req, res) {
   }
 
   /* SON EMNİYET AĞI
-     Model bazen ürünü adını vermeden anlatıyor ("öne çıkan bir ürünümüz var").
-     O zaman ne ÜRÜN: satırı ne de ad eşleşmesi oluyor, kullanıcı kart göremeyip
-     "ürün nerede" diye sormak zorunda kalıyor. Yanıt açıkça öneri dilindeyse ve
-     elde alakalı bir aday varsa, en iyi adayın kartı yine de gösterilir. */
-  if (!kartlar.length && secilen.length) {
-    const oneriDili = /(oneri|onerebilir|onerir|urunumuz|urunu|urun|kullanabilir|tuketebilir|hazirlanmis|iceriginde|formul)/
-      .test(govdeMetni);
-    if (oneriDili) ekle(secilen[0]);
+     Model bazen ürünü adını vermeden ANLATIYOR ("öne çıkan bir ürünümüz var,
+     içeriğindeki bileşenlerle..."). O zaman ne ÜRÜN: satırı ne de ad eşleşmesi
+     oluşuyor ve kullanıcı kart göremiyor. Bu durumda en iyi adayın kartı
+     gösterilir.
+
+     Ama ağ dar tutulmalı: modelin ürün önermeyi REDDETTİĞİ mesajlarda
+     ("ürün önermek yerine ekibimize danışın") tetiklenirse alakasız bir kart
+     takılıyor ki bu hiç kart olmamasından kötü. Üç koşul birden aranır:
+       1. metin bir ürünü tarif ediyor,
+       2. reddetme/yönlendirme dili YOK,
+       3. en iyi adayın alaka puanı yeterince yüksek. */
+  if (!kartlar.length && puanli.length && puanli[0].p >= 14) {
+    const tarifEdiyor =
+      /(iceriginde|icerigindeki|icerdigi|formul|hazirlanmis|bilesen|kullanim sekli|urunumuz var|urunumuz bulun)/
+        .test(govdeMetni);
+    const reddediyor =
+      /(yerine|onermiyorum|oneremem|onermek yerine|urunumuz yok|hazir bir urun|ekibiyle gorus|ekibimize yaz|ekibine yaz|ekibine danis|degerlendirme gerek)/
+        .test(govdeMetni);
+    if (tarifEdiyor && !reddediyor) ekle(puanli[0].u);
   }
 
   /* WhatsApp düğmesi her mesajda değil, yalnızca anlamlı olduğunda:

@@ -77,8 +77,9 @@ const NIYET = [
   { d: ['bitki cayi', 'bitkisel cay'], a: ['bitki', 'cay'] }
 ];
 
-/* Ürünleri konuşmaya göre puanlar, en alakalı N tanesini döner. */
-export function urunGetir(metin, adet = 10) {
+/* Ürünleri konuşmaya göre puanlar. Puanlı liste döner; urunGetir bunun
+   yalnızca ürünlerini verir. Emniyet ağı puanı eşiklemek için kullanır. */
+export function urunGetirPuanli(metin, adet = 10) {
   const n = sade(metin);
   const kelime = n.split(' ').filter((k) => k.length > 2).map(govde);
   let ek = [];
@@ -101,8 +102,11 @@ export function urunGetir(metin, adet = 10) {
     })
     .filter((x) => x.p > 2)
     .sort((a, b) => b.p - a.p)
-    .slice(0, adet)
-    .map((x) => x.u);
+    .slice(0, adet);
+}
+
+export function urunGetir(metin, adet = 10) {
+  return urunGetirPuanli(metin, adet).map((x) => x.u);
 }
 
 /* ------------------------------------------------------------ istem */
