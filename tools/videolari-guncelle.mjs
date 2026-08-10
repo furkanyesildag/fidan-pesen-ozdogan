@@ -317,6 +317,7 @@ function sayfaUret(videolar, guncelleme) {
 <html lang="tr">
 <head>
 <meta charset="utf-8">
+<script>(function(){try{var t=localStorage.getItem('fpo_tema');if(!t)t=matchMedia('(prefers-color-scheme: light)').matches?'acik':'koyu';document.documentElement.dataset.tema=t;}catch(e){document.documentElement.dataset.tema='koyu';}})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>${baslik}</title>
 <meta name="description" content="${aciklama}">
@@ -335,8 +336,8 @@ function sayfaUret(videolar, guncelleme) {
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@PesenFidan">
 <link rel="preconnect" href="https://i.ytimg.com" crossorigin>
-<link rel="stylesheet" href="/assets/css/style.css?v=5">
-<link rel="stylesheet" href="/assets/css/makale.css?v=5">
+<link rel="stylesheet" href="/assets/css/style.css?v=6">
+<link rel="stylesheet" href="/assets/css/makale.css?v=6">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
 <script type="application/ld+json">
 ${JSON.stringify(ld, null, 2)}
@@ -363,6 +364,10 @@ ${JSON.stringify(ld, null, 2)}
     <a href="/sss">SSS</a>
     <a class="menu-cta" href="/asistan">Asistan</a>
   </nav>
+  <button class="tema-dugme" id="temaDugme" type="button" aria-pressed="false" aria-label="Aydınlık moda geç" title="Aydınlık mod">
+    <svg class="t-ay" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.8A8.6 8.6 0 0 1 9.2 3.5a8.6 8.6 0 1 0 11.3 11.3Z"/></svg>
+    <svg class="t-gunes" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.1"/><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.6 1.6M17 17l1.6 1.6M18.6 5.4 17 7M7 17l-1.6 1.6"/></svg>
+  </button>
   <button class="menu-dugme" id="menuDugme" aria-label="Menüyü aç" aria-expanded="false"><span></span><span></span></button>
 </header>
 
@@ -468,8 +473,9 @@ ${JSON.stringify(ld, null, 2)}
   </div>
 </footer>
 
-<script src="/assets/js/sayfa.js?v=5"></script>
-<script src="/assets/js/asistan-baloncuk.js?v=5" defer></script>
+<script src="/assets/js/sayfa.js?v=6"></script>
+<script src="/assets/js/tema.js?v=6"></script>
+<script src="/assets/js/asistan-baloncuk.js?v=6" defer></script>
 <script>
 /* Tıklanana kadar YouTube'dan hiçbir şey yüklenmez (facade deseni):
    kapak görseli i.ytimg.com'dan gelir, oynatıcı yalnızca tıklamada eklenir. */

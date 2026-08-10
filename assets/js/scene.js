@@ -44,6 +44,17 @@
     toprak:  ['#f0dcb4', '#c2a06b', '#6f5a34']    // sevda
   };
 
+  /* Aydınlık modda toplamalı (lighter) harmanlama işe yaramaz: açık zeminde
+     parlak parçacık görünmez. Orada koyu parçacıklar normal harmanlamayla
+     çizilir; palet de ona göre koyulaşır. */
+  var PALETTES_ACIK = {
+    kok:     ['#7d6427', '#a8842c', '#c9ae6e'],
+    ates:    ['#8f3208', '#c2470c', '#d97b45'],
+    hava:    ['#78182e', '#b02644', '#c9647c'],
+    su:      ['#0f4359', '#1a6f9c', '#5b9fc0'],
+    toprak:  ['#4f3d1c', '#7a5f2c', '#a68f60']
+  };
+
   /* ------------------------------------------------------------ şekil üreteci */
   var Shapes = {
     kure: function (n, R, rnd) {
@@ -247,8 +258,9 @@
     this.cur.set(ilk); this.from.set(ilk); this.to.set(ilk);
 
     /* palet & sprite önbelleği */
+    this.tema = (document.documentElement.dataset.tema === 'acik') ? 'acik' : 'koyu';
     this.spriteler = {};
-    for (var ad in PALETTES) this.spriteler[ad] = paletSpriteleri(PALETTES[ad]);
+    this.spriteleriKur();
     this.paletAdi = secenekler.palet || 'kok';
     this.oncekiPalet = this.paletAdi;
     this.paletT = 1;
@@ -270,6 +282,21 @@
     this._resize = this.olcekle.bind(this);
     global.addEventListener('resize', this._resize, { passive: true });
   }
+
+  /* Sprite'lar temaya göre bir kez üretilir; her karede değil. */
+  Sahne.prototype.spriteleriKur = function () {
+    var kaynak = this.tema === 'acik' ? PALETTES_ACIK : PALETTES;
+    this.spriteler = {};
+    for (var ad in kaynak) this.spriteler[ad] = paletSpriteleri(kaynak[ad]);
+  };
+
+  Sahne.prototype.temaAyarla = function (tema) {
+    var yeni = tema === 'acik' ? 'acik' : 'koyu';
+    if (yeni === this.tema) return;
+    this.tema = yeni;
+    this.spriteleriKur();
+    if (!this.calisiyor) this.tekKare();
+  };
 
   Sahne.prototype.sekilAl = function (ad) {
     if (!this.sekiller[ad]) {
@@ -406,13 +433,15 @@
 
     /* Dar ekranda içerik ortada durduğu için sahne metnin üstüne biniyor;
        yoğunluğu bir tık kısarak okunurluğu koruyoruz. */
-    var ekranKatsayi = w < 820 ? 0.42 : 1;
+    var acik = this.tema === 'acik';
+    var ekranKatsayi = (w < 820 ? 0.42 : 1) * (acik ? 0.55 : 1);
 
     var yeni = this.spriteler[this.paletAdi];
     var eski = this.spriteler[this.oncekiPalet];
     var pt = easeOutCubic(this.paletT);
 
-    ctx.globalCompositeOperation = 'lighter';
+    /* koyu tema: toplamalı ışık · aydınlık tema: normal harmanlama */
+    ctx.globalCompositeOperation = acik ? 'source-over' : 'lighter';
 
     var cur = this.cur, tohum = this.tohum, katman = this.katman, olcek = this.olcek;
 

@@ -16,18 +16,31 @@
   var dokunmatik = window.matchMedia('(hover: none)').matches;
 
   /* ------------------------------------------------------ palet → CSS rengi */
-  var RENK = {
-    kok:    { a: '#d8b45f', ac: '#f6e7bb', koy: '#7d6427', rgb: '216, 180, 95' },
-    ates:   { a: '#ff7a2f', ac: '#ffd9a8', koy: '#a12f0d', rgb: '255, 122, 47' },
-    hava:   { a: '#e8506f', ac: '#ffd4dc', koy: '#8d2440', rgb: '232, 80, 111' },
-    su:     { a: '#3fa9e0', ac: '#cdefff', koy: '#1a5e85', rgb: '63, 169, 224' },
-    toprak: { a: '#c2a06b', ac: '#f0dcb4', koy: '#6f5a34', rgb: '194, 160, 107' }
+  /* Aynı unsurun karanlık ve aydınlık karşılığı ayrı: aydınlıkta beyaz zemin
+     üstünde okunabilmesi için tonlar koyulaştırılır. */
+  var RENKLER = {
+    koyu: {
+      kok:    { a: '#d8b45f', ac: '#f6e7bb', koy: '#7d6427', rgb: '216, 180, 95' },
+      ates:   { a: '#ff7a2f', ac: '#ffd9a8', koy: '#a12f0d', rgb: '255, 122, 47' },
+      hava:   { a: '#e8506f', ac: '#ffd4dc', koy: '#8d2440', rgb: '232, 80, 111' },
+      su:     { a: '#3fa9e0', ac: '#cdefff', koy: '#1a5e85', rgb: '63, 169, 224' },
+      toprak: { a: '#c2a06b', ac: '#f0dcb4', koy: '#6f5a34', rgb: '194, 160, 107' }
+    },
+    acik: {
+      kok:    { a: '#8a6a1c', ac: '#a8842c', koy: '#5d4610', rgb: '138, 106, 28' },
+      ates:   { a: '#c2470c', ac: '#a03a09', koy: '#7a2c06', rgb: '194, 71, 12' },
+      hava:   { a: '#b02644', ac: '#8d1e36', koy: '#6d162a', rgb: '176, 38, 68' },
+      su:     { a: '#1a6f9c', ac: '#145877', koy: '#0f4359', rgb: '26, 111, 156' },
+      toprak: { a: '#7a5f2c', ac: '#614a21', koy: '#48371a', rgb: '122, 95, 44' }
+    }
   };
 
+  function temaAdi() { return kok.dataset.tema === 'acik' ? 'acik' : 'koyu'; }
+
   var aktifPalet = 'kok';
-  function temaUygula(ad) {
-    var r = RENK[ad] || RENK.kok;
-    if (ad === aktifPalet) return;
+  function temaUygula(ad, zorla) {
+    var r = RENKLER[temaAdi()][ad] || RENKLER[temaAdi()].kok;
+    if (ad === aktifPalet && !zorla) return;
     aktifPalet = ad;
     kok.style.setProperty('--aksan', r.a);
     kok.style.setProperty('--aksan-ac', r.ac);
@@ -35,12 +48,19 @@
     kok.style.setProperty('--aksan-rgb', r.rgb);
   }
 
+  /* Tema değişince hem aksan renkleri hem sahne paleti tazelenir. */
+  window.addEventListener('temadegisti', function () {
+    temaUygula(aktifPalet, true);
+    if (sahne) sahne.temaAyarla(temaAdi());
+  });
+
   /* ============================================================ 1. SAHNE */
   var canvas = document.getElementById('sahne');
   var sahne = null;
 
   if (canvas && window.UnsurSahnesi) {
     sahne = new window.UnsurSahnesi(canvas, { sekil: 'kure', palet: 'kok' });
+    temaUygula('kok', true);
     if (azHareket) {
       sahne.tekKare();
     } else {

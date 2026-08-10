@@ -80,6 +80,11 @@
 
   function enAlta() { akis.scrollTop = akis.scrollHeight; }
 
+  /* Sayfa gövdesi mobilde kaymasın diye sohbet açıkken taşma kilitlenir. */
+  if (window.matchMedia('(max-width: 820px)').matches) {
+    document.body.style.overflowY = 'auto';
+  }
+
   /* ------------------------------------------------------------- balonlar */
   function balonEkle(rol, html, sinif) {
     var d = document.createElement('div');
@@ -247,14 +252,10 @@
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); gonder(alan.value); }
   });
 
-  /* Mobilde klavye açılınca görünür alan küçülür; kutuyu ve son mesajı
-     görünürde tutmak için hem odakta hem viewport değişiminde aşağı kaydırırız. */
-  alan.addEventListener('focus', function () {
-    setTimeout(function () {
-      enAlta();
-      alan.scrollIntoView({ block: 'end', behavior: 'smooth' });
-    }, 250);
-  });
+  /* Odaklanınca SAYFAYI kaydırmıyoruz; kutu zaten dvh ile klavyeye uyum
+     sağlıyor. Yalnızca mesaj akışını en alta çekiyoruz. scrollIntoView
+     kullanmak sayfanın bir aşağı bir yukarı zıplamasına yol açıyordu. */
+  alan.addEventListener('focus', function () { setTimeout(enAlta, 260); });
   if (window.visualViewport) {
     window.visualViewport.addEventListener('resize', function () {
       if (document.activeElement === alan) setTimeout(enAlta, 60);
