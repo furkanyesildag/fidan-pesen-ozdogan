@@ -74,6 +74,11 @@
   --yay:      cubic-bezier(.18,.89,.32,1.18);
 }
 
+/* Karanlık palet yalnızca kullanıcı seçtiğinde devreye girer; varsayılan
+   aydınlıktır. Jetonların :root'taki değerleri karanlık paletin kendisidir,
+   bu yüzden burada yalnızca form denetimlerine tema bildirilir. */
+:root[data-tema="koyu"] { color-scheme: dark; }
+
 /* -------------------------------------------------------- 1b. AYDINLIK MOD */
 /* Aynı iskelet, farklı palet. Sadece jetonlar değişir; hiçbir bileşen
    kuralı tekrar yazılmaz. Kullanıcı seçimi <html data-tema="acik|koyu">
