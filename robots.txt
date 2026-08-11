@@ -57,3 +57,8 @@ User-agent: cohere-ai
 Allow: /
 
 Sitemap: https://fidanpesen.com/sitemap.xml
+
+# Yönetim ekranı
+User-agent: *
+Disallow: /kayitlar
+Disallow: /api/

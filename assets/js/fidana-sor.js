@@ -71,27 +71,32 @@
   var BICIM = [
     ':host{all:initial}',
     '*,*::before,*::after{box-sizing:border-box}',
-    '.kok{--altin:#a8842c;--murekkep:#1a221e;--sis:#6f736a;--cizgi:#e4ded1;',
-    '  --kagit:#fbf8f1;--beyaz:#fff;',
+    /* Renkler ve yazı karakterleri fidanpesen.com'daki asistanla aynı:
+       iki yüzey aynı markanın parçası gibi okunsun. */
+    '.kok{--altin:#a8842c;--altin-ac:#c9a447;--altin-rgb:168,132,44;',
+    '  --murekkep:#1a221e;--ink2:#3c4640;--sis:#6f736a;--cizgi:#e6e0d3;',
+    '  --kagit:#fbf8f1;--kutu:#fffdf8;--beyaz:#fff;',
+    '  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;',
     '  font-family:ui-sans-serif,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;',
     '  font-size:15px;line-height:1.6;color:var(--murekkep)}',
 
     /* --- baloncuk --- */
     '.bal{position:fixed;left:20px;bottom:var(--dip,20px);z-index:2147483000;',
-    '  display:flex;align-items:center;gap:10px;padding:9px 16px 9px 9px;',
+    '  display:flex;align-items:center;gap:11px;padding:8px 18px 8px 8px;',
     '  border:1px solid var(--cizgi);border-radius:99px;background:var(--beyaz);',
-    '  box-shadow:0 14px 40px -14px rgba(26,34,30,.34);cursor:pointer;',
-    '  transition:transform .35s cubic-bezier(.2,.9,.3,1.2),box-shadow .35s}',
-    '.bal:hover{transform:translateY(-3px);box-shadow:0 20px 48px -16px rgba(26,34,30,.42)}',
-    '.bal img{width:38px;height:38px;border-radius:50%;object-fit:cover;flex:0 0 auto}',
-    '.bal b{display:block;font-size:13.5px;font-weight:600}',
-    '.bal i{display:block;font-size:12px;font-style:normal;color:var(--sis)}',
+    '  box-shadow:0 16px 42px -14px rgba(26,34,30,.30);cursor:pointer;',
+    '  transition:transform .4s cubic-bezier(.2,.9,.3,1.2),box-shadow .4s,border-color .4s}',
+    '.bal:hover{transform:translateY(-3px);border-color:rgba(var(--altin-rgb),.5);',
+    '  box-shadow:0 22px 52px -16px rgba(26,34,30,.4)}',
+    '.bal img{width:40px;height:40px;border-radius:50%;object-fit:cover;flex:0 0 auto;',
+    '  border:1px solid rgba(var(--altin-rgb),.3)}',
+    '.bal b{display:block;font-family:var(--serif);font-weight:500;font-size:15px;letter-spacing:.01em}',
+    '.bal i{display:block;font-size:11.5px;font-style:normal;color:var(--sis);margin-top:1px}',
     '.bal .nokta{display:inline-block;width:6px;height:6px;border-radius:50%;',
     '  background:#3fa66a;margin-right:6px;vertical-align:middle}',
     '.bal .kapat{border:0;background:none;color:var(--sis);font-size:17px;',
-    '  line-height:1;padding:4px;cursor:pointer;margin-left:2px}',
-    /* Mobilde yazılı baloncuk ekranın yarısını kaplıyor. Avatar zaten
-       tanınabilir olduğu için orada yalnızca yuvarlak düğme gösteriliyor. */
+    '  line-height:1;padding:4px;cursor:pointer;margin-left:2px;opacity:.5}',
+    '.bal .kapat:hover{opacity:1}',
     '@media(max-width:520px){',
     '  .bal{left:14px;width:58px;height:58px;padding:0;justify-content:center;border-radius:50%}',
     '  .bal span{display:none}.bal .kapat{display:none}',
@@ -99,73 +104,96 @@
 
     /* --- panel --- */
     '.panel{position:fixed;left:20px;bottom:var(--dip,20px);z-index:2147483000;',
-    '  width:390px;max-width:calc(100vw - 32px);height:600px;max-height:calc(100vh - 40px);',
+    '  width:396px;max-width:calc(100vw - 32px);height:620px;',
+    '  max-height:calc(100vh - var(--dip,20px) - 20px);',
     '  display:flex;flex-direction:column;overflow:hidden;',
-    '  border:1px solid var(--cizgi);border-radius:18px;background:var(--kagit);',
-    '  box-shadow:0 30px 80px -24px rgba(26,34,30,.45);',
-    '  opacity:0;transform:translateY(12px) scale(.98);pointer-events:none;',
-    '  transition:opacity .3s,transform .3s cubic-bezier(.2,.9,.3,1.2)}',
+    '  border:1px solid var(--cizgi);border-radius:20px;background:var(--kagit);',
+    '  box-shadow:0 34px 90px -26px rgba(26,34,30,.5);',
+    '  opacity:0;transform:translateY(14px) scale(.98);pointer-events:none;',
+    '  transition:opacity .32s,transform .32s cubic-bezier(.2,.9,.3,1.2)}',
     '.panel.acik{opacity:1;transform:none;pointer-events:auto}',
     '@media(max-width:520px){.panel{left:0;right:0;bottom:0!important;width:100vw;max-width:100vw;',
     '  height:100dvh;max-height:100dvh;border-radius:0;border:0}}',
 
-    '.ust{display:flex;align-items:center;gap:11px;padding:14px 16px;',
-    '  border-bottom:1px solid var(--cizgi);background:var(--beyaz)}',
-    '.ust img{width:40px;height:40px;border-radius:50%;object-fit:cover}',
-    '.ust .ad{font-weight:600;font-size:14.5px}',
-    '.ust .kimden{font-size:11.5px;color:var(--sis)}',
-    '.ust .kapa{margin-left:auto;border:0;background:none;font-size:22px;',
-    '  line-height:1;color:var(--sis);cursor:pointer;padding:4px 6px}',
+    '.ust{display:flex;align-items:center;gap:12px;padding:15px 18px;',
+    '  border-bottom:1px solid var(--cizgi);',
+    '  background:linear-gradient(160deg,#fff,rgba(var(--altin-rgb),.05))}',
+    '.ust img{width:42px;height:42px;border-radius:50%;object-fit:cover;',
+    '  border:1px solid rgba(var(--altin-rgb),.32)}',
+    '.ust .ad{font-family:var(--serif);font-weight:500;font-size:17px}',
+    '.ust .kimden{font-size:11px;color:var(--sis);margin-top:1px}',
+    '.ust .kapa{margin-left:auto;border:0;background:none;font-size:21px;',
+    '  line-height:1;color:var(--sis);cursor:pointer;padding:4px 6px;border-radius:8px}',
+    '.ust .kapa:hover{background:rgba(var(--altin-rgb),.1);color:var(--murekkep)}',
 
-    '.akis{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;',
-    '  -webkit-overflow-scrolling:touch}',
-    '.msj{max-width:86%;padding:11px 14px;border-radius:14px;font-size:14.5px}',
-    '.msj p{margin:0 0 8px}.msj p:last-child{margin:0}',
-    '.msj ul{margin:6px 0;padding-left:18px}.msj li{margin:3px 0}',
-    '.msj a{color:var(--altin);text-decoration:underline}',
-    '.ben{align-self:flex-end;background:var(--murekkep);color:#f4f1e8;border-bottom-right-radius:5px}',
-    '.o{align-self:flex-start;background:var(--beyaz);border:1px solid var(--cizgi);',
-    '  border-bottom-left-radius:5px}',
-    '.yaziyor{display:flex;gap:4px;padding:13px 15px}',
-    '.yaziyor span{width:6px;height:6px;border-radius:50%;background:var(--sis);',
+    '.akis{flex:1;overflow-y:auto;overscroll-behavior:contain;padding:20px 18px 10px;',
+    '  display:flex;flex-direction:column;gap:16px;-webkit-overflow-scrolling:touch;',
+    '  scrollbar-width:thin;scrollbar-color:rgba(var(--altin-rgb),.4) transparent}',
+    '.akis::-webkit-scrollbar{width:6px}',
+    '.akis::-webkit-scrollbar-thumb{background:rgba(var(--altin-rgb),.4);border-radius:99px}',
+
+    /* --- balonlar: sitedeki asistanla aynı düzen --- */
+    '.msj{max-width:88%;animation:gir .35s ease both}',
+    '@keyframes gir{from{opacity:0;transform:translateY(8px)}}',
+    '.msj .kim{display:block;margin:0 0 6px 2px;font-size:10px;letter-spacing:.18em;',
+    '  text-transform:uppercase;color:var(--altin)}',
+    '.msj .govde{padding:13px 17px;border-radius:16px;border:1px solid var(--cizgi);',
+    '  background:var(--kutu);font-size:15px;line-height:1.62;color:var(--ink2)}',
+    '.ben{align-self:flex-end}',
+    '.ben .govde{background:linear-gradient(150deg,rgba(var(--altin-rgb),.16),rgba(var(--altin-rgb),.06));',
+    '  border-color:rgba(var(--altin-rgb),.32);color:var(--murekkep);border-bottom-right-radius:5px}',
+    '.o .govde{border-bottom-left-radius:5px}',
+    '.govde p{margin:0 0 10px}.govde p:last-child{margin:0}',
+    '.govde b{color:var(--murekkep);font-weight:600}',
+    '.govde a{color:var(--altin);border-bottom:1px solid rgba(var(--altin-rgb),.4);text-decoration:none}',
+    '.govde ul{margin:8px 0 10px;padding:0;list-style:none}',
+    '.govde li{position:relative;padding-left:18px;margin-bottom:6px}',
+    '.govde li::before{content:"";position:absolute;left:2px;top:.65em;width:5px;height:5px;',
+    '  border-radius:50%;background:var(--altin);opacity:.8}',
+    '.yaziyor .govde{display:flex;gap:5px;padding:17px}',
+    '.yaziyor i{width:6px;height:6px;border-radius:50%;background:var(--altin);opacity:.35;',
     '  animation:zipla 1.2s infinite}',
-    '.yaziyor span:nth-child(2){animation-delay:.18s}',
-    '.yaziyor span:nth-child(3){animation-delay:.36s}',
+    '.yaziyor i:nth-child(2){animation-delay:.18s}',
+    '.yaziyor i:nth-child(3){animation-delay:.36s}',
     '@keyframes zipla{0%,60%,100%{opacity:.3;transform:translateY(0)}',
     '  30%{opacity:1;transform:translateY(-4px)}}',
 
     /* --- ürün kartı --- */
-    '.urunler{display:flex;flex-direction:column;gap:8px;align-self:flex-start;',
-    '  max-width:86%;width:100%}',
-    '.urun{display:flex;gap:11px;align-items:center;padding:9px;text-decoration:none;',
-    '  border:1px solid var(--cizgi);border-radius:12px;background:var(--beyaz);',
-    '  color:inherit;transition:border-color .3s,transform .3s}',
-    '.urun:hover{border-color:var(--altin);transform:translateY(-1px)}',
-    '.urun img{width:46px;height:46px;border-radius:8px;object-fit:cover;flex:0 0 auto;',
-    '  background:var(--kagit)}',
-    '.urun .ad{font-size:13px;font-weight:600;line-height:1.35}',
-    '.urun .fi{font-size:12px;color:var(--altin);margin-top:2px}',
+    '.urunler{display:flex;flex-direction:column;gap:9px;align-self:flex-start;max-width:88%;width:100%}',
+    '.urun{display:flex;gap:12px;align-items:center;padding:10px;text-decoration:none;',
+    '  border:1px solid var(--cizgi);border-radius:14px;background:var(--beyaz);',
+    '  color:inherit;transition:border-color .35s,transform .35s,box-shadow .35s}',
+    '.urun:hover{border-color:rgba(var(--altin-rgb),.55);transform:translateY(-2px);',
+    '  box-shadow:0 12px 28px -14px rgba(26,34,30,.35)}',
+    '.urun img{width:52px;height:52px;border-radius:10px;object-fit:cover;flex:0 0 auto;background:var(--kagit)}',
+    '.urun .ad{display:block;font-size:13px;font-weight:600;line-height:1.36;color:var(--murekkep)}',
+    '.urun .fi{display:block;font-size:12.5px;color:var(--altin);margin-top:3px}',
+    '.urun .ok{margin-left:auto;color:var(--altin);font-size:15px;flex:0 0 auto}',
 
-    '.wa{display:flex;align-items:center;justify-content:center;gap:8px;',
-    '  align-self:flex-start;max-width:86%;padding:11px 16px;border-radius:99px;',
+    '.wa{display:inline-flex;align-items:center;justify-content:center;gap:8px;',
+    '  align-self:flex-start;max-width:88%;padding:12px 20px;border-radius:99px;',
     '  background:#25d366;color:#08331a;font-size:13.5px;font-weight:600;',
-    '  text-decoration:none}',
+    '  text-decoration:none;transition:transform .3s}',
+    '.wa:hover{transform:translateY(-2px)}',
 
-    '.alt-bar{border-top:1px solid var(--cizgi);background:var(--beyaz);padding:11px 12px}',
-    '.satir{display:flex;gap:8px;align-items:flex-end}',
-    '.satir textarea{flex:1;resize:none;border:1px solid var(--cizgi);border-radius:12px;',
-    '  padding:10px 12px;font:inherit;font-size:14.5px;max-height:110px;background:var(--kagit);',
-    '  color:var(--murekkep);outline:none}',
-    '.satir textarea:focus{border-color:var(--altin)}',
-    '.gonder{flex:0 0 auto;width:42px;height:42px;border:0;border-radius:50%;',
-    '  background:var(--altin);color:#fff;font-size:17px;cursor:pointer}',
-    '.gonder:disabled{opacity:.45;cursor:default}',
-    '.kvkk{margin:8px 2px 0;font-size:10.5px;line-height:1.5;color:var(--sis)}',
+    '.alt-bar{border-top:1px solid var(--cizgi);background:var(--beyaz);padding:12px 14px}',
+    '.satir{display:flex;gap:9px;align-items:flex-end}',
+    '.satir textarea{flex:1;resize:none;border:1px solid var(--cizgi);border-radius:14px;',
+    '  padding:11px 14px;font:inherit;font-size:15px;max-height:110px;background:var(--kagit);',
+    '  color:var(--murekkep);outline:none;transition:border-color .3s}',
+    '.satir textarea:focus{border-color:rgba(var(--altin-rgb),.6)}',
+    '.gonder{flex:0 0 auto;width:44px;height:44px;border:0;border-radius:50%;',
+    '  background:linear-gradient(140deg,var(--altin-ac),var(--altin));color:#fff;',
+    '  font-size:17px;cursor:pointer;transition:transform .3s,filter .3s}',
+    '.gonder:hover:not(:disabled){transform:translateY(-2px);filter:brightness(1.08)}',
+    '.gonder:disabled{opacity:.4;cursor:default}',
+    '.kvkk{margin:9px 3px 0;font-size:10.5px;line-height:1.55;color:var(--sis)}',
     '.kvkk a{color:var(--sis)}',
-    '.oneri{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}',
+    '.oneri{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:11px}',
     '.oneri button{border:1px solid var(--cizgi);background:var(--beyaz);border-radius:99px;',
-    '  padding:7px 12px;font:inherit;font-size:12.5px;color:var(--murekkep);cursor:pointer}',
-    '.oneri button:hover{border-color:var(--altin);color:var(--altin)}',
+    '  padding:8px 14px;font:inherit;font-size:12.5px;color:var(--ink2);cursor:pointer;',
+    '  transition:border-color .3s,color .3s,transform .3s}',
+    '.oneri button:hover{border-color:rgba(var(--altin-rgb),.55);color:var(--altin);transform:translateY(-1px)}',
   ].join('');
 
   var ACILIS =
@@ -286,8 +314,10 @@
 
     function balonEkle(kim, metin) {
       var d = el('div', 'msj ' + (kim === 'ben' ? 'ben' : 'o'));
-      d.innerHTML = bicimle(metin);
-      akis.appendChild(d); kaydir(); return d;
+      d.innerHTML = (kim === 'ben' ? '' : '<span class="kim">Fidan\u2019ın Asistanı</span>')
+        + '<div class="govde">' + bicimle(metin) + '</div>';
+      akis.appendChild(d); kaydir();
+      return d.querySelector('.govde');
     }
 
     function onerileriGoster() {
@@ -310,7 +340,8 @@
         a.innerHTML =
           (u.gorsel ? '<img src="' + kacis(u.gorsel) + '" alt="" loading="lazy">' : '') +
           '<span><span class="ad">' + kacis(u.ad) + '</span>' +
-          (u.fiyat ? '<span class="fi">' + kacis(String(u.fiyat)) + ' TL</span>' : '') + '</span>';
+          (u.fiyat ? '<span class="fi">' + kacis(String(u.fiyat)) + ' TL</span>' : '') + '</span>' +
+          '<span class="ok" aria-hidden="true">\u2197</span>';
         k.appendChild(a);
       });
       akis.appendChild(k); kaydir();
@@ -335,7 +366,8 @@
       gecmis.push({ rol: 'kullanici', metin: metin });
 
       var bekle = el('div', 'msj o yaziyor');
-      bekle.innerHTML = '<span></span><span></span><span></span>';
+      bekle.innerHTML = '<span class="kim">Fidan\u2019ın Asistanı</span>'
+        + '<div class="govde"><i></i><i></i><i></i></div>';
       akis.appendChild(bekle); kaydir();
 
       var balon = null, toplam = '';
