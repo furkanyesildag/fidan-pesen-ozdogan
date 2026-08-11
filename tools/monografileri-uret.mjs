@@ -163,9 +163,17 @@ function monografiSayfa(m, komsu, urunler) {
   const latin = m.latince ? ` (${m.latince})` : '';
   const uzunAd = `${m.ad} Monografisi${latin}`;
   const baslik = (uzunAd + MARKA).length <= 62 ? uzunAd + MARKA : `${m.ad}${latin}${MARKA}`;
-  const aciklama = duz(`${m.ad} nedir, ne işe yarar, nasıl kullanılır, yan etkileri `
-    + `nelerdir? ${m.ad}${latin} monografisi: bileşenler, farmakopeler, `
-    + `geleneksel kullanım ve ilaç etkileşimleri.`);
+  /* Açıklama arama sonucunda 160 karakterde kesiliyor. Soru kısmı her zaman
+     giriyor; kuyruk bitki adının uzunluğuna göre kısalıyor. */
+  const soruKismi = `${m.ad} nedir, ne işe yarar, nasıl kullanılır, yan etkileri nelerdir?`;
+  const kuyruklar = [
+    ` ${m.ad}${latin} monografisi: bileşenler, farmakopeler ve ilaç etkileşimleri.`,
+    ` ${m.ad} monografisi: bileşenler, farmakopeler ve ilaç etkileşimleri.`,
+    ' Tam monografi: bileşenler, farmakopeler ve ilaç etkileşimleri.',
+    ' Kaynaklı tam monografi.',
+  ];
+  const aciklama = duz(soruKismi
+    + (kuyruklar.find((k) => (soruKismi + k).length <= 158) || ''));
 
   const bolumBaslik = m.bolumler.map((b) => ({
     kimlik: b.kimlik.replace(/[^a-z0-9-]/g, '').slice(0, 50) || 'bolum',
