@@ -184,8 +184,9 @@ function kisaCevap(m, bol) {
      Ortak kimlik yoksa bölüm adına göre aranıyor. */
   const ara = (kanonik, ...parcalar) => bol[kanonik]
     || Object.values(bol).find((b) => parcalar.some((x) => b.kimlik.includes(x)));
+  /* "Nedir" satırı yazılmıyor: hemen üstteki özet paragrafı aynı cümleleri
+     taşıyor, tekrar edince kutunun üst kısmı boşa gidiyordu. */
   const satir = [
-    ['Nedir', m.ozet],
     ['Kullanılan kısmı', ilkCumle(ara('kisim', 'kullanilan-kisim'), 200)],
     ['Literatürde bildirilen etkiler',
       ilkCumle(ara('farmakoloji', 'farmakolojik', 'endikasyon'), 300)],
@@ -193,7 +194,7 @@ function kisaCevap(m, bol) {
       ilkCumle(ara('uyari', 'kontraendikasyon', 'yan-advers', 'yan-etki', 'uyarilar'), 260)],
     ['Farmakopeler', ilkCumle(ara('farmakope'), 160)],
   ].filter(([, d]) => d && d.length > 30);
-  if (satir.length < 3) return '';
+  if (satir.length < 2) return '';
   return `
       <section id="kisa-cevap">
         <h2>${kacis(m.ad)} nedir, ne işe yarar?</h2>
