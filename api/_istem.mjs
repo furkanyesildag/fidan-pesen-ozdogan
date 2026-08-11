@@ -42,9 +42,28 @@ export const DIKKAT = [
   { k: ['seker hastasi', 'diyabet'], n: 'diyabet' }
 ];
 
+/* Bitişik kalıplar araya kelime girince kaçıyordu: "göğsümde şiddetli bir
+   ağrı var" cümlesinde "gogus agrisi" geçmiyor ama durum acil. Bu yüzden
+   bölge + belirti eşleşmesi ayrıca aranıyor; her satırdaki iki kümeden de
+   en az bir kelimenin metinde bulunması yeterli. */
+export const ACIL_IKILI = [
+  [['gogus', 'gogsum', 'gogsunde', 'kalbim', 'kalp'],
+   ['agri', 'agiri', 'sikis', 'basinc', 'yaniyor', 'daralma', 'kramp']],
+  [['nefes', 'soluk'], ['alamiyor', 'darlig', 'yetmiyor', 'tikaniyor', 'kesiliyor', 'zorlan', 'guclukle', 'daral']],
+  [['kol', 'cene', 'sirtim'], ['uyusuyor', 'uyusma', 'yayilan agri']],
+  [['bilincini', 'bilinc'], ['kaybetti', 'kapali', 'yerinde degil']],
+  [['konusam', 'konusma'], ['bozuk', 'peltek', 'zorlan']],
+  [['yuzun', 'yuzum', 'agzim'], ['kaymis', 'kaydi', 'felc']],
+  [['kanama'], ['durmuyor', 'durdurami', 'siddetli']],
+  [['kusuyorum', 'kusma', 'kustum'], ['kanli', 'kan']],
+  [['oldurmek', 'olmek'], ['istiyorum']],
+];
+
 export function guvenlikTara(metin) {
   const n = sade(metin);
-  const acil = ACIL.some((a) => n.includes(a));
+  const acil = ACIL.some((a) => n.includes(a))
+    || ACIL_IKILI.some(([bolge, belirti]) =>
+      bolge.some((b) => n.includes(b)) && belirti.some((c) => n.includes(c)));
   const uyari = DIKKAT.filter((d) => d.k.some((k) => n.includes(k))).map((d) => d.n);
   return { acil, uyari };
 }
