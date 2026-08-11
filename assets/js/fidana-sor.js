@@ -109,7 +109,7 @@
     '  border-bottom:1px solid var(--cizgi);background:var(--beyaz)}',
     '.ust img{width:40px;height:40px;border-radius:50%;object-fit:cover}',
     '.ust .ad{font-weight:600;font-size:14.5px}',
-    '.ust .alt{font-size:11.5px;color:var(--sis)}',
+    '.ust .kimden{font-size:11.5px;color:var(--sis)}',
     '.ust .kapa{margin-left:auto;border:0;background:none;font-size:22px;',
     '  line-height:1;color:var(--sis);cursor:pointer;padding:4px 6px}',
 
@@ -147,7 +147,7 @@
     '  background:#25d366;color:#08331a;font-size:13.5px;font-weight:600;',
     '  text-decoration:none}',
 
-    '.alt{border-top:1px solid var(--cizgi);background:var(--beyaz);padding:11px 12px}',
+    '.alt-bar{border-top:1px solid var(--cizgi);background:var(--beyaz);padding:11px 12px}',
     '.satir{display:flex;gap:8px;align-items:flex-end}',
     '.satir textarea{flex:1;resize:none;border:1px solid var(--cizgi);border-radius:12px;',
     '  padding:10px 12px;font:inherit;font-size:14.5px;max-height:110px;background:var(--kagit);',
@@ -205,11 +205,11 @@
       '<div class="ust">' +
         '<img src="' + AVATAR + '" alt="">' +
         '<div><div class="ad">Fidan’a Sor</div>' +
-        '<div class="alt">Dr. Ecz. Fidan Pesen Özdoğan’ın asistanı</div></div>' +
+        '<div class="kimden">Dr. Ecz. Fidan Pesen Özdoğan’ın asistanı</div></div>' +
         '<button class="kapa" type="button" aria-label="Kapat">×</button>' +
       '</div>' +
       '<div class="akis"></div>' +
-      '<div class="alt-bar alt">' +
+      '<div class="alt-bar">' +
         '<div class="oneri"></div>' +
         '<div class="satir">' +
           '<textarea rows="1" placeholder="Mesajınızı yazın..." aria-label="Mesaj"></textarea>' +
