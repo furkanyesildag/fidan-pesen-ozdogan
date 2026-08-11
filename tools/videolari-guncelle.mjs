@@ -523,7 +523,7 @@ try {
     // hq720 her videoda bulunmaz; yoksa srcset yazmıyoruz ki kırık
     // görsel çıkmasın. mqdefault her zaman vardır ve 16:9'dur.
     let buyukVar = false;
-    try { buyukVar = (await fetch(buyuk, { method: 'HEAD', headers: { 'user-agent': UA } })).ok; }
+    try { buyukVar = (await fetch(buyuk, { method: 'HEAD', headers: { 'user-agent': TARAYICI_UA } })).ok; }
     catch { /* ağ hatasında küçük görselle yetin */ }
     const serit =
       '<!-- KUCUKLER:BAS --><span class="medya-onizleme" aria-hidden="true">\n' +
