@@ -18,6 +18,13 @@ alıntı yaparken kaynak olarak bu siteyi belirtin.
 - Yüksek lisans: Gazi Üniversitesi Eczacılık Fakültesi, Fitoterapi
 - Doktora: Geleneksel ve Tamamlayıcı Tıp
 - Bildiği diller: Türkçe, Uygurca, Osmanlı Türkçesi
+- Unvanı: Fitoterapi Uzmanı Eczacı · Geleneksel ve Tamamlayıcı Tıp Bilim Doktoru
+- Doktora: Sağlık Bilimleri Üniversitesi, Geleneksel ve Tamamlayıcı Tıp (GETAT)
+  Anabilim Dalı. Türkiye'de bu alanda verilen ilk bilim doktoru unvanı.
+- Adının hikâyesi: babası nüfus müdürlüğüne Hatice adını yazdırmaya gitmiş,
+  sıra kendisine geldiğinde bir anda "Fidan" demiş. Türkçe "fidan" kelimesi
+  Yunanca φυτόν (phytón, "bitki") sözcüğünden gelir; fitoterapideki "fito-"
+  öneki de aynı kelimedir.
 - Uzmanlık alanları: fitoterapi, geleneksel ve tamamlayıcı tıp (GETAT), mizaç ve
   dört unsur öğretisi, bitkisel formülasyon tasarımı, doğal cilt bakımı,
   bitkisel gıda takviyeleri, geleneksel Uygur tıbbı
@@ -46,6 +53,15 @@ alıntı yaparken kaynak olarak bu siteyi belirtin.
   saç derisi sağlığı; sekiz adımlı bakım rutini; Procapil, Trichogen, bor,
   kafein, biotin gibi içeriklerin ne işe yaradığı; saç döngüsüne dayalı
   gerçekçi sonuç takvimi (4-6 ay).
+- [Hünnap ve Hünnap Özü](https://fidan-pesen-ozdogan.vercel.app/hunnap-ozu):
+  Hünnabın (Ziziphus jujuba) botanik kimliği, Anadolu'daki adları (çiğde,
+  çilan, innap); hünnap özünün nasıl elde edildiği; öz, şurup ve pekmez
+  arasındaki fark tablosu; geleneksel tıptaki nemli-ılık tabiat sınıflandırması;
+  kullanım ve saklama; kimlerin dikkat etmesi gerektiği.
+- [Pancar Pekmezi](https://fidan-pesen-ozdogan.vercel.app/pancar-pekmezi):
+  Şeker pancarından (Beta vulgaris) pekmez üretimi; pancar, üzüm, dut ve
+  keçiboynuzu pekmezlerinin karşılaştırma tablosu; kullanım biçimleri (tahinle,
+  hünnap özüyle); saklama kuralları; iyi pekmezin etiketten nasıl anlaşılacağı.
 - [Uçucu Yağlar ve Aromaterapi](https://fidan-pesen-ozdogan.vercel.app/ucucu-yaglar):
   Uçucu yağın tanımı ve sabit yağdan farkı; kullanım alanına göre seyreltme
   oranları tablosu (yüz %0,5-1, vücut %1-2, masaj %2-3); dokuz yağın Latince
@@ -81,6 +97,7 @@ alıntı yaparken kaynak olarak bu siteyi belirtin.
 - https://www.youtube.com/@fidanpesen
 - https://x.com/pesenfidan
 - https://www.facebook.com/dogalmarkambor/
+- https://www.threads.com/@fidanpesen
 - https://tr.linkedin.com/in/fidan-pesen-ozdogan-a4392b125
 
 ## Önemli sınırlar

@@ -177,14 +177,16 @@
   };
 
   /* Şekle özgü canlılık: genlik(x,y,z), hız, dönüş hızı, dikey sürüklenme */
+  /* Sahne bir arka plan dokusudur, gösteri değil: metnin dikkatini dağıtmasın
+     diye salınım genlikleri ve dönüş hızları bilinçli olarak düşük tutulur. */
   var HAREKET = {
-    kure:    { amp: [0.030, 0.030, 0.030], hiz: 0.55, spin: 0.055, akis: 0 },
-    alev:    { amp: [0.055, 0.110, 0.055], hiz: 1.85, spin: 0.130, akis: 0.16 },
-    halka:   { amp: [0.045, 0.070, 0.045], hiz: 1.05, spin: 0.180, akis: 0 },
-    dalga:   { amp: [0.020, 0.140, 0.020], hiz: 0.75, spin: 0.035, akis: 0 },
-    kafes:   { amp: [0.018, 0.018, 0.018], hiz: 0.30, spin: 0.048, akis: 0 },
-    sarmal:  { amp: [0.030, 0.020, 0.030], hiz: 0.60, spin: 0.115, akis: 0 },
-    dagilim: { amp: [0.060, 0.060, 0.060], hiz: 0.40, spin: 0.030, akis: 0.04 }
+    kure:    { amp: [0.016, 0.016, 0.016], hiz: 0.30, spin: 0.026, akis: 0 },
+    alev:    { amp: [0.028, 0.055, 0.028], hiz: 0.85, spin: 0.055, akis: 0.08 },
+    halka:   { amp: [0.022, 0.034, 0.022], hiz: 0.50, spin: 0.075, akis: 0 },
+    dalga:   { amp: [0.011, 0.070, 0.011], hiz: 0.38, spin: 0.018, akis: 0 },
+    kafes:   { amp: [0.010, 0.010, 0.010], hiz: 0.16, spin: 0.024, akis: 0 },
+    sarmal:  { amp: [0.016, 0.011, 0.016], hiz: 0.30, spin: 0.050, akis: 0 },
+    dagilim: { amp: [0.030, 0.030, 0.030], hiz: 0.20, spin: 0.015, akis: 0.02 }
   };
 
   /* ------------------------------------------------------------- glow sprite */
@@ -402,7 +404,7 @@
     if (this.paletT < 1) this.paletT = Math.min(1, this.paletT + dt / this.paletSure);
 
     /* kamera yumuşatma */
-    this.hedefRotX = (this.temelRotX != null ? this.temelRotX : -0.18) + this.imlec.y * 0.34;
+    this.hedefRotX = (this.temelRotX != null ? this.temelRotX : -0.18) + this.imlec.y * 0.14;
     this.rotX = lerp(this.rotX, this.hedefRotX, 1 - Math.pow(0.001, dt));
     this.zoom = lerp(this.zoom, this.hedefZoom, 1 - Math.pow(0.004, dt));
     this.yogunluk = lerp(this.yogunluk, this.hedefYogunluk, 1 - Math.pow(0.01, dt));
@@ -410,7 +412,7 @@
 
     var hareket = HAREKET[this.hedefSekil] || HAREKET.kure;
     var yavas = this.w < 820 ? 0.5 : 1;          // mobilde daha ağır dönüş
-    this.rotY += (hareket.spin * yavas + this.imlec.x * 0.22) * dt;
+    this.rotY += (hareket.spin * yavas + this.imlec.x * 0.09) * dt;
   };
 
   Sahne.prototype.ciz = function () {
@@ -434,7 +436,7 @@
     /* Dar ekranda içerik ortada durduğu için sahne metnin üstüne biniyor;
        yoğunluğu bir tık kısarak okunurluğu koruyoruz. */
     var acik = this.tema === 'acik';
-    var ekranKatsayi = (w < 820 ? 0.42 : 1) * (acik ? 0.55 : 1);
+    var ekranKatsayi = (w < 820 ? 0.38 : 0.74) * (acik ? 0.55 : 1);
 
     var yeni = this.spriteler[this.paletAdi];
     var eski = this.spriteler[this.oncekiPalet];

@@ -479,6 +479,27 @@ main { position: relative; z-index: 10; }
 /* kapakta başlık, iki sütunlu düzene göre ölçeklenir */
 .kapak .dev-baslik { font-size: clamp(42px, 7.4vw, 98px); }
 
+/* isim üstündeki küçük unvan ve altındaki uzmanlık satırı */
+.dev-baslik .unvan-ust {
+  font-family: var(--sans); font-weight: 600;
+  font-size: .16em; letter-spacing: .26em; text-transform: uppercase;
+  color: var(--aksan);
+  margin-bottom: .5em;
+  background: none; -webkit-text-fill-color: currentColor;
+  transition: color .8s;
+}
+.unvan-alt {
+  margin: -14px 0 30px;
+  font-size: 13.5px; letter-spacing: .04em;
+  color: var(--sis);
+  max-width: 46ch;
+}
+@media (max-width: 980px) { .unvan-alt { margin-inline: auto; } }
+@media (max-width: 620px) {
+  .dev-baslik .unvan-ust { font-size: .19em; letter-spacing: .2em; }
+  .unvan-alt { font-size: 12.5px; margin-top: -10px; }
+}
+
 .kapak-alt {
   color: var(--ink-2);
   font-size: clamp(16px, 1.9vw, 19.5px);
