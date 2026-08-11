@@ -86,32 +86,70 @@ function cevap(bolum, sinir = 420) {
       if (s && s.length + c.length > sinir) break;
       s += (s ? ' ' : '') + c;
     }
-    return s.replace(/(\s*\d+(,\d+)*(-\d+)?)+(?=[.]|$)/g, '').trim();
+    /* Kaynak numaraları SSS cevabında üst simge olarak yazılmıyor; ham
+       sayı olarak kalınca hem okunmuyor hem de yapısal veriye sızıyor. */
+    return s
+      .replace(/([a-zçğıöşüA-ZÇĞİÖŞÜ’')\]][.,]?)(\d{1,3}(?:[-–,]\d{1,3})*)(?=$|[\s.,;:)\]])/g, '$1')
+      .replace(/\s+([.,;:])/g, '$1')
+      .replace(/\s{2,}/g, ' ')
+      .trim();
   }
   return '';
 }
 
+/**
+ * Sorular, insanların arama kutusuna yazdığı biçimde kuruluyor: "ne işe
+ * yarar", "faydaları nelerdir", "yan etkileri". Cevaplar monografinin kendi
+ * metninden geliyor ve etki anlatan bölümlerde her cevabın başına kaynağın
+ * kim olduğu yazılıyor.
+ *
+ * Bu ayrım hukuken belirleyici: sayfada bir ürünün bir hastalığı iyileştirdiği
+ * iddia edilmiyor, literatürde hangi etkilerin araştırıldığı aktarılıyor.
+ * Soru cümlesini halkın kullandığı dile çevirmek bir sağlık beyanı değil;
+ * beyan, etkinin bir ürüne bağlanmasıyla oluşur ve o bağ hiçbir yerde
+ * kurulmuyor.
+ */
+const LITERATUR = 'Bilimsel literatürde bu bitki üzerine bildirilen bulgular şöyledir: ';
+
 function sssUret(m, bol) {
   const soru = [];
   const it = (k) => bol[k];
-  const kısaAd = m.ad;
+  const ad = m.ad;
+
   if (m.ozet) {
-    soru.push([`${kısaAd} nedir?`,
-      `${kısaAd}${m.latince ? ` (${m.latince})` : ''}, ${m.ozet.charAt(0).toLocaleLowerCase('tr-TR')}${m.ozet.slice(1)}`]);
+    soru.push([`${ad} nedir?`,
+      `${ad}${m.latince ? ` (${m.latince})` : ''}, ${m.ozet.charAt(0).toLocaleLowerCase('tr-TR')}${m.ozet.slice(1)}`]);
   }
+
+  /* Etki bölümünden iki ayrı kesit alınıyor: aynı cevabı iki soruya
+     yapıştırmak hem okuru hem arama motorunu yanıltırdı. */
+  const etki = it('farmakoloji');
+  const etkiBas = cevap(etki, 420);
+  const etkiDevam = cevap(etki, 900);
+  if (etkiBas) {
+    soru.push([`${ad} ne işe yarar?`, LITERATUR + etkiBas]);
+  }
+  if (etkiDevam && etkiDevam.length > etkiBas.length + 80) {
+    const kalan = etkiDevam.slice(etkiBas.length).trim();
+    if (kalan.length > 90) {
+      soru.push([`${ad} faydaları nelerdir?`,
+        LITERATUR + kalan + ' Bu bulgular literatür derlemesidir; tedavi önerisi ya da '
+        + 'herhangi bir ürün için sağlık beyanı değildir.']);
+    }
+  }
+
   const c1 = cevap(it('kisim'));
-  if (c1) soru.push([`${kısaAd} bitkisinin hangi kısımları kullanılır?`, c1]);
-  const c2 = cevap(it('bilesen'));
-  if (c2) soru.push([`${kısaAd} hangi etken maddeleri içerir?`, c2]);
+  if (c1) soru.push([`${ad} bitkisinin hangi kısımları kullanılır?`, c1]);
   const c3 = cevap(it('gelenek'));
-  if (c3) soru.push([`${kısaAd} geleneksel olarak nasıl kullanılmış?`, c3]);
-  const c4 = cevap(it('farmakoloji'));
-  if (c4) soru.push([`${kısaAd} üzerine yapılan çalışmalar ne gösteriyor?`, c4]);
+  if (c3) soru.push([`${ad} nasıl kullanılır?`, c3]);
   const c5 = cevap(it('uyari'));
-  if (c5) soru.push([`${kısaAd} kullanırken nelere dikkat edilmeli?`, c5]);
+  if (c5) soru.push([`${ad} yan etkileri nelerdir, kimler kullanmamalı?`, c5]);
+  const c2 = cevap(it('bilesen'));
+  if (c2) soru.push([`${ad} hangi etken maddeleri içerir?`, c2]);
   const c6 = cevap(it('farmakope'));
-  if (c6) soru.push([`${kısaAd} hangi farmakopelerde yer alıyor?`, c6]);
-  return soru.filter(([, c]) => c && c.length > 40).slice(0, 8);
+  if (c6) soru.push([`${ad} hangi farmakopelerde yer alıyor?`, c6]);
+
+  return soru.filter(([, c]) => c && c.length > 40).slice(0, 9);
 }
 
 /* --------------------------------------------------------- monografi sayfa */
@@ -125,8 +163,9 @@ function monografiSayfa(m, komsu, urunler) {
   const latin = m.latince ? ` (${m.latince})` : '';
   const uzunAd = `${m.ad} Monografisi${latin}`;
   const baslik = (uzunAd + MARKA).length <= 62 ? uzunAd + MARKA : `${m.ad}${latin}${MARKA}`;
-  const aciklama = duz(`${m.ad}${latin} monografisi: botanik sınıflandırma, kimyasal `
-    + `bileşenler, farmakopeler, geleneksel kullanım, yan etki ve ilaç etkileşimleri.`);
+  const aciklama = duz(`${m.ad} nedir, ne işe yarar, nasıl kullanılır, yan etkileri `
+    + `nelerdir? ${m.ad}${latin} monografisi: bileşenler, farmakopeler, `
+    + `geleneksel kullanım ve ilaç etkileşimleri.`);
 
   const bolumBaslik = m.bolumler.map((b) => ({
     kimlik: b.kimlik.replace(/[^a-z0-9-]/g, '').slice(0, 50) || 'bolum',

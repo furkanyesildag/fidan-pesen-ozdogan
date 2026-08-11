@@ -152,8 +152,11 @@ function cevap(govde, sinir = 400) {
       s += (s ? ' ' : '') + c;
     }
     if (!s) s = icerik.slice(0, sinir);
-    return s.replace(/(?<=[.!?])\d+(?:[-–,]\d+)*(?=\s|$)/g, '')
-      .replace(/\s*\d+(?:[-–,]\d+)*$/, '').trim();
+    return s
+      .replace(/([a-zçğıöşüA-ZÇĞİÖŞÜ’')\]][.,]?)(\d{1,3}(?:[-–,]\d{1,3})*)(?=$|[\s.,;:)\]])/g, '$1')
+      .replace(/\s+([.,;:])/g, '$1')
+      .replace(/\s{2,}/g, ' ')
+      .trim();
   }
   return '';
 }
