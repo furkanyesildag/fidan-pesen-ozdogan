@@ -1091,7 +1091,7 @@ main { position: relative; z-index: 10; }
   transition: border-color .5s;
 }
 .medya-onizleme img {
-  display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover;
+  display: block; width: 100%; height: auto;
   filter: saturate(.9) contrast(.96);
   transition: filter .6s var(--yumusak), transform .8s var(--yay);
 }
