@@ -61,11 +61,36 @@ function ustSimge(m) {
     (_, on, sayi) => `${on}<sup class="kaynak-no">${sayi}</sup>`);
 }
 
-/** Latince tür adlarını italik yazar. */
+/**
+ * İtalik yazılacak cins adları. Sabit liste tutmak yerine metnin kendisinden
+ * çıkarılıyor: Latince tür sonekiyle biten bir kelimeden önce gelen büyük
+ * harfli kelimeler aday sayılıyor. Böylece yeni monografi eklendiğinde liste
+ * kendiliğinden büyüyor. Ayıklama olmadan "Kare kesitli" ya da "Dalmatian
+ * sage" gibi öbekler de italiğe kaçıyordu.
+ */
+const LATIN_SON = /(?:us|um|is|ae|ii|ense|ensis|oides|ata|atum|ica|icum|osa|osum|ifolia|iflora|inalis|iana|icus|ida|ina|alis|aria|estris|orum|ella|iae|eus|ium|iva|iba|oba|ata|iva)$/;
+const CINS_DISI = new Set(['Latince', 'Chinese', 'Hawaiian', 'English', 'German',
+  'Japanese', 'Indian', 'Tels', 'Bitkinin', 'Bitkisel', 'Normal', 'Klinik']);
+let CINSLER = new Set();
+
+/* Cins adından sonra gelen her kelime tür adı değil: metinde "Ginkgo yaprak",
+   "Crataegus cinsinin", "Ginkgo biloba extract" gibi öbekler de geçiyor.
+   Türkçe çekim ekleri kalıpla, tekil kelimeler listeyle eleniyor. */
+const TURKCE_EK = /(?:lar|ler|leri|ları|lerin|ların|sinin|sine|sinden|sini|inin|inde|inden|nin|nın|siz|lik|lık|dır|dir|ktir|ndan|nden)$/;
+const TUR_DISI = new Set(['alt', 'and', 'for', 'ise', 'olarak', 'botanik', 'cinsi',
+  'yaprak', 'yapra', 'genus', 'sect', 'special', 'species', 'spp', 'taxa', 'cum',
+  'berry', 'berries', 'compounds', 'extract', 'extracts', 'flavonoids', 'ginkgo',
+  'preparation', 'polysaccharide', 'aronia', 'anthocyanins-rich',
+  'extract-induced', 'bilobaextracts', 'unguicularisfixed', 'bakterisine']);
+
+/** Yalnızca bilinen cins adlarıyla başlayan gerçek ikilileri italik yazar. */
 function latinceIsaretle(m) {
   return m.replace(/\b([A-Z][a-z]{3,})\s+((?:subsp\.|var\.|ssp\.)?\s?[a-z][a-zé-]{2,})\b/g,
-    (tam, c, t) => (/^(Alman|Amerikan|Avrupa|İngiliz|Türk|Doğu|Batı|Kuzey|Güney|Orta)$/.test(c)
-      ? tam : `<i>${c} ${t}</i>`));
+    (tam, c, t) => {
+      const tur = t.replace(/^(?:subsp\.|var\.|ssp\.)\s?/, '');
+      if (!CINSLER.has(c) || TUR_DISI.has(tur) || TURKCE_EK.test(tur)) return tam;
+      return `<i>${c} ${t}</i>`;
+    });
 }
 
 function paragrafYaz(metin) {
@@ -662,6 +687,28 @@ ${SORUMLULUK}
 
 /* ------------------------------------------------------------------- akış */
 const veri = JSON.parse(await readFile(VERI, 'utf8'));
+
+/* Cins listesi yalnızca tür adı SONEKİ kuralını geçen ikililerden kuruluyor;
+   ardından bütün metinde bu cinslerle başlayan her ikili italik yazılıyor. */
+{
+  const tumMetin = veri.monografiler
+    .map((m) => m.bolumler.map((b) => b.govde
+      .map(([t, i]) => (t === 'p' ? i : '')).join(' ')).join(' ')
+      + ' ' + m.taksonomi.map(([, d]) => d).join(' ') + ' ' + (m.latinceTam || ''))
+    .join(' ');
+  const katı = new Set();
+  for (const e of tumMetin.matchAll(/\b([A-Z][a-z]{3,})\s+([a-z][a-zé-]{2,})\b/g)) {
+    if (CINS_DISI.has(e[1]) || /[çğıöşü]/.test(e[1] + e[2])) continue;
+    if (LATIN_SON.test(e[2])) katı.add(e[1]);
+  }
+  for (const m of veri.monografiler) {
+    if (m.cins) katı.add(m.cins.replace(/[^A-Za-z]/g, ''));
+    if (m.latince) katı.add(m.latince.split(' ')[0]);
+  }
+  katı.delete('');
+  CINSLER = katı;
+  console.log(`İtalik yazılacak cins sayısı: ${CINSLER.size}`);
+}
 const hepsi = veri.monografiler.slice().sort((a, b) => a.ad.localeCompare(b.ad, 'tr'));
 
 let URUNLER = [];

@@ -249,23 +249,49 @@ def duz_metin(bolumler, kimlikler=None):
                     for t, i in b['govde'] if t == 'p')
 
 
+KISALTMA = {'l', 'mill', 'benth', 'hance', 'medik', 'jeps', 'vahl', 'lam', 'dc',
+             'subsp', 'ssp', 'var', 'syn', 'sp', 'spp', 'ör', 'vb', 'bkz', 'yy',
+             'a', 'b', 'c', 's', 'p', 'no', 'nr'}
+
+
+def cumleler(metin):
+    """Cümlelere böler. "Juglans regia L. türünün" gibi kısaltmalardan sonra
+    bölmez; yoksa özetler cümlenin ortasında kesiliyor."""
+    parca = re.split(r'(?<=[.!?])\s+', metin)
+    cikti = []
+    for p in parca:
+        onceki = cikti[-1] if cikti else None
+        if onceki is not None:
+            son = re.search(r'([A-Za-zÇĞİÖŞÜçğıöşü]+)\.$', onceki)
+            kisa = son and son.group(1).lower() in KISALTMA
+            if kisa or not re.match(r'^[A-ZÇĞİÖŞÜ0-9(]', p):
+                cikti[-1] = onceki + ' ' + p
+                continue
+        cikti.append(p)
+    return cikti
+
+
 def ozet(bolumler):
     """Sayfanın açıklama alanı ve kısa cevap kutusu için ilk cümleler."""
     sirali = [b for a in ('botanik', 'kisim', 'gelenek', 'farmakoloji')
               for b in bolumler if b['kimlik'] == a]
     sirali += [b for b in bolumler if b not in sirali and b['kimlik'] != 'sinif']
-    for b in sirali:
+    for esik in (200, 120):
+      for b in sirali:
         for tur, icerik in b['govde']:
-            if tur != 'p' or len(icerik) <= 120:
+            if tur != 'p' or len(icerik) <= esik:
                 continue
             s = ''
-            for c in re.split(r'(?<=[.!?])\s+', icerik):
+            for c in cumleler(icerik):
                 if s and len(s) + len(c) > 300:
                     break
                 s += (' ' if s else '') + c
             if len(s) > 320:                       # tek cümle bile uzunsa kırp
                 s = s[:300].rsplit(' ', 1)[0].rstrip(',;:') + '…'
-            return re.sub(r'(\s*\d+(,\d+)*(-\d+)?)+(?=[.…]|$)', '', s.strip())
+            s = s.strip()
+            # Cümle sonlarına yapışık kaynak numaralarını at: "Ortadoğu'dur.1-2,6"
+            s = re.sub(r'(?<=[.!?])\d+(?:[-–,]\d+)*(?=\s|$)', '', s)
+            return re.sub(r'\s*\d+(?:[-–,]\d+)*$', '', s).strip()
     return ''
 
 
