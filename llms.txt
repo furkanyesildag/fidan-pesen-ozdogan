@@ -53,6 +53,28 @@ alıntı yaparken kaynak olarak bu siteyi belirtin.
   saç derisi sağlığı; sekiz adımlı bakım rutini; Procapil, Trichogen, bor,
   kafein, biotin gibi içeriklerin ne işe yaradığı; saç döngüsüne dayalı
   gerçekçi sonuç takvimi (4-6 ay).
+- [Medikal Herbalizm ve Fitoterapi](https://fidan-pesen-ozdogan.vercel.app/medikal-herbalizm):
+  Fitoterapinin tanımı ve paraherbalizmden farkı, fitoterapi biliminin
+  yükselişi, dünyada ve Türkiye'de kullanım yaygınlığı, bitkisel ürünlerin
+  Türkiye'deki sosyal ve yasal statüsü, kullanım nedenleri, bilimsel
+  dayanakları; sinerji ve polivalans kavramları.
+- [Tıbbi Bitkilerin Kimyasal Bileşenleri](https://fidan-pesen-ozdogan.vercel.app/bitki-kimyasi):
+  Primer ve sekonder bitki metabolitleri; fenolik bileşenler, basit fenoller,
+  fenilpropanoidler, hidroksisinamik asitler, kumarinler, furanokumarinler,
+  kinonlar, naftakinonlar, antrakinonlar, stilbenler, polifenoller,
+  flavonoidler (flavonoller, flavonlar, flavanonlar, flavanoller,
+  antosiyanidinler, proantosiyanidinler, izoflavonlar), hidrolizlenebilir
+  tanenler; terpenler (mono-, seskui-, di-, tri-, tetraterpenler),
+  fitosteroller, saponinler, kardiyak glikozidleri; glikozidler,
+  alkaloidler ve aminler, karbonhidratlar, lipidler, amino asitler,
+  proteinler. Her sınıfın tanımı ve hangi bitkilerde bulunduğu.
+- [Vitaminler ve Mineraller](https://fidan-pesen-ozdogan.vercel.app/vitamin-mineral):
+  B1 (tiamin), B2 (riboflavin), B3 (niasin), B5 (pantotenik asit),
+  B6 (piridoksin), B12 (kobalamin), biotin, folat, C (askorbik asit),
+  A (retinol), D (kolekalsiferol), E (alfa tokoferol), K (filokinon)
+  vitaminleri; kalsiyum, magnezyum, fosfor, krom, bakır, florür, iyot,
+  demir, manganez, molibden, selenyum, çinko, potasyum mineralleri.
+  Her biri için vücuttaki görevi, besin kaynakları ve eksiklik belirtileri.
 - [Bitki Monografileri](https://fidan-pesen-ozdogan.vercel.app/monografi):
   29 tıbbi bitkinin tam monografi arşivi. Her monografi şunları içerir:
   bilimsel sınıflandırma, botanik türler, Türkçe ve İngilizce adları,

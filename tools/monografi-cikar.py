@@ -27,6 +27,7 @@ from xml.etree import ElementTree as ET
 KOK = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 KAYNAK = os.path.join(KOK, 'belge', 'monografi')
 CIKTI = os.path.join(KOK, 'data', 'monografiler.json')
+CIKTI_KITAP = os.path.join(KOK, 'data', 'herbalizm.json')
 W = '{http://schemas.openxmlformats.org/wordprocessingml/2006/main}'
 
 # Belgelerdeki bölüm başlıkları. Soldaki anahtar sayfada kullanılan kimlik,
@@ -299,6 +300,84 @@ def ozet(bolumler):
     return ''
 
 
+KAYNAK_KALIP = re.compile(
+    r'^(?:[A-ZÇĞİÖŞÜ][A-Za-zçğıöşüÇĞİÖŞÜ\'’-]+\s+[A-Z]{1,3}[,.\s]'   # Kayne SB.
+    r'|[A-ZÇĞİÖŞÜ][\w\'’-]+\s+[A-ZÇĞİÖŞÜ][\w\'’-]*\s*\(\d{4}\)'  # Wagner H (2004)
+    r'|[A-Z][A-Za-z\s]+:\s*https?://'                                # UMMC: http://
+    r'|https?://)')
+
+
+def kaynak_kesin(tur, icerik):
+    """Yazar adıyla ya da bağlantıyla başlayan satır: kesin kaynakça girdisi."""
+    return tur == 'p' and bool(KAYNAK_KALIP.match(icerik) or icerik.startswith('http'))
+
+
+def kaynak_zayif(tur, icerik):
+    """Kaynakça listesinin içinde geçebilecek gevşek biçimler. Tek başına
+    sınır belirlemeye yetmez; gövde metninde de yıl ya da yayınevi adı
+    geçebiliyor."""
+    return tur == 'p' and bool(
+        kaynak_kesin(tur, icerik) or 'http' in icerik
+        or re.search(r'\b(19|20)\d{2}\b', icerik)
+        or re.search(r'\b(?:Press|Publishing|Journal|Pharmacopoeia|edn|ed\.|pp?\.)', icerik))
+
+
+def kaynakca_kuyruk(govde):
+    """Medikal Herbalizm belgesinde "Kaynakça" başlığı yok; kaynaklar son
+    bölümün gövdesine yapışık, alfabetik bir liste hâlinde duruyor.
+
+    Sınır iki koşulla belirleniyor: sınır satırının KESİN kaynakça biçiminde
+    olması ve ardından gelen kuyruğun büyük çoğunluğunun kaynak görünümünde
+    olması. Tek bir gevşek eşleşme gövde metnini kesmeye yetmiyor; yoksa
+    içinde yıl geçen normal bir paragraf listeyi erken başlatıyor."""
+    kesin = [kaynak_kesin(t, i) for t, i in govde]
+    zayif = [kaynak_zayif(t, i) for t, i in govde]
+    for i in range(len(govde)):
+        kuyruk = zayif[i:]
+        if (kesin[i] and all(zayif[i:i + 5]) and len(kuyruk) >= 10
+                and sum(kuyruk) / len(kuyruk) >= 0.85):
+            while i > 0 and kesin[i - 1]:      # listenin başına doğru genişlet
+                i -= 1
+            return govde[:i], [c for t, c in govde[i:] if t == 'p' and len(c) > 12]
+    return govde, []
+
+
+def kitabi_cikar():
+    """MEDİKAL HERBALİZM belgesini bölümleriyle birlikte JSON'a yazar."""
+    yol = next((p for p in glob.glob(os.path.join(KAYNAK, '*.docx'))
+                if 'HERBAL' in nfc(os.path.basename(p)).upper()), None)
+    if not yol:
+        print('MEDİKAL HERBALİZM belgesi bulunamadı, atlandı.')
+        return
+    oge = paragraflar(yol)
+    basliksiz, bolumler = bolumle(oge[1:])
+    if bolumler:
+        bolumler[-1]['govde'], kaynakca = kaynakca_kuyruk(bolumler[-1]['govde'])
+    else:
+        kaynakca = []
+    kayit = {
+        'ad': 'Medikal Herbalizm ve Fitoterapi',
+        'giris': [[t, i] for t, i in basliksiz],
+        'bolumler': [{
+            'kimlik': b['kimlik'],
+            'baslik': b['baslik'],
+            'govde': b['govde'],
+        } for b in bolumler if b['govde']],
+        'kaynakca': kaynakca,
+    }
+    kayit['kelime'] = sum(len(i.split()) for b in kayit['bolumler']
+                          for t, i in b['govde'] if t == 'p')
+    with open(CIKTI_KITAP, 'w', encoding='utf-8') as f:
+        json.dump({
+            'kaynak': 'Dr. Ecz. Fidan Pesen Özdoğan, Medikal Herbalizm',
+            'not': 'tools/monografi-cikar.py tarafından üretildi, elle düzenlemeyin.',
+            'kitap': kayit,
+        }, f, ensure_ascii=False, indent=1)
+        f.write('\n')
+    print('Yazıldı: data/herbalizm.json · %d bölüm · %d kelime · %d kaynak' % (
+        len(kayit['bolumler']), kayit['kelime'], len(kaynakca)))
+
+
 def calis():
     if not os.path.isdir(KAYNAK):
         sys.exit('belge/monografi/ klasörü yok: %s' % KAYNAK)
@@ -373,6 +452,7 @@ def calis():
         f.write('\n')
     print('\nYazıldı: data/monografiler.json · %d monografi · %d kelime' % (
         len(kayitlar), sum(k['kelime'] for k in kayitlar)))
+    kitabi_cikar()
 
 
 if __name__ == '__main__':
