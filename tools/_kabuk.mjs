@@ -10,7 +10,7 @@
  * ---------------------------------------------------------------------------
  */
 export const SITE = 'https://fidanpesen.com';
-export const SURUM = 'v=22';
+export const SURUM = 'v=23';
 export const BUGUN = '2026-08-11';
 export const BUGUN_YAZI = '11 Ağustos 2026';
 
@@ -140,7 +140,11 @@ export function bas({ yol, baslik, aciklama, ldJson }) {
 <meta property="og:url" content="${url}">
 <meta property="og:title" content="${kacis(baslik)}">
 <meta property="og:description" content="${kacis(aciklama)}">
-<meta property="og:image" content="${SITE}/assets/img/portre-atolye.jpg">
+<meta property="og:image" content="${SITE}/assets/img/og-kapak.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:alt" content="Dr. Eczacı Fidan Pesen Özdoğan · Fitoterapi Uzmanı Eczacı, Geleneksel ve Tamamlayıcı Tıp Bilim Doktoru">
 <meta property="article:author" content="Dr. Ecz. Fidan Pesen Özdoğan">
 <meta property="article:published_time" content="${BUGUN}">
 <meta property="article:modified_time" content="${BUGUN}">
@@ -148,7 +152,8 @@ export function bas({ yol, baslik, aciklama, ldJson }) {
 <meta name="twitter:site" content="@PesenFidan">
 <meta name="twitter:title" content="${kacis(baslik)}">
 <meta name="twitter:description" content="${kacis(aciklama)}">
-<meta name="twitter:image" content="${SITE}/assets/img/portre-atolye.jpg">
+<meta name="twitter:image" content="${SITE}/assets/img/og-kapak.jpg">
+<meta name="twitter:image:alt" content="Dr. Eczacı Fidan Pesen Özdoğan · Fitoterapi Uzmanı Eczacı, Geleneksel ve Tamamlayıcı Tıp Bilim Doktoru">
 <link rel="stylesheet" href="/assets/css/style.css?${SURUM}">
 <link rel="stylesheet" href="/assets/css/makale.css?${SURUM}">
 <link rel="icon" href="${SIMGE}">

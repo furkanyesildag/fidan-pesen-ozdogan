@@ -43,11 +43,9 @@ const SAYFALAR = [
     ayrica: ['Sinerji ve Polivalans'],
     ust: null,                                  // her bölüm h2
     h1: 'Medikal Herbalizm ve Fitoterapi',
-    baslik: 'Medikal Herbalizm ve Fitoterapi Nedir? | Dr. Ecz. Fidan Pesen Özdoğan',
+    baslik: 'Medikal Herbalizm Nedir? | Dr. Ecz. Fidan Pesen',
     aciklama: 'Medikal herbalizm ve fitoterapi nedir, paraherbalizmden farkı '
-      + 'nedir? Fitoterapinin dünyada ve Türkiye\'de kullanım yaygınlığı, '
-      + 'bitkisel ürünlerin yasal statüsü, bilimsel dayanakları, sinerji ve '
-      + 'polivalans kavramları. Dr. Ecz. Fidan Pesen Özdoğan\'ın derlemesi.',
+      + 'nedir? Bilimsel dayanakları, yasal statüsü, sinerji ve polivalans.',
     ozet: 'Fitoterapi, bitkiyi bir inanç nesnesi değil bir ilaç hammaddesi '
       + 'olarak ele alan bilim dalıdır. Bu sayfa alanın tanımını, bilimsel '
       + 'dayanaklarını, dünyada ve Türkiye\'deki yerini, bitkisel ürünlerin '
@@ -66,11 +64,10 @@ const SAYFALAR = [
       'Karbonhidratlar ve türevleri', 'Lipidler', 'Amino asitler ve türevleri',
       'Proteinler']),
     h1: 'Tıbbi Bitkilerin Kimyasal Bileşenleri',
-    baslik: 'Bitki Kimyası: Flavonoid, Tanen, Saponin, Alkaloid Nedir? | Dr. Ecz. Fidan Pesen Özdoğan',
+    baslik: 'Flavonoid, Tanen, Saponin Nedir? | Dr. Ecz. Fidan Pesen',
     aciklama: 'Tıbbi bitkilerdeki etken maddeler: fenolik bileşenler, '
-      + 'flavonoidler, tanenler, kumarinler, antrakinonlar, terpenler, uçucu '
-      + 'yağlar, saponinler, glikozidler, alkaloidler, polisakkaritler. Her '
-      + 'bileşen sınıfının tanımı, hangi bitkilerde bulunduğu ve ne yaptığı.',
+      + 'flavonoidler, tanenler, terpenler, saponinler, glikozidler ve '
+      + 'alkaloidler.',
     ozet: 'Bir bitkinin ne yaptığını anlamak, içinde ne olduğunu bilmekle '
       + 'başlar. Bu sayfa tıbbi bitkilerdeki etken madde sınıflarını sırayla '
       + 'ele alıyor: primer ve sekonder metabolitler, fenolik bileşenler ve '
@@ -88,11 +85,10 @@ const SAYFALAR = [
     ust: new Set(['Vitamin ve mineraller']),
     araBaslik: { 'B1 vitamini (Tiamin)': 'Vitaminler', 'Kalsiyum (Ca)': 'Mineraller' },
     h1: 'Vitaminler ve Mineraller',
-    baslik: 'Vitaminler ve Mineraller: Görevleri, Kaynakları, Eksikliği | Dr. Ecz. Fidan Pesen Özdoğan',
-    aciklama: 'B1, B2, B3, B5, B6, B12, biotin, folat, C, A, D, E, K '
-      + 'vitaminleri ile kalsiyum, magnezyum, fosfor, krom, bakır, iyot, '
-      + 'demir, manganez, molibden, selenyum, çinko ve potasyum: her birinin '
-      + 'vücuttaki görevi, besin kaynakları ve eksiklik belirtileri.',
+    baslik: 'Vitaminler ve Mineraller Rehberi | Dr. Ecz. Fidan Pesen',
+    aciklama: 'B12, D, C, folat, demir, çinko, magnezyum, selenyum ve '
+      + 'diğerleri: her birinin vücuttaki görevi, besin kaynakları ve '
+      + 'eksiklik belirtileri.',
     ozet: 'Vitaminler ve mineraller, vücudun kendi üretemediği ya da yeterince '
       + 'üretemediği için dışarıdan almak zorunda olduğu bileşenlerdir. Bu '
       + 'sayfa on üç vitamini ve on üç minerali tek tek ele alıyor: her birinin '

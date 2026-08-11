@@ -118,10 +118,15 @@ function sssUret(m, bol) {
 function monografiSayfa(m, komsu, urunler) {
   const bol = Object.fromEntries(m.bolumler.map((b) => [b.kimlik, b]));
   const sss = sssUret(m, bol);
-  const baslik = `${m.ad}${m.latince ? ` (${m.latince})` : ''} Nedir? Bitki Monografisi | Dr. Ecz. Fidan Pesen Özdoğan`;
-  const aciklama = duz(`${m.ad} monografisi: botanik kimliği, kimyasal bileşenleri, `
-    + `farmakopelerdeki yeri, geleneksel kullanımı, farmakolojik özellikleri ve `
-    + `dikkat edilmesi gereken noktalar. Dr. Ecz. Fidan Pesen Özdoğan'ın derlemesi.`).slice(0, 300);
+  /* Başlık arama sonucunda kırpılmasın diye 62 karakteri aşmıyor: "Monografisi"
+     kelimesi ancak sığdığında giriyor, sığmadığında botanik ad tek başına
+     kalıyor. Açıklama da 160'ı aşmıyor. */
+  const MARKA = ' | Dr. Ecz. Fidan Pesen';
+  const latin = m.latince ? ` (${m.latince})` : '';
+  const uzunAd = `${m.ad} Monografisi${latin}`;
+  const baslik = (uzunAd + MARKA).length <= 62 ? uzunAd + MARKA : `${m.ad}${latin}${MARKA}`;
+  const aciklama = duz(`${m.ad}${latin} monografisi: botanik sınıflandırma, kimyasal `
+    + `bileşenler, farmakopeler, geleneksel kullanım, yan etki ve ilaç etkileşimleri.`);
 
   const bolumBaslik = m.bolumler.map((b) => ({
     kimlik: b.kimlik.replace(/[^a-z0-9-]/g, '').slice(0, 50) || 'bolum',
@@ -306,11 +311,10 @@ ${icindekiler.map(([k, b]) => `        <li><a href="#${k}">${kacis(b)}</a></li>`
 
 /* -------------------------------------------------------------- dizin sayfa */
 function dizinSayfa(hepsi, urunSayi) {
-  const baslik = 'Bitki Monografileri | Tıbbi Bitkiler Arşivi | Dr. Ecz. Fidan Pesen Özdoğan';
+  const baslik = 'Bitki Monografileri Arşivi | Dr. Ecz. Fidan Pesen';
   const aciklama = duz(`${hepsi.length} tıbbi bitkinin tam monografisi: botanik `
-    + `sınıflandırma, kimyasal bileşenler, farmakopelerdeki yeri, geleneksel `
-    + `kullanım, farmakolojik özellikler, yan etki ve ilaç etkileşimleri. `
-    + `Fitoterapi Uzmanı Eczacı Dr. Ecz. Fidan Pesen Özdoğan'ın derlemesi.`);
+    + `sınıflandırma, kimyasal bileşenler, farmakopeler, geleneksel kullanım `
+    + `ve ilaç etkileşimleri.`);
 
   const ldJson = {
     '@context': 'https://schema.org',

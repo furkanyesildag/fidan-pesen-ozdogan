@@ -236,84 +236,7 @@ function sayfaUret(videolar, guncelleme) {
         '@id': `${url}/#webpage`,
         url,
         name: 'Videolar | Dr. Ecz. Fidan Pesen Özdoğan',
-        description: 'Dr. Ecz. Fidan Pesen Özdoğan’ın YouTube kanalındaki güncel videolar: şifalı bitkiler, mizaç, doğal bakım ve geleneksel tıp anlatımları.',
-        inLanguage: 'tr-TR',
-        isPartOf: { '@id': `${SITE}/#website` },
-        about: { '@id': `${SITE}/#fidan-pesen-ozdogan` },
-        dateModified: guncelleme,
-        breadcrumb: { '@id': `${url}/#breadcrumb` },
-      },
-      {
-        '@type': 'BreadcrumbList',
-        '@id': `${url}/#breadcrumb`,
-        itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Ana sayfa', item: `${SITE}/` },
-          { '@type': 'ListItem', position: 2, name: 'Videolar' },
-        ],
-      },
-      {
-        '@type': 'ItemList',
-        '@id': `${url}/#liste`,
-        name: 'Dr. Ecz. Fidan Pesen Özdoğan videoları',
-        numberOfItems: videolar.length,
-        itemListOrder: 'https://schema.org/ItemListOrderDescending',
-        itemListElement: videolar.map((v, i) => ({
-          '@type': 'ListItem',
-          position: i + 1,
-          item: {
-            '@type': 'VideoObject',
-            '@id': `https://www.youtube.com/watch?v=${v.id}`,
-            name: v.baslik,
-            description: v.aciklama || v.baslik,
-            thumbnailUrl: [v.kucukResim],
-            uploadDate: v.yayin,
-            contentUrl: v.bag,
-            embedUrl: `https://www.youtube.com/embed/${v.id}`,
-            inLanguage: 'tr-TR',
-            creator: { '@id': `${SITE}/#fidan-pesen-ozdogan` },
-            publisher: { '@id': `${SITE}/#fidan-pesen-ozdogan` },
-            keywords: v.etiketler.join(', ') || undefined,
-            ...(v.gorunum ? {
-              interactionStatistic: {
-                '@type': 'InteractionCounter',
-                interactionType: 'https://schema.org/WatchAction',
-                userInteractionCount: v.gorunum,
-              },
-            } : {}),
-          },
-        })),
-      },
-      {
-        '@type': 'Person',
-        '@id': `${SITE}/#fidan-pesen-ozdogan`,
-        name: 'Fidan Pesen Özdoğan',
-        honorificPrefix: 'Dr. Ecz.',
-        url: `${SITE}/`,
-        sameAs: [
-          'https://www.dogalmarkam.com/',
-          'https://www.instagram.com/fidanpesen/',
-          'https://www.instagram.com/dogalmarkambor/',
-          'https://www.youtube.com/@fidanpesen',
-          'https://x.com/pesenfidan',
-          'https://www.facebook.com/dogalmarkambor/',
-          'https://tr.linkedin.com/in/fidan-pesen-ozdogan-a4392b125',
-        ],
-      },
-      {
-        '@type': 'WebSite',
-        '@id': `${SITE}/#website`,
-        url: `${SITE}/`,
-        name: 'Dr. Ecz. Fidan Pesen Özdoğan',
-        inLanguage: 'tr-TR',
-        publisher: { '@id': `${SITE}/#fidan-pesen-ozdogan` },
-      },
-    ],
-  };
-
-  const baslik = 'Videolar | Dr. Ecz. Fidan Pesen Özdoğan';
-  const aciklama = 'Dr. Ecz. Fidan Pesen Özdoğan’ın YouTube kanalındaki güncel videolar: şifalı bitkiler, mizaç, doğal bakım ve geleneksel tıp anlatımları.';
-
-  return `<!DOCTYPE html>
+        description: 'YouTube kanalındaki güncel videolar: şifalı bitkiler, mizaç, doğal bakım tarifleri ve geleneksel tıp anlatımları tek sayfada.<!DOCTYPE html>
 <html lang="tr">
 <head>
 <meta charset="utf-8">
@@ -332,12 +255,16 @@ function sayfaUret(videolar, guncelleme) {
 <meta property="og:url" content="${url}">
 <meta property="og:title" content="${baslik}">
 <meta property="og:description" content="${aciklama}">
-<meta property="og:image" content="${SITE}/assets/img/portre-atolye.jpg">
+<meta property="og:image" content="${SITE}/assets/img/og-kapak.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:alt" content="Dr. Eczacı Fidan Pesen Özdoğan · Fitoterapi Uzmanı Eczacı, Geleneksel ve Tamamlayıcı Tıp Bilim Doktoru">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@PesenFidan">
 <link rel="preconnect" href="https://i.ytimg.com" crossorigin>
-<link rel="stylesheet" href="/assets/css/style.css?v=22">
-<link rel="stylesheet" href="/assets/css/makale.css?v=22">
+<link rel="stylesheet" href="/assets/css/style.css?v=23">
+<link rel="stylesheet" href="/assets/css/makale.css?v=23">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44' fill='none'><path d='M22 36V14' stroke='%23a8842c' stroke-width='3' stroke-linecap='round'/><path d='M22 22.6c-6 0-9.6-3.6-9.6-9.6 6 0 9.6 3.6 9.6 9.6Z' stroke='%23a8842c' stroke-width='2.8' stroke-linejoin='round'/><path d='M22 18c0-6.6 3.8-10.4 10.4-10.4 0 6.6-3.8 10.4-10.4 10.4Z' stroke='%23a8842c' stroke-width='2.8' stroke-linejoin='round'/></svg>">
 <script type="application/ld+json">
 ${JSON.stringify(ld, null, 2)}
@@ -480,9 +407,9 @@ ${JSON.stringify(ld, null, 2)}
   </div>
 </footer>
 
-<script src="/assets/js/sayfa.js?v=22"></script>
-<script src="/assets/js/tema.js?v=22"></script>
-<script src="/assets/js/asistan-baloncuk.js?v=22" defer></script>
+<script src="/assets/js/sayfa.js?v=23"></script>
+<script src="/assets/js/tema.js?v=23"></script>
+<script src="/assets/js/asistan-baloncuk.js?v=23" defer></script>
 <script>
 /* Tıklanana kadar YouTube'dan hiçbir şey yüklenmez (facade deseni):
    kapak görseli i.ytimg.com'dan gelir, oynatıcı yalnızca tıklamada eklenir. */
