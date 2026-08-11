@@ -54,6 +54,17 @@
       "has": [
         {
           "type": "host",
+          "value": "www.fidanpesen.com"
+        }
+      ],
+      "destination": "https://fidanpesen.com/:yol*",
+      "permanent": true
+    },
+    {
+      "source": "/:yol*",
+      "has": [
+        {
+          "type": "host",
           "value": "fidan-pesen-ozdogan.vercel.app"
         }
       ],
