@@ -10,7 +10,7 @@
  * ---------------------------------------------------------------------------
  */
 export const SITE = 'https://fidan-pesen-ozdogan.vercel.app';
-export const SURUM = 'v=20';
+export const SURUM = 'v=21';
 export const BUGUN = '2026-08-11';
 export const BUGUN_YAZI = '11 Ağustos 2026';
 

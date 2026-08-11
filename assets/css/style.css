@@ -480,29 +480,23 @@ main { position: relative; z-index: 10; }
 .kapak .dev-baslik { font-size: clamp(42px, 7.4vw, 98px); }
 
 /* isim üstündeki küçük unvan ve altındaki uzmanlık satırı */
+/* Kapaktaki unvan. Önce küçük, seyrek harfli, çizgili bir etiket olarak
+   yazılmıştı; ismin üstünde ayrı duran bir rozet gibi görünüyordu. Artık
+   ismin kendi yazı karakterinde, aynı hizada ve aynı renk ailesinde: bir
+   etiket değil, ismin ilk satırı. */
 .dev-baslik .unvan-ust {
-  display: flex; align-items: center; gap: .8em;
-  font-family: var(--sans); font-weight: 700;
-  font-size: .2em; letter-spacing: .34em; text-transform: uppercase;
-  color: var(--aksan);
-  margin-bottom: .34em;
+  display: block;
+  font-family: var(--serif); font-weight: 400; font-style: normal;
+  font-size: .33em; line-height: 1;
+  letter-spacing: .005em; text-transform: none;
+  color: var(--ink-2);
+  margin-bottom: .06em;
+  padding-top: .1em; margin-top: -.1em;
   background: none; -webkit-text-fill-color: currentColor;
   transition: color .8s;
 }
-/* Unvanın yanındaki ince altın çizgi: satırı bir etiketten çok bir künye
-   satırı hâline getirir, isimle arasındaki boşluğu da görsel olarak bağlar. */
-.dev-baslik .unvan-ust::after {
-  content: ''; flex: 0 0 auto; width: 4.6em; height: 2px; border-radius: 2px;
-  background: linear-gradient(90deg, var(--aksan), rgba(var(--aksan-rgb), 0));
-  transition: background .8s;
-}
-@media (max-width: 980px) {
-  .dev-baslik .unvan-ust { justify-content: center; }
-  .dev-baslik .unvan-ust::before {
-    content: ''; flex: 0 0 auto; width: 4.6em; height: 2px; border-radius: 2px;
-    background: linear-gradient(270deg, var(--aksan), rgba(var(--aksan-rgb), 0));
-  }
-}
+@media (max-width: 980px) { .dev-baslik .unvan-ust { text-align: center; } }
+
 .unvan-alt {
   margin: -14px 0 30px;
   font-size: 13.5px; letter-spacing: .04em;
@@ -511,9 +505,7 @@ main { position: relative; z-index: 10; }
 }
 @media (max-width: 980px) { .unvan-alt { margin-inline: auto; } }
 @media (max-width: 620px) {
-  .dev-baslik .unvan-ust { font-size: .24em; letter-spacing: .26em; gap: .6em; }
-  .dev-baslik .unvan-ust::before,
-  .dev-baslik .unvan-ust::after { width: 3.2em; }
+  .dev-baslik .unvan-ust { font-size: .34em; }
   .unvan-alt { font-size: 12.5px; margin-top: -10px; }
 }
 
