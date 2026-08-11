@@ -7,3 +7,6 @@ _m_*.html
 _f_*.html
 _p_*.html
 _dbg.html
+
+# ortam değişkenleri asla depoya girmez
+.env*
