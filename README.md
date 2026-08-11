@@ -4,7 +4,7 @@ Tek sayfalık, görsel ağırlıklı bir özgeçmiş/biyografi sitesi.
 **Hiçbir harici kütüphane yok** — Three.js yok, WebGL yok, framework yok, CDN yok.
 Sadece HTML + CSS + vanilla JS.
 
-**Canlı:** https://fidan-pesen-ozdogan.vercel.app
+**Canlı:** https://fidanpesen.com
 **Kaynak:** https://github.com/furkanyesildag/fidan-pesen-ozdogan
 
 ## Çalıştırma

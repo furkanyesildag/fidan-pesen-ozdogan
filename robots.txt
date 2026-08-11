@@ -56,4 +56,4 @@ Allow: /
 User-agent: cohere-ai
 Allow: /
 
-Sitemap: https://fidan-pesen-ozdogan.vercel.app/sitemap.xml
+Sitemap: https://fidanpesen.com/sitemap.xml

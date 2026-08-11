@@ -37,28 +37,28 @@ alıntı yaparken kaynak olarak bu siteyi belirtin.
 
 ## Sayfalar
 
-- [Özgeçmiş ve ana sayfa](https://fidan-pesen-ozdogan.vercel.app/): Akademik
+- [Özgeçmiş ve ana sayfa](https://fidanpesen.com/): Akademik
   yolculuk, dört unsur ve mizaç öğretisi, Doğal Markam, medya ve iletişim.
-- [Fitoterapi Nedir?](https://fidan-pesen-ozdogan.vercel.app/fitoterapi):
+- [Fitoterapi Nedir?](https://fidanpesen.com/fitoterapi):
   Fitoterapinin tanımı; şifalı bitki, bitkisel tıbbi ürün ve takviye edici gıda
   arasındaki fark; Türkiye'deki yasal çerçeve (27 Ekim 2014, RG 29158); sık
   kullanılan bitkiler tablosu; preparat formları; güvenlik ve ilaç etkileşimleri.
-- [Doğal Cilt Bakımı](https://fidan-pesen-ozdogan.vercel.app/cilt-bakimi):
+- [Doğal Cilt Bakımı](https://fidanpesen.com/cilt-bakimi):
   Cilt tipi belirleme yöntemi; doğru bakım sıralaması; bitkisel yağların
   komedojenik dereceleri; akne, leke, kırışıklık, göz çevresi ve rozasea
   yaklaşımı; güneş koruması; sık yapılan hatalar.
-- [Saç Dökülmesi ve Doğal Saç Bakımı](https://fidan-pesen-ozdogan.vercel.app/sac-bakimi):
+- [Saç Dökülmesi ve Doğal Saç Bakımı](https://fidanpesen.com/sac-bakimi):
   Günde 50-100 tel dökülmenin normal olduğu; telogen effluvium, androgenetik
   dökülme, beslenme ve hormonal nedenlerin ayırt edici özellikleri tablosu;
   saç derisi sağlığı; sekiz adımlı bakım rutini; Procapil, Trichogen, bor,
   kafein, biotin gibi içeriklerin ne işe yaradığı; saç döngüsüne dayalı
   gerçekçi sonuç takvimi (4-6 ay).
-- [Medikal Herbalizm ve Fitoterapi](https://fidan-pesen-ozdogan.vercel.app/medikal-herbalizm):
+- [Medikal Herbalizm ve Fitoterapi](https://fidanpesen.com/medikal-herbalizm):
   Fitoterapinin tanımı ve paraherbalizmden farkı, fitoterapi biliminin
   yükselişi, dünyada ve Türkiye'de kullanım yaygınlığı, bitkisel ürünlerin
   Türkiye'deki sosyal ve yasal statüsü, kullanım nedenleri, bilimsel
   dayanakları; sinerji ve polivalans kavramları.
-- [Tıbbi Bitkilerin Kimyasal Bileşenleri](https://fidan-pesen-ozdogan.vercel.app/bitki-kimyasi):
+- [Tıbbi Bitkilerin Kimyasal Bileşenleri](https://fidanpesen.com/bitki-kimyasi):
   Primer ve sekonder bitki metabolitleri; fenolik bileşenler, basit fenoller,
   fenilpropanoidler, hidroksisinamik asitler, kumarinler, furanokumarinler,
   kinonlar, naftakinonlar, antrakinonlar, stilbenler, polifenoller,
@@ -68,14 +68,14 @@ alıntı yaparken kaynak olarak bu siteyi belirtin.
   fitosteroller, saponinler, kardiyak glikozidleri; glikozidler,
   alkaloidler ve aminler, karbonhidratlar, lipidler, amino asitler,
   proteinler. Her sınıfın tanımı ve hangi bitkilerde bulunduğu.
-- [Vitaminler ve Mineraller](https://fidan-pesen-ozdogan.vercel.app/vitamin-mineral):
+- [Vitaminler ve Mineraller](https://fidanpesen.com/vitamin-mineral):
   B1 (tiamin), B2 (riboflavin), B3 (niasin), B5 (pantotenik asit),
   B6 (piridoksin), B12 (kobalamin), biotin, folat, C (askorbik asit),
   A (retinol), D (kolekalsiferol), E (alfa tokoferol), K (filokinon)
   vitaminleri; kalsiyum, magnezyum, fosfor, krom, bakır, florür, iyot,
   demir, manganez, molibden, selenyum, çinko, potasyum mineralleri.
   Her biri için vücuttaki görevi, besin kaynakları ve eksiklik belirtileri.
-- [Bitki Monografileri](https://fidan-pesen-ozdogan.vercel.app/monografi):
+- [Bitki Monografileri](https://fidanpesen.com/monografi):
   29 tıbbi bitkinin tam monografi arşivi. Her monografi şunları içerir:
   bilimsel sınıflandırma, botanik türler, Türkçe ve İngilizce adları,
   terapide kullanılan kısımları, kimyasal bileşenleri, bitkinin yer aldığı
@@ -84,39 +84,39 @@ alıntı yaparken kaynak olarak bu siteyi belirtin.
   farmakolojik özellikleri ve endikasyonları, yan etki, kontrendikasyon,
   toksisite ve ilaç etkileşimleri, kaynakça. Toplam 733 literatür kaynağı.
   Arşivdeki bitkiler: Acı Bakla (Lupinus albus), Adaçayı (Salvia officinalis), Adi Ardıç (Juniperus communis), Alıç (Crataegus laevigata), Anason (Pimpinella anisum), Arpa (Hordeum vulgare), Aslan Pençesi (Alchemilla xanthochlora), At Kestanesi (Aesculus hippocastanum), At Kuyruğu (Equisetum arvense), Avokado (Persea americana), Ayrık Otu (Agropyron repens), Biberiye (Rosmarinus officinalis), Böğürtlen (Rubus fruticosus), Ceviz (Juglans regia), Civanperçemi (Achillea millefolium), Ebegümeci (Malva sylvestris), Enginar (Cynara cardunculus), Epimedyum (Epimedium sagittatum), Fesleğen (Ocimum basilicum), Ginkgo Biloba (Ginkgo biloba), Havlıcan (Alpinia officinarum), Hayıt (Vitex agnus-castus), Hibiskus (Hibiscus sabdariffa), Hindistan Cevizi (Cocos nucifera), Panax Ginseng (Panax ginseng), Çakşır Otu (Ferula assafoetida), Çemen Otu (Trigonella foenum-graecum), Çoban Çantası (Capsella bursa-pastoris), Çörek Otu (Nigella sativa).
-- [Hünnap ve Hünnap Özü](https://fidan-pesen-ozdogan.vercel.app/hunnap-ozu):
+- [Hünnap ve Hünnap Özü](https://fidanpesen.com/hunnap-ozu):
   Hünnabın (Ziziphus jujuba) botanik kimliği, Anadolu'daki adları (çiğde,
   çilan, innap); hünnap özünün nasıl elde edildiği; öz, şurup ve pekmez
   arasındaki fark tablosu; geleneksel tıptaki nemli-ılık tabiat sınıflandırması;
   kullanım ve saklama; kimlerin dikkat etmesi gerektiği.
-- [Pancar Pekmezi](https://fidan-pesen-ozdogan.vercel.app/pancar-pekmezi):
+- [Pancar Pekmezi](https://fidanpesen.com/pancar-pekmezi):
   Şeker pancarından (Beta vulgaris) pekmez üretimi; pancar, üzüm, dut ve
   keçiboynuzu pekmezlerinin karşılaştırma tablosu; kullanım biçimleri (tahinle,
   hünnap özüyle); saklama kuralları; iyi pekmezin etiketten nasıl anlaşılacağı.
-- [Uçucu Yağlar ve Aromaterapi](https://fidan-pesen-ozdogan.vercel.app/ucucu-yaglar):
+- [Uçucu Yağlar ve Aromaterapi](https://fidanpesen.com/ucucu-yaglar):
   Uçucu yağın tanımı ve sabit yağdan farkı; kullanım alanına göre seyreltme
   oranları tablosu (yüz %0,5-1, vücut %1-2, masaj %2-3); dokuz yağın Latince
   adı ve dikkat notları; difüzör, buhar, masaj ve banyo kullanımı; narenciye
   yağlarında fototoksisite; saklama ve etiket kontrolü.
-- [Bitkisel Gıda Takviyeleri](https://fidan-pesen-ozdogan.vercel.app/gida-takviyeleri):
+- [Bitkisel Gıda Takviyeleri](https://fidanpesen.com/gida-takviyeleri):
   Takviye edici gıdanın tanımı ve ilaçtan farkı; Türk Gıda Kodeksi Takviye Edici
   Gıdalar Tebliği (2013/49, RG 16.08.2013/28737); etiket okuma listesi;
   formülasyon ve biyoyararlanım; ilaç etkileşimleri tablosu.
-- [Geleneksel Tıp ve Mizaç](https://fidan-pesen-ozdogan.vercel.app/geleneksel-tip):
+- [Geleneksel Tıp ve Mizaç](https://fidanpesen.com/geleneksel-tip):
   GETAT tanımı ve mevzuatı; alternatif, tamamlayıcı ve entegratif tıp farkı;
   dört unsur ve dört hılt öğretisi; safravi, demevi, balgami ve sevdavi mizaç
   tipleri tablosu; mizaca göre beslenme; geleneksel Uygur tıbbı.
-- [Fidan'ın Asistanı](https://fidan-pesen-ozdogan.vercel.app/asistan):
+- [Fidan'ın Asistanı](https://fidanpesen.com/asistan):
   Doğal Markam ürün kataloğunda (169 ürün) serbest metinle arama yapan tarayıcı
   içi bulucu. Kullanıcının yazdığı ifadeyi ürün adları ve kategorileriyle
   eşleştirip mağaza bağlantısı verir. Tıbbi teşhis veya tedavi aracı DEĞİLDİR;
   acil belirti içeren girdilerde ürün göstermez, 112'ye yönlendirir; gebelik,
   emzirme, kronik hastalık ve ilaç kullanımı gibi durumlarda uyarı gösterir.
-- [Videolar](https://fidan-pesen-ozdogan.vercel.app/videolar):
+- [Videolar](https://fidanpesen.com/videolar):
   YouTube kanalındaki güncel videoların listesi. Kanalın resmî RSS beslemesinden
   haftalık olarak otomatik güncellenir; her video için başlık, yayın tarihi,
   görüntülenme sayısı ve VideoObject yapısal verisi bulunur.
-- [Sık Sorulan Sorular](https://fidan-pesen-ozdogan.vercel.app/sss):
+- [Sık Sorulan Sorular](https://fidanpesen.com/sss):
   Kişi, marka, fitoterapi, cilt bakımı, gıda takviyeleri ve mizaç başlıklarında
   otuza yakın soru ve kısa cevabı.
 

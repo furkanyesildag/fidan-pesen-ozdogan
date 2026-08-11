@@ -47,5 +47,18 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/:yol*",
+      "has": [
+        {
+          "type": "host",
+          "value": "fidan-pesen-ozdogan.vercel.app"
+        }
+      ],
+      "destination": "https://fidanpesen.com/:yol*",
+      "permanent": true
+    }
   ]
 }

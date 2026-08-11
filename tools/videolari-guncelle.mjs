@@ -33,7 +33,7 @@ const SHORTS_SEKME = 'https://www.youtube.com/@fidanpesen/shorts';
 const TARAYICI_UA =
   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 ' +
   '(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36';
-const SITE = 'https://fidan-pesen-ozdogan.vercel.app';
+const SITE = 'https://fidanpesen.com';
 const ARSIV = path.join(KOK_DIZIN, 'data', 'videolar.json');
 const CIKTI = path.join(KOK_DIZIN, 'videolar', 'index.html');
 
@@ -66,7 +66,7 @@ function alan(blok, etiket) {
 /* ------------------------------------------------------------- RSS okuma */
 async function rssOku() {
   const yanit = await fetch(RSS, {
-    headers: { 'user-agent': 'fidan-pesen-ozdogan-site/1.0 (+https://fidan-pesen-ozdogan.vercel.app)' },
+    headers: { 'user-agent': 'fidan-pesen-ozdogan-site/1.0 (+https://fidanpesen.com)' },
   });
   if (!yanit.ok) throw new Error(`RSS alınamadı: HTTP ${yanit.status}`);
   const xml = await yanit.text();
