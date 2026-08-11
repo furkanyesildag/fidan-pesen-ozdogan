@@ -111,8 +111,11 @@ export default async function handler(req, res) {
   if (guvenlik.acil) {
     gonder('parca', ACIL_YANIT);
     gonder('bitti', { urunler: [], acil: true, whatsapp: true });
-    res.end();
+    /* Kayıt yanıt kapanmadan yazılıyor: res.end() sonrası sunucusuz örnek
+       dondurulabiliyor ve yazma yarıda kalıyordu. Kullanıcı içeriği zaten
+       almış oldu, akış yalnızca birkaç milisaniye açık kalıyor. */
     await kaydet({ oturum, ip, kaynak, mesajlar, yanit: ACIL_YANIT, acil: true, urunler: [] });
+    res.end();
     return;
   }
 
@@ -241,8 +244,10 @@ export default async function handler(req, res) {
     uyari: guvenlik.uyari,
     whatsapp: waGoster,
   });
-  res.end();
 
+  /* Kayıt yanıt kapanmadan yazılıyor. res.end() sonrasına bırakıldığında
+     sunucusuz örnek dondurulup yazma yarıda kalabiliyordu; iki ardışık
+     istekten birinin kaydı bu yüzden kayboldu. */
   await kaydet({
     oturum, ip, kaynak, mesajlar,
     yanit: tamYanit,
@@ -250,4 +255,6 @@ export default async function handler(req, res) {
     uyari: guvenlik.uyari,
     acil: false,
   });
+
+  res.end();
 }
