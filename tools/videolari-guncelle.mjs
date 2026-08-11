@@ -409,6 +409,10 @@ ${JSON.stringify(ld, null, 2)}
 
 <script src="/assets/js/sayfa.js?v=23"></script>
 <script src="/assets/js/tema.js?v=23"></script>
+<!-- Vercel Web Analytics ve Speed Insights: çerezsiz, kişisel veri
+     toplamaz; KVKK açısından onay bandı gerektirmez. -->
+<script defer src="/_vercel/insights/script.js"></script>
+<script defer src="/_vercel/speed-insights/script.js"></script>
 <script src="/assets/js/asistan-baloncuk.js?v=23" defer></script>
 <script>
 /* Tıklanana kadar YouTube'dan hiçbir şey yüklenmez (facade deseni):

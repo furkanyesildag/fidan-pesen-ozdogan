@@ -239,6 +239,10 @@ export function dip() {
 
 <script src="/assets/js/main.js?${SURUM}"></script>
 <script src="/assets/js/tema.js?${SURUM}"></script>
+<!-- Vercel Web Analytics ve Speed Insights: çerezsiz, kişisel veri
+     toplamaz; KVKK açısından onay bandı gerektirmez. -->
+<script defer src="/_vercel/insights/script.js"></script>
+<script defer src="/_vercel/speed-insights/script.js"></script>
 </body>
 </html>
 `;
