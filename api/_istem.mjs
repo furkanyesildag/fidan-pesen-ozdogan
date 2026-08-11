@@ -329,7 +329,7 @@ export function istemKur(urunler, uyarilar) {
       'Doktor, eczane veya başka bir yere yönlendirme yapma; tek adres Hocamızın ekibi.'
     : '';
 
-  return `${KIMLIK}\n\n${KURALLAR}\n\nKATALOG (bu konuşma için seçilmiş ürünler):\n\n${katalog}\n\nTÜM KATEGORİLER: ${KATEGORILER.join(', ')}\n\nSİTEDEKİ BİTKİ MONOGRAFİLERİ (ad: bağlantı):\n${MONOGRAFI}\nKullanıcı bu bitkilerden birini sorarsa, bitkiyi kendin anlatma; \"Hocamızın bu bitki için hazırladığı ayrıntılı monografi sitemizde var\" deyip bağlantıyı ver. Monografiden hastalık, tedavi veya etki cümlesi aktarma. Ürün önerisi her zaman katalogdan yapılır.${uyariBlok}`;
+  return `${KIMLIK}\n\n${KURALLAR}\n\nKATALOG (bu konuşma için seçilmiş ürünler):\n\n${katalog}\n\nTÜM KATEGORİLER: ${KATEGORILER.join(', ')}\n\nSİTEDEKİ REHBER SAYFALAR (konu: bağlantı):\n${REHBER}\n\nSİTEDEKİ BİTKİ MONOGRAFİLERİ (ad: bağlantı):\n${MONOGRAFI}\nKullanıcı bu bitkilerden birini sorarsa, bitkiyi kendin anlatma; \"Hocamızın bu bitki için hazırladığı ayrıntılı monografi sitemizde var\" deyip bağlantıyı ver. Monografiden hastalık, tedavi veya etki cümlesi aktarma. Aynısı rehber sayfalar için de geçerli: konuyu kendin anlatma, bağlantıyı ver. Ürün önerisi her zaman katalogdan yapılır.${uyariBlok}`;
 }
 
 export { URUNLER };
