@@ -817,3 +817,39 @@ html.katman-acik, html.katman-acik body { overflow: hidden; }
   .ak-panel > .sohbet-kutu { opacity: 1; transform: none; }
   .ak-perde { opacity: 1; }
 }
+
+/* Rehber sayfalarındaki ürün tablosunda ad, doğrudan dogalmarkam.com'daki
+   kendi ürün sayfasına gider. Okur adı arayıp bulmak zorunda kalmasın. */
+.makale-govde .urun-bag {
+  border-bottom: 1px solid rgba(var(--aksan-rgb), .34);
+  text-decoration: none;
+}
+.makale-govde .urun-bag b { color: var(--ink); font-weight: 600; transition: color .35s; }
+.makale-govde .urun-bag::after {
+  content: ' ↗'; font-size: .82em; color: var(--aksan-ac);
+  white-space: nowrap; letter-spacing: 0;
+}
+.makale-govde .urun-bag:hover { border-bottom-color: var(--aksan); }
+.makale-govde .urun-bag:hover b { color: var(--aksan-ac); }
+
+/* Rehberin sonundaki ürün çağrısı: okuru ana sayfaya değil, doğrudan o
+   rehberin anlattığı ürünün kendi sayfasına götürür. */
+.makale-govde .urun-cagri {
+  display: flex; flex-wrap: wrap; gap: 12px; margin: 26px 0 22px;
+}
+.makale-govde .urun-cagri .dugme {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 13px 22px; border-radius: 99px;
+  border: 1px solid var(--cizgi-kuv);
+  font-size: 14px; font-weight: 500;
+  color: var(--ink); text-decoration: none;
+  transition: border-color .4s, color .4s, filter .4s, transform .4s var(--yay);
+}
+.makale-govde .urun-cagri .dugme:hover { transform: translateY(-2px); border-color: var(--aksan); }
+.makale-govde .urun-cagri .birincil {
+  border-color: transparent;
+  background: linear-gradient(120deg, var(--aksan), var(--aksan-ac));
+  color: #17150f;
+}
+.makale-govde .urun-cagri .birincil:hover { filter: brightness(1.06); color: #17150f; }
+@media (max-width: 560px) { .makale-govde .urun-cagri { flex-direction: column; } }
