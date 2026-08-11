@@ -2016,6 +2016,17 @@
      ]
     },
     {
+     "kimlik": "kisim",
+     "baslik": "Terapide kullanılan kısımları",
+     "kanonik": true,
+     "govde": [
+      [
+       "p",
+       "Olgunlaşmış ve kurutulmuş at kestanesi tohumları (meyveleri) (Semen hippocastani)1"
+      ]
+     ]
+    },
+    {
      "kimlik": "farmakope",
      "baslik": "Farmakope ve monografiler",
      "kanonik": true,
@@ -2046,14 +2057,11 @@
       [
        "p",
        "Tanenler: Oligomerik proantosiyanidinler ve yoğunlaşmış tanenler olası olarak yalnızca meyve kabuğunda bulunur.3-4"
-      ]
-     ]
-    },
-    {
-     "kimlik": "fitosteroller-stigmasterol-alfa-spinasterol-beta-sitosterol-",
-     "baslik": "Fitosteroller: Stigmasterol, alfa-spinasterol, beta-sitosterol.4-5",
-     "kanonik": false,
-     "govde": [
+      ],
+      [
+       "p",
+       "Fitosteroller: Stigmasterol, alfa-spinasterol, beta-sitosterol.4-5"
+      ],
       [
        "p",
        "Şekerler: Glukoz, sikloz ve ramnoz gibi monosakkaritler. Ayrıca, 1-kestoz, 2-kestoz ve stakiyoz gibi oligosakkaritler ve nişasta (%50) gibi polisakkaritler.3,5"
@@ -2145,7 +2153,7 @@
     "Wilkinson J & Brown A (1999). Horse chestnut: Aesculus hippocastanum: Potential applications in cosmetic skin-care products. Int J Cosmet Sci 21(6): 437-447.",
     "Hellum BH & Nilsen OG (2008). In vitro inhibition of CYP3A4 metabolism and P-glycoprotein mediated transport by trade herbal products. Basic Clin Pharmacol Toxicol 102: 466–475."
    ],
-   "kelime": 1374
+   "kelime": 1387
   },
   {
    "ad": "At Kuyruğu",
@@ -2256,6 +2264,10 @@
       [
        "p",
        "Piridin alkaloidleri: Eser miktarda nikotin, palustrin, paludtridin, ekuisetumpiron gibi stirolpiron glukozidleri9"
+      ],
+      [
+       "p",
+       "Steroller: Kamfesterol izokuesterol ve brassinosteroidler9"
       ]
      ]
     },
@@ -2330,7 +2342,7 @@
     "Williamson E, Driver S & Baxter K. (Eds.) (2009). Stockley’s Herbal Medicines Interactions. London, UK. Pharmaceutical Press, RPS Publishing.",
     "Scott IM, Leduc RI, Burt AJ, Marles RJ, Arnason JT & Foster BC (2006). The inhibition of human cytochrome P450 by ethanol extracts of North American botanicals. Pharm Biol 44: 315–327."
    ],
-   "kelime": 1377
+   "kelime": 1382
   },
   {
    "ad": "Avokado",
@@ -2538,6 +2550,17 @@
      ]
     },
     {
+     "kimlik": "adlar",
+     "baslik": "Diğer adları",
+     "kanonik": true,
+     "govde": [
+      [
+       "p",
+       "Köpek çimeni4"
+      ]
+     ]
+    },
+    {
      "kimlik": "ingilizce",
      "baslik": "İngilizce adları",
      "kanonik": true,
@@ -2575,14 +2598,11 @@
       [
        "p",
        "Flavonoidler: Trisin ve diğer belirlenmemiş flavonoidler.2"
-      ]
-     ]
-    },
-    {
-     "kimlik": "saponinler-detaylar-belirtilmemistir-2",
-     "baslik": "Saponinler: Detaylar belirtilmemiştir.2",
-     "kanonik": false,
-     "govde": [
+      ],
+      [
+       "p",
+       "Saponinler: Detaylar belirtilmemiştir.2"
+      ],
       [
        "p",
        "Uçucu yağlar (%0.05): %95'i agropiren bileşeninden oluşur.2-3 Gerçi bu bileşenin mevcudiyeti tartışmalıdır.2 Uçucu yağların diğer bileşenleri monoterpenler olup %10.81 oranında karvakrol, %6.81 transanetol, %5.5 karvon, %4.3 timol, %3.5 mentol, %1.4 menton, %1.1 oranında p-simen ve üç farklı seskiterpen içerir.2-3"
@@ -2666,7 +2686,7 @@
     "Bar-Sela G, Tsalic M, Fried G & Goldberg H (2007). Wheat grass juice may improve hematological toxicity related to chemotherapy in breast cancer patients: a pilot study. Nutr Cancer 58(1):43-48.",
     "Newell CA, Anderson LA & Phillipson JD (1996). Herbal Medicines. London, England: Pharmaceutical Press."
    ],
-   "kelime": 1146
+   "kelime": 1151
   },
   {
    "ad": "Böğürtlen",
@@ -2714,6 +2734,17 @@
      ]
     },
     {
+     "kimlik": "adlar",
+     "baslik": "Diğer adları",
+     "kanonik": true,
+     "govde": [
+      [
+       "p",
+       "Diken çileği, diken dutu, diken dudu3"
+      ]
+     ]
+    },
+    {
      "kimlik": "ingilizce",
      "baslik": "İngilizce adları",
      "kanonik": true,
@@ -2721,6 +2752,17 @@
       [
        "p",
        "Blackberry, bramble, brambleberry, dewberry, goutberry, high blackberry, loganberry, wineberry, boysenberry, thimbleberry, cloudberry, fingerberry, scaldhead2,4-5"
+      ]
+     ]
+    },
+    {
+     "kimlik": "kisim",
+     "baslik": "Terapide kullanılan kısımları",
+     "kanonik": true,
+     "govde": [
+      [
+       "p",
+       "Bitkinin çiçeklenme döneminde toplanıp kurutulmuş yaprakları (Folium rubi)4,6"
       ]
      ]
     },
@@ -2814,7 +2856,7 @@
     "Hager TJ, Howard LR, Liyanage R, Lay JO & Prior RL (2008). Ellagitannin composition of blackberry as determined by HPLC-ESI-MS and MALDI-TOF-MS. Journal of Agricultural and Food Chemistry 56(3): 661–669.",
     "Balckberry Leaf. Herbal Extract Plus. http://www.herbalextractsplus.com/blackberry-leaf.cfm. Erişim: 11.06.2011."
    ],
-   "kelime": 711
+   "kelime": 725
   },
   {
    "ad": "Biberiye",
@@ -2869,6 +2911,17 @@
       [
        "p",
        "Toplam üç türü bulunan biberiye bitkisinin Rosmarinus officinalis L. türünden başka R. eriocalyx ve R. tomentosus gibi iki farklı türü daha vardır.1 Biberiye (R. officinalis L.), Ledum palustre, Andromeda polifolia, Teucrium montanum, Taxus baccata, Santolina rosmarinfolia ve S. chamaecyparissus bitkileriyle karıştırılmamalıdır.2"
+      ]
+     ]
+    },
+    {
+     "kimlik": "adlar",
+     "baslik": "Diğer adları",
+     "kanonik": true,
+     "govde": [
+      [
+       "p",
+       "Kuşdili, beyaz püren, biberya, hasalban3"
       ]
      ]
     },
@@ -3030,7 +3083,7 @@
     "Kraft K & Hobbs C (2004). Pocket Guide to Herbal Medicine, Georg Thieme Verlag, Stuttgart.",
     "Abu-al-Basal AM (2010). Healing potential of Rosmarinus ofﬁcinalis L. on full-thickness excision cutaneous wounds in alloxan-induced-diabetic BALB/c mice. Journal of Ethnopharmacology 131: 443–450."
    ],
-   "kelime": 2026
+   "kelime": 2031
   },
   {
    "ad": "Ceviz",
@@ -3133,14 +3186,11 @@
       [
        "p",
        "Naftalen türevleri: Juglon (5-hydroksi-1,4-naftokinon), hidrojuglon ve hidrojuglonglikozid.4-5"
-      ]
-     ]
-    },
-    {
-     "kimlik": "flavonoidler-hiperosid-kuersitrin-kamferol-ve-juglanin-4-6",
-     "baslik": "Flavonoidler: Hiperosid, kuersitrin, kamferol ve juglanin.4-6",
-     "kanonik": false,
-     "govde": [
+      ],
+      [
+       "p",
+       "Flavonoidler: Hiperosid, kuersitrin, kamferol ve juglanin.4-6"
+      ],
       [
        "p",
        "Yağ asitleri ve eterik yağ türevleri: %0.01-0.03 oranında germakren, karyoflen, limonen, linoleik, oleik, linolenik ve palmitik asit.3-7"
@@ -3229,7 +3279,7 @@
     "Nagel Jm, Brinkoetter M, Maqkos F, et al. (2012). Dietary walnuts inhibit colorectal cancer growth in mice by suppressing angiogenesis. Nutrition 28(1): 67-75.",
     "Willis LM, Shukitt-Hale B, Cheng V & Joseph JA (2009). Dose-dependent effects of walnuts on motor and cognitive function in aged rats. British Journal of Nutrition 101: 1140-1144."
    ],
-   "kelime": 1915
+   "kelime": 1921
   },
   {
    "ad": "Civanperçemi",
@@ -3340,14 +3390,11 @@
       [
        "p",
        "Flavonoidler: Rutin, apigenin, luteolin, kastisin, artemetin, izohamnetin, swertisin, visenin 2 ve 3, şaftozid gibi serbest veya flavonol glikozitleri.5-7,9"
-      ]
-     ]
-    },
-    {
-     "kimlik": "tanenler-3-4-yogunlasmis-veya-hidrolizlebilir-tanenler-5-7-9",
-     "baslik": "Tanenler (%3-4): Yoğunlaşmış veya hidrolizlebilir tanenler.5-7,9",
-     "kanonik": false,
-     "govde": [
+      ],
+      [
+       "p",
+       "Tanenler (%3-4): Yoğunlaşmış veya hidrolizlebilir tanenler.5-7,9"
+      ],
       [
        "p",
        "Diğer bileşenler: Arabinoz, galaktoz, dekstroz, dulsitol, glukoz, inositol, maltoz, manitol ve sukroz gibi şekerler; beta stesterol ve bunların asetatları gibi steroller; reçine, kumarinler (%0.35), saponinler, ve bilinmeyen siyanogenetik bileşen.5-7,9"
@@ -3428,7 +3475,7 @@
     "Candan F, Unlu M, Tepe B, et al. (2003). Antioxidant and antimicrobial activity of the essential oil and methanol extracts of Achillea millefolium subsp. millefolium Afan. (Asteraceae). Journal of Ethnopharmacology 87: 215-220.",
     "Williamson E, Driver S & Baxter K (Eds.) (2009). Stockley’s Herbal Medicines Interactions. London, UK. Pharmaceutical Press, RPS Publishing."
    ],
-   "kelime": 1142
+   "kelime": 1148
   },
   {
    "ad": "Ebegümeci",
@@ -3866,6 +3913,17 @@
      ]
     },
     {
+     "kimlik": "adlar",
+     "baslik": "Diğer adları",
+     "kanonik": true,
+     "govde": [
+      [
+       "p",
+       "Keşiş külahı, azgın teke otu3"
+      ]
+     ]
+    },
+    {
      "kimlik": "ingilizce",
      "baslik": "İngilizce adları",
      "kanonik": true,
@@ -3986,7 +4044,7 @@
     "Ma H et al. (2011). The genus Epimedium: An ethnopharmacological and phytochemical review. Journal of Ethnopharmacology 134: 519-541.",
     "Shah J (2009). Herbal Treatments for Erectile Dysfunction, Chapter 5. In K.G. Ramawat (Ed.), Herbal Drugs: Ethnomedicine to Modern Medicine. Springer-Verlag Berlin Heidelberg, pp.67-80."
    ],
-   "kelime": 1746
+   "kelime": 1751
   },
   {
    "ad": "Fesleğen",
@@ -4045,6 +4103,17 @@
      ]
     },
     {
+     "kimlik": "adlar",
+     "baslik": "Diğer adları",
+     "kanonik": true,
+     "govde": [
+      [
+       "p",
+       "Reyhan, reyhan otu, rahan, fesliğan, feslikan, peslan, peslen5-7,11"
+      ]
+     ]
+    },
+    {
      "kimlik": "ingilizce",
      "baslik": "İngilizce adları",
      "kanonik": true,
@@ -4052,6 +4121,17 @@
       [
        "p",
        "Basil, sweet basil, bush basil, common basil, St. Josephwort, garden basil, garden balsam, tulsi, green tulsi, holy basil, sacred basil8-12"
+      ]
+     ]
+    },
+    {
+     "kimlik": "kisim",
+     "baslik": "Terapide kullanılan kısımları",
+     "kanonik": true,
+     "govde": [
+      [
+       "p",
+       "Bitkinin toplanıp kurutulmuş toprak üstü kısımları (Herba ocimi basilici)8-9"
       ]
      ]
     },
@@ -4161,7 +4241,7 @@
     "Ismail M (2006). Central Properties and Chemical Composition of Ocimum basilicum Essential Oil. Pharmaceutical Biology 44(8): 619-626.",
     "Carovic´-Stanko K et al. (2010). Composition and antibacterial activities of essential oils of seven Ocimum taxa. Food Chemistry 119: 196-201."
    ],
-   "kelime": 1656
+   "kelime": 1673
   },
   {
    "ad": "Ginkgo Biloba",
@@ -4268,14 +4348,11 @@
       [
        "p",
        "Organik asitler: Askorbik, D-glukarik, kinik, şikimik, 6-hidroksikinurenik, p-hidroksibenzoik, protokateşuik, vanilik, asetik, butirik, formik, heksanoik ve valerik asitler.1-3,6-9,11-27"
-      ]
-     ]
-    },
-    {
-     "kimlik": "karbonhidratlar-sukroz-pinitol-sekuoyitol-ve-polisakkaritler",
-     "baslik": "Karbonhidratlar: Sukroz, pinitol, sekuoyitol ve polisakkaritler.1-3,6-9,11-27",
-     "kanonik": false,
-     "govde": [
+      ],
+      [
+       "p",
+       "Karbonhidratlar: Sukroz, pinitol, sekuoyitol ve polisakkaritler.1-3,6-9,11-27"
+      ],
       [
        "p",
        "Uzun zincirle bağlanmış hidrokarbonlar ve lipidler: 1-heksakosanol, 2-heksenal, n-nonakosan, n-nonakosan-10-ol (ginnol), n-nonakosan-10-on (ginnon), n-oktakosan-1-ol, linolenik ve linoleik, 14-methilheksadekanoik, 5,9,12-oktadekatrienoik, oleik, palmitik, eikosanedikarboksilik ve felonik asitler.1-3,6-9,11-27"
@@ -4391,7 +4468,7 @@
     "Cassidy A (2009). Phytochemicals: Classification and Occurrence. In Caballero B (Editor), Guide To Nutritional Supplements. Elsevier Ltd. Oxford: UK.",
     "Gong QH et al. (2005). Protective effects of Ginkgo biloba leaf extract on aluminum-induced brain dysfunction in rats. Life Sciences 77: 140-148."
    ],
-   "kelime": 2605
+   "kelime": 2611
   },
   {
    "ad": "Panax Ginseng",
@@ -4672,6 +4749,10 @@
       [
        "p",
        "Fenilalkanonlar: Gingerol.1-4,6,8-17"
+      ],
+      [
+       "p",
+       "Diğer bileşenler: Nişasta ve tanenler.1-4,6,8-17"
       ]
      ]
     },
@@ -4753,7 +4834,7 @@
     "Eumbek G et al. (2010). Reversing β-lactam antibiotic resistance of Staphylococcus aureus with galangin from Alpinia officinarum Hance and synergism with ceftazidime. Phytomedicine 18: 40-45.",
     "Alpinia officinarum. Wikipedia. http://en.wikipedia.org/wiki/Alpinia_officinarum. Erişim: 11.06.2011."
    ],
-   "kelime": 859
+   "kelime": 864
   },
   {
    "ad": "Hayıt",
@@ -4808,6 +4889,17 @@
       [
        "p",
        "Vitex botanik cinsi, mineçiçeğigiller (Verbenaceae) familyasının yaklaşık 250-270 farklı botanik türle temsil edilen ve coğrafik dağılımının çoğunlukla tropik ve subtropik, çok az türünün ise ılıman iklim bölgelerinde yoğunlaştığı en büyük cinslerinden birisidir.1-2 Vitex cinsine ait 30'dan fazla botanik türün fitokimyasal yapısı analiz edilmiş olsa da, detaylı bilimsel araştırmalar daha çok V. agnus-castus (hayıt), V. negundo, V. rotundifolia, V. trifolia ve V. quinata botanik türleri üzerinde yoğunlaşmıştır.2"
+      ]
+     ]
+    },
+    {
+     "kimlik": "adlar",
+     "baslik": "Diğer adları",
+     "kanonik": true,
+     "govde": [
+      [
+       "p",
+       "Ayıt, ayıd, şifalı ayıt, beşparmak ağacı, Yemen safranı3-5"
       ]
      ]
     },
@@ -4962,7 +5054,7 @@
     "Stojkovic´ D et al. (2011). Chemical composition and antimicrobial activity of Vitex agnus-castus L. fruits and leaves essential oils. Food Chemistry 128: 1017-1022.",
     "He Z et al. (2009). Treatment for premenstrual syndrome with Vitex agnus castus: A prospective, randomized, multi-center placebo controlled study in China. Maturitas 63: 99-103."
    ],
-   "kelime": 1521
+   "kelime": 1529
   },
   {
    "ad": "Hibiskus",
@@ -5069,14 +5161,11 @@
       [
        "p",
        "Polifenolikler (%1.7): Hibissetin-3-monoglukozid, gossipetin-3-glukozid, gossipetin-7-glukozid, gossipetin-8-glukozid, sabdaritrin, gossipetin, hibissetin, sabdaretin gibi flavonol glikozidleri ve kuersetin. Flavonoid içeriği kuru ekstrede %1.43 oranında bulunur.2,5,10"
-      ]
-     ]
-    },
-    {
-     "kimlik": "musilajlar-65-ramnogalakturonanlar-arabinogalaktanlar-ve-ara",
-     "baslik": "Müsilajlar (%65): Ramnogalakturonanlar, arabinogalaktanlar ve arabinanlar.2,5",
-     "kanonik": false,
-     "govde": [
+      ],
+      [
+       "p",
+       "Müsilajlar (%65): Ramnogalakturonanlar, arabinogalaktanlar ve arabinanlar.2,5"
+      ],
       [
        "p",
        "Diğer bileşenler: Şekerler, reçineler, mukopolisakkaridler, alkaloidler, pektin, beta karoten, anisaldehid, glisinbetain, trigonellin, riboflavin, tiamin, niasin, askorbik asit, alüminyum, krom, bakır ve demir.2,5-6,10"
@@ -5168,7 +5257,7 @@
     "Gurrola-Díaz et al. (2010). Effects of Hibiscus sabdariffa extract powder and preventive treatment (diet) on the lipid profiles of patients with metabolic syndrome (MeSy). Phytomedicine 17: 500-5005.",
     "Chang CY et al. (2006). Hibiscus anthocyanins-rich extract inhibited LDL oxidation and oxLDL-mediated macrophages apoptosis. Food and Chemical Toxicology 44: 1015-1023."
    ],
-   "kelime": 1377
+   "kelime": 1383
   },
   {
    "ad": "Hindistan Cevizi",
@@ -5245,14 +5334,11 @@
       [
        "p",
        "Yağ asitleri (%60-70): %45-50 oranında lorik (dodekanoik) asit, miristik (tetradekanoik) asit (%13-20), palmitik (heksadekanoik) asit (%7-10), kaprilik (oktanoik) asit (%5-10) ve ayrıca stearik asit, linoleik asit, kaproik asit ve oleik asit içerir.1-9"
-      ]
-     ]
-    },
-    {
-     "kimlik": "serbest-yag-asitleri-3-5-1-9",
-     "baslik": "Serbest yağ asitleri (%3-5)1-9",
-     "kanonik": false,
-     "govde": [
+      ],
+      [
+       "p",
+       "Serbest yağ asitleri (%3-5)1-9"
+      ],
       [
        "p",
        "5-hidroksi yağ asitlerinin delta-laktonları: Hindistan cevizi aromasından bazı alifatik hidroksikarboksilik asitlerinin delta laktonları sorumludur. Özellikle, delta oktalakton ve 5-dekanolid başlıca bileşenlerdir.1-9"
@@ -5341,7 +5427,7 @@
     "Mandal SM et al. (2009). Identification and structural insights of three novel antimicrobial peptides isolated from green coconut water. Peptides 30: 633-637.",
     "Bankar GR et al. (2011). Vasorelaxant and antihypertensive effect of Cocos nucifera Linn. endocarp on isolated rat thoracic aorta and DOCA salt-induced hypertensive rats. Journal of Ethnopharmacology 134: 50-54."
    ],
-   "kelime": 1583
+   "kelime": 1587
   },
   {
    "ad": "Çakşır Otu",
@@ -5389,6 +5475,17 @@
      ]
     },
     {
+     "kimlik": "adlar",
+     "baslik": "Diğer adları",
+     "kanonik": true,
+     "govde": [
+      [
+       "p",
+       "Şeytan teresi, şeytan otu, şeytan tersi, şeytan boku2"
+      ]
+     ]
+    },
+    {
      "kimlik": "ingilizce",
      "baslik": "İngilizce adları",
      "kanonik": true,
@@ -5418,14 +5515,11 @@
       [
        "p",
        "Reçineler (%40-64): Ferülik asit esterleri (%60), serbest ferülik asit (%1.3), asaresinotanoller; umbelliferon ve umbelliferon eterleri (farnesiferol A, B ve C ve kamolonol) gibi kumarin türevleri; assafoetida, asakumarin A ve asakumarin B gibi kumarin seskiterpenoid komplekleri ve basorin benzeri müsilajlar.3-5 Ferülik asit bileşeni lateks kuruduktan sonra kumarine dönüşür.3"
-      ]
-     ]
-    },
-    {
-     "kimlik": "recine-sakizi-25-glukoz-galaktoz-l-arabinoz-ramnoz-glukuroni",
-     "baslik": "Reçine sakızı (%25): Glukoz, galaktoz, L-arabinoz, ramnoz, glukuronik asit.3-5",
-     "kanonik": false,
-     "govde": [
+      ],
+      [
+       "p",
+       "Reçine sakızı (%25): Glukoz, galaktoz, L-arabinoz, ramnoz, glukuronik asit.3-5"
+      ],
       [
        "p",
        "Uçucu yağlar (%3-21): Uçucu yağ oranı genellikle ortalama %7-9 arasında görülür.5 Uçucu yağlar sülfür içeren disülfid ve polisülfidli bileşenlerle türlü monoterpenlerden oluşur. Başlıca bileşenler 2-butil propenil disülfid (E ve Z-izomerleri), alfa ve beta pinen monoterpenleri, serbest ferulik asit, valerik asit ve eser miktarda vanilin.3-5 Çeşitli kaynaklar bazı Ferula cinslerinin polisülfanlar, kompleks asetilenler, fenilpropanoidler ve çok sayıda seskiterpen türevleri gibi farklı fitokimyasal bileşenler içerdiğini bildirmektedir. Ancak bitkinin yağlı reçine sakızı bileşenlerinin çakşır cinslerine göre değiştiğini unutmamak gerekir.3 Sülfür içeren asadisülfid ve diğer sülfidler gibi fitokimyasal bileşikler çakşırdan elde edilen yağlı reçine sakızının tat ve kokusundan sorumludur.5"
@@ -5521,7 +5615,7 @@
     "El-Thaher TS, Matalka KZ, Taha HA & Badwan AA (2001). Ferula harmonis 'zallouh' and enhancing erectile function in rats: efficacy and toxicity study. Int J Impot Res. 13(4):247-251.",
     "Williamson E, Driver S & Baxter K (Eds.) (2009). Stockley’s Herbal Medicines Interactions. London, UK. Pharmaceutical Press, RPS Publishing."
    ],
-   "kelime": 1320
+   "kelime": 1337
   },
   {
    "ad": "Çemen Otu",
@@ -5818,6 +5912,17 @@
      ]
     },
     {
+     "kimlik": "kisim",
+     "baslik": "Terapide kullanılan kısımları",
+     "kanonik": true,
+     "govde": [
+      [
+       "p",
+       "Bitkinin toplanıp kurutulmuş toprak üstü kısımları (Herba capsella).5-9"
+      ]
+     ]
+    },
+    {
      "kimlik": "bilesen",
      "baslik": "Kimyasal bileşenleri",
      "kanonik": true,
@@ -5917,7 +6022,7 @@
     "Kuroda K & Takagi K (1969). Studies on capsella bursa pastoris. II. Diuretic, anti-inflammatory and antiulcer action of ethanol extracts of the herb. Arch Int Pharmacodyn Ther 178: 392–399.",
     "Jurisson S (1973). Flavonoid substances of Capsella bursa pastoris. Farmatsiya (Moscow) 22: 34–35."
    ],
-   "kelime": 1292
+   "kelime": 1300
   },
   {
    "ad": "Çörek Otu",

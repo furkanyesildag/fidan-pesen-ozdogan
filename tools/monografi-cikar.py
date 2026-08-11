@@ -120,6 +120,10 @@ def baslik_mi(metin, sonraki):
         return True
     if len(metin) > 82 or metin.endswith(('.', ',', ';')):
         return False
+    # Sonunda kaynak numarası olan satır gövde metnidir: "…juglanin.4-6" gibi
+    # bileşen cümleleri noktayla bitmediği için başlık sanılıyordu.
+    if re.search(r'[.,%)a-zA-ZçğıöşüÇĞİÖŞÜ]\d+(?:[-–,]\d+)*$', metin):
+        return False
     if re.search(r'\b(19|20)\d{2}\b', metin):
         return False
     if re.match(r'^(%s)\s*[:：]' % '|'.join(TAKSON + ['Takım', 'Alt familyası',
