@@ -853,3 +853,95 @@ html.katman-acik, html.katman-acik body { overflow: hidden; }
 }
 .makale-govde .urun-cagri .birincil:hover { filter: brightness(1.06); color: #17150f; }
 @media (max-width: 560px) { .makale-govde .urun-cagri { flex-direction: column; } }
+
+/* ====================================================== BİTKİ MONOGRAFİLERİ */
+/* Monografiler uzun referans metinleridir: okurun aradığı satırı bulabilmesi
+   biçimin ilk işi. Bu yüzden kimlik tablosu, üst simge kaynak numaraları ve
+   katlanan kaynakça listesi ayrı ayrı ele alındı. */
+
+.makale-latin {
+  margin: -10px 0 18px;
+  font-family: var(--serif); font-style: italic;
+  font-size: clamp(17px, 2.2vw, 21px);
+  color: var(--aksan-ac);
+  letter-spacing: .01em;
+}
+
+/* Bilimsel sınıflandırma tablosu: iki sütun, sol sütun etiket. */
+.makale-govde .kimlik-tablo th {
+  width: 38%; white-space: nowrap;
+  font-size: 12px; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--sis); font-weight: 600;
+  vertical-align: top;
+}
+.makale-govde .kimlik-tablo td { font-size: 15px; }
+@media (max-width: 560px) {
+  .makale-govde .kimlik-tablo th { width: 42%; white-space: normal; font-size: 11px; }
+}
+
+/* Kaynak numaraları. Gövde metninin akışını bozmasın diye küçük ve soluk. */
+.kaynak-no {
+  font-size: .64em; font-weight: 600; line-height: 0;
+  vertical-align: super;
+  color: var(--aksan-ac); opacity: .85;
+  margin-left: .5px; letter-spacing: .02em;
+}
+
+/* Kaynakça: 30-140 arası girdi olabiliyor, bu yüzden katlanmış duruyor. */
+.kaynak-katla { margin-top: 6px; }
+.kaynak-katla > summary {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 18px; border-radius: 99px;
+  border: 1px solid var(--cizgi-kuv);
+  font-size: 13.5px; color: var(--ink-2);
+  cursor: pointer; list-style: none;
+  transition: border-color .4s, color .4s;
+}
+.kaynak-katla > summary::-webkit-details-marker { display: none; }
+.kaynak-katla > summary::after { content: '▾'; font-size: 11px; opacity: .7; }
+.kaynak-katla[open] > summary::after { content: '▴'; }
+.kaynak-katla > summary:hover { border-color: var(--aksan); color: var(--ink); }
+.kaynak-liste {
+  margin: 20px 0 0; padding-left: 1.6em;
+  font-size: 13.5px; line-height: 1.7; color: var(--ink-2);
+}
+.kaynak-liste li { margin-bottom: 9px; }
+.kaynak-liste li::marker { color: var(--aksan-ac); font-size: .86em; }
+
+/* Bitkiyi içeren ürünlerin listesi. */
+.makale-govde .urun-liste { list-style: none; padding: 0; margin: 18px 0 0; }
+.makale-govde .urun-liste li { padding-left: 0; margin-bottom: 11px; }
+.makale-govde .urun-liste li::before { content: none; }
+
+/* ------------------------------------------------------------ dizin sayfası */
+.monografi-izgara {
+  display: grid; gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(258px, 1fr));
+  margin-top: 26px;
+}
+.monografi-kart {
+  display: flex; flex-direction: column; gap: 6px;
+  padding: 20px 21px 18px;
+  border: 1px solid var(--cizgi); border-radius: 14px;
+  background: var(--kutu);
+  text-decoration: none;
+  transition: border-color .45s, transform .5s var(--yay), box-shadow .5s;
+}
+.monografi-kart:hover {
+  border-color: var(--aksan); transform: translateY(-3px);
+  box-shadow: 0 22px 46px -32px var(--golge);
+}
+.mk-ad { font-family: var(--serif); font-size: 19.5px; color: var(--ink); }
+.mk-latin { font-size: 13px; color: var(--aksan-ac); }
+.mk-ozet {
+  margin-top: 4px; font-size: 13.5px; line-height: 1.62; color: var(--ink-2);
+}
+.mk-alt {
+  margin-top: auto; padding-top: 12px;
+  font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--sis);
+}
+.monografi-dizin { max-width: none; }
+@media (max-width: 560px) {
+  .monografi-izgara { grid-template-columns: 1fr; }
+}

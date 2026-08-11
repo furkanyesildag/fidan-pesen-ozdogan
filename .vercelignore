@@ -1,0 +1,4 @@
+# Kaynak belgeler yayına çıkmaz: .docx dosyaları yalnızca monografi
+# sayfalarını üretmek için depoda durur, statik olarak sunulmamalıdır.
+belge/
+tools/

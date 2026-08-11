@@ -251,6 +251,42 @@ DESTEK BİLGİSİ (gerçek bilgiler, uydurma)
   destek alınabileceğini söyle.
 `.trim();
 
+
+/* Sitedeki bitki monografilerinin DİZİNİ. Bilinçli olarak yalnızca ad ve
+   bağlantı verilir; monografi metinleri asistana verilmez. O metinler
+   literatür derlemesidir ve içlerinde hastalık adı geçen ifadeler vardır;
+   asistanın ağzından çıktığında sağlık beyanına dönüşür. Asistan bitkiyi
+   anlatmaz, "bunun ayrıntılı monografisi şurada" der ve bağlantıyı verir. */
+const MONOGRAFI = `Acı Bakla (Lupinus albus): /monografi/aci-bakla
+Adaçayı (Salvia officinalis): /monografi/adacayi
+Adi Ardıç (Juniperus communis): /monografi/adi-ardic
+Alıç (Crataegus laevigata): /monografi/alic
+Anason (Pimpinella anisum): /monografi/anason
+Arpa (Hordeum vulgare): /monografi/arpa
+Aslan Pençesi (Alchemilla xanthochlora): /monografi/aslan-pencesi
+At Kestanesi (Aesculus hippocastanum): /monografi/at-kestanesi
+At Kuyruğu (Equisetum arvense): /monografi/at-kuyrugu
+Avokado (Persea americana): /monografi/avokado
+Ayrık Otu (Agropyron repens): /monografi/ayrik-otu
+Biberiye (Rosmarinus officinalis): /monografi/biberiye
+Böğürtlen (Rubus fruticosus): /monografi/bogurtlen
+Ceviz (Juglans regia): /monografi/ceviz
+Civanperçemi (Achillea millefolium): /monografi/civanpercemi
+Ebegümeci (Malva sylvestris): /monografi/ebegumeci
+Enginar (Cynara cardunculus): /monografi/enginar
+Epimedyum (Epimedium sagittatum): /monografi/epimedyum
+Fesleğen (Ocimum basilicum): /monografi/feslegen
+Ginkgo Biloba (Ginkgo biloba): /monografi/ginkgo-biloba
+Havlıcan (Alpinia officinarum): /monografi/havlican
+Hayıt (Vitex agnus-castus): /monografi/hayit
+Hibiskus (Hibiscus sabdariffa): /monografi/hibiskus
+Hindistan Cevizi (Cocos nucifera): /monografi/hindistan-cevizi
+Panax Ginseng (Panax ginseng): /monografi/panax-ginseng
+Çakşır Otu (Ferula assafoetida): /monografi/caksir-otu
+Çemen Otu (Trigonella foenum-graecum): /monografi/cemen-otu
+Çoban Çantası (Capsella bursa-pastoris): /monografi/coban-cantasi
+Çörek Otu (Nigella sativa): /monografi/corek-otu`;
+
 export function istemKur(urunler, uyarilar) {
   /* En alakalı ilk dörde açıklamanın TAMAMI verilir; asistanın içerik listesini
      ve kullanım şeklini eksiksiz aktarabilmesi için gerekli. Geri kalanlar
@@ -282,7 +318,7 @@ export function istemKur(urunler, uyarilar) {
       'Doktor, eczane veya başka bir yere yönlendirme yapma; tek adres Hocamızın ekibi.'
     : '';
 
-  return `${KIMLIK}\n\n${KURALLAR}\n\nKATALOG (bu konuşma için seçilmiş ürünler):\n\n${katalog}\n\nTÜM KATEGORİLER: ${KATEGORILER.join(', ')}${uyariBlok}`;
+  return `${KIMLIK}\n\n${KURALLAR}\n\nKATALOG (bu konuşma için seçilmiş ürünler):\n\n${katalog}\n\nTÜM KATEGORİLER: ${KATEGORILER.join(', ')}\n\nSİTEDEKİ BİTKİ MONOGRAFİLERİ (ad: bağlantı):\n${MONOGRAFI}\nKullanıcı bu bitkilerden birini sorarsa, bitkiyi kendin anlatma; \"Hocamızın bu bitki için hazırladığı ayrıntılı monografi sitemizde var\" deyip bağlantıyı ver. Monografiden hastalık, tedavi veya etki cümlesi aktarma. Ürün önerisi her zaman katalogdan yapılır.${uyariBlok}`;
 }
 
 export { URUNLER };

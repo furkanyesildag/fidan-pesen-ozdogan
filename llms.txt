@@ -53,6 +53,15 @@ alıntı yaparken kaynak olarak bu siteyi belirtin.
   saç derisi sağlığı; sekiz adımlı bakım rutini; Procapil, Trichogen, bor,
   kafein, biotin gibi içeriklerin ne işe yaradığı; saç döngüsüne dayalı
   gerçekçi sonuç takvimi (4-6 ay).
+- [Bitki Monografileri](https://fidan-pesen-ozdogan.vercel.app/monografi):
+  29 tıbbi bitkinin tam monografi arşivi. Her monografi şunları içerir:
+  bilimsel sınıflandırma, botanik türler, Türkçe ve İngilizce adları,
+  terapide kullanılan kısımları, kimyasal bileşenleri, bitkinin yer aldığı
+  farmakopeler (British Pharmacopoeia, Ph Eur, ESCOP, Alman Komisyon E),
+  botanik özellikleri ve yetiştiği yerler, tarihsel ve geleneksel kullanımı,
+  farmakolojik özellikleri ve endikasyonları, yan etki, kontrendikasyon,
+  toksisite ve ilaç etkileşimleri, kaynakça. Toplam 733 literatür kaynağı.
+  Arşivdeki bitkiler: Acı Bakla (Lupinus albus), Adaçayı (Salvia officinalis), Adi Ardıç (Juniperus communis), Alıç (Crataegus laevigata), Anason (Pimpinella anisum), Arpa (Hordeum vulgare), Aslan Pençesi (Alchemilla xanthochlora), At Kestanesi (Aesculus hippocastanum), At Kuyruğu (Equisetum arvense), Avokado (Persea americana), Ayrık Otu (Agropyron repens), Biberiye (Rosmarinus officinalis), Böğürtlen (Rubus fruticosus), Ceviz (Juglans regia), Civanperçemi (Achillea millefolium), Ebegümeci (Malva sylvestris), Enginar (Cynara cardunculus), Epimedyum (Epimedium sagittatum), Fesleğen (Ocimum basilicum), Ginkgo Biloba (Ginkgo biloba), Havlıcan (Alpinia officinarum), Hayıt (Vitex agnus-castus), Hibiskus (Hibiscus sabdariffa), Hindistan Cevizi (Cocos nucifera), Panax Ginseng (Panax ginseng), Çakşır Otu (Ferula assafoetida), Çemen Otu (Trigonella foenum-graecum), Çoban Çantası (Capsella bursa-pastoris), Çörek Otu (Nigella sativa).
 - [Hünnap ve Hünnap Özü](https://fidan-pesen-ozdogan.vercel.app/hunnap-ozu):
   Hünnabın (Ziziphus jujuba) botanik kimliği, Anadolu'daki adları (çiğde,
   çilan, innap); hünnap özünün nasıl elde edildiği; öz, şurup ve pekmez
