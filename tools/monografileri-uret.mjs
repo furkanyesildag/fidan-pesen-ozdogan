@@ -152,10 +152,68 @@ function sssUret(m, bol) {
   return soru.filter(([, c]) => c && c.length > 40).slice(0, 9);
 }
 
+/**
+ * Sayfanın en üstüne konan kısa cevap kutusu.
+ *
+ * Cevap motorları ve öne çıkan sonuç kutuları sayfanın başından okur;
+ * monografilerde ise ilk paragraf bitkinin boyunu ve çiçek rengini anlatan
+ * botanik tarifti. "Ne işe yarar" sorusunun karşılığı sayfanın ortasında
+ * kalıyordu. Bu kutu, her bölümün ilk cümlesini etiketleyerek başa taşıyor;
+ * metin monografinin kendisinden geliyor, hiçbir şey uydurulmuyor.
+ */
+function ilkCumle(bolum, sinir = 260) {
+  if (!bolum) return '';
+  for (const [tur, icerik] of bolum.govde) {
+    if (tur !== 'p' || icerik.length < 40) continue;
+    let s = '';
+    for (const c of icerik.split(/(?<=[.!?])\s+/)) {
+      if (s && s.length + c.length > sinir) break;
+      s += (s ? ' ' : '') + c;
+    }
+    if (!s) s = icerik.slice(0, sinir);
+    return s
+      .replace(/([a-zçğıöşüA-ZÇĞİÖŞÜ’')\]][.,]?)(\d{1,3}(?:[-–,]\d{1,3})*)(?=$|[\s.,;:)\]])/g, '$1')
+      .replace(/\s+([.,;:])/g, '$1').replace(/\s{2,}/g, ' ').trim();
+  }
+  return '';
+}
+
+function kisaCevap(m, bol) {
+  /* Alıç belgesi ortak başlıkları kullanmıyor, kendi bölüm adları var
+     ("Farmakolojik Etkileri ve Özellikleri", "Yan (Advers) Etkileri").
+     Ortak kimlik yoksa bölüm adına göre aranıyor. */
+  const ara = (kanonik, ...parcalar) => bol[kanonik]
+    || Object.values(bol).find((b) => parcalar.some((x) => b.kimlik.includes(x)));
+  const satir = [
+    ['Nedir', m.ozet],
+    ['Kullanılan kısmı', ilkCumle(ara('kisim', 'kullanilan-kisim'), 200)],
+    ['Literatürde bildirilen etkiler',
+      ilkCumle(ara('farmakoloji', 'farmakolojik', 'endikasyon'), 300)],
+    ['Dikkat edilmesi gerekenler',
+      ilkCumle(ara('uyari', 'kontraendikasyon', 'yan-advers', 'yan-etki', 'uyarilar'), 260)],
+    ['Farmakopeler', ilkCumle(ara('farmakope'), 160)],
+  ].filter(([, d]) => d && d.length > 30);
+  if (satir.length < 3) return '';
+  return `
+      <section id="kisa-cevap">
+        <h2>${kacis(m.ad)} nedir, ne işe yarar?</h2>
+        <div class="kisa-cevap">
+          <dl class="cevap-dl">
+${satir.map(([b, d]) => `            <dt>${kacis(b)}</dt>
+            <dd>${latinceIsaretle(kacis(d))}</dd>`).join('\n')}
+          </dl>
+          <p class="cevap-not">Yukarıdaki etki bilgileri, bu sayfanın kaynakçasında
+          listelenen bilimsel literatürde bildirilen bulgulardır; tedavi önerisi ya da
+          herhangi bir ürün için sağlık beyanı değildir.</p>
+        </div>
+      </section>`;
+}
+
 /* --------------------------------------------------------- monografi sayfa */
 function monografiSayfa(m, komsu, urunler) {
   const bol = Object.fromEntries(m.bolumler.map((b) => [b.kimlik, b]));
   const sss = sssUret(m, bol);
+  const cevapKutu = kisaCevap(m, bol);
   /* Başlık arama sonucunda kırpılmasın diye 62 karakteri aşmıyor: "Monografisi"
      kelimesi ancak sığdığında giriyor, sığmadığında botanik ad tek başına
      kalıyor. Açıklama da 160'ı aşmıyor. */
@@ -203,6 +261,10 @@ function monografiSayfa(m, komsu, urunler) {
         isPartOf: { '@id': `${SITE}/monografi/#koleksiyon` },
         mainEntityOfPage: `${SITE}/monografi/${m.kimlik}`,
         citation: m.kaynakca.slice(0, 40).map((k) => duz(k)),
+        speakable: {
+          '@type': 'SpeakableSpecification',
+          cssSelector: ['h1', '#kisa-cevap .cevap-dl'],
+        },
         about: {
           '@type': 'Taxon',
           name: m.latince || m.ad,
@@ -297,6 +359,7 @@ ${m.kaynakca.map((k) => `            <li>${latinceIsaretle(kacis(k))}</li>`).joi
       </section>` : '';
 
   const icindekiler = [
+    ...(cevapKutu ? [['kisa-cevap', `${m.ad} nedir, ne işe yarar?`]] : []),
     ...(kimlikTablo ? [['kimlik', `${m.ad} kimlik bilgileri`]] : []),
     ...bolumBaslik.map((x) => [x.kimlik, x.baslik]),
     ...(urunler.length ? [['urunler', 'İlgili ürünler']] : []),
@@ -327,6 +390,7 @@ ${m.latince ? `      <p class="makale-latin"><i>${kacis(m.latinceTam || m.latinc
 
   <div class="makale-duzen">
     <article class="makale">
+${cevapKutu}
 ${kimlikTablo}
 ${govde}
 ${urunBlok}

@@ -945,3 +945,21 @@ html.katman-acik, html.katman-acik body { overflow: hidden; }
 @media (max-width: 560px) {
   .monografi-izgara { grid-template-columns: 1fr; }
 }
+
+/* Monografinin başındaki kısa cevap kutusu. Etiketli satırlar hem okuru hem
+   makineyi doğrudan cevaba götürüyor; monografinin gövdesi aşağıda duruyor. */
+.makale-govde .cevap-dl { margin: 0; display: grid; gap: 0; }
+.makale-govde .cevap-dl dt {
+  font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--aksan-ac); font-weight: 600;
+  margin-top: 18px;
+}
+.makale-govde .cevap-dl dt:first-child { margin-top: 0; }
+.makale-govde .cevap-dl dd {
+  margin: 6px 0 0; font-size: 15.5px; line-height: 1.66; color: var(--ink);
+}
+.makale-govde .cevap-not {
+  margin-top: 20px; padding-top: 14px;
+  border-top: 1px solid var(--cizgi);
+  font-size: 13px; line-height: 1.6; color: var(--sis);
+}
