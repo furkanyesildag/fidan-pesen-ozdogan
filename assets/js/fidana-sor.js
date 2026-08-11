@@ -77,7 +77,7 @@
     '  font-size:15px;line-height:1.6;color:var(--murekkep)}',
 
     /* --- baloncuk --- */
-    '.bal{position:fixed;right:20px;bottom:20px;z-index:2147483000;',
+    '.bal{position:fixed;right:20px;bottom:var(--dip,20px);z-index:2147483000;',
     '  display:flex;align-items:center;gap:10px;padding:9px 16px 9px 9px;',
     '  border:1px solid var(--cizgi);border-radius:99px;background:var(--beyaz);',
     '  box-shadow:0 14px 40px -14px rgba(26,34,30,.34);cursor:pointer;',
@@ -90,11 +90,11 @@
     '  background:#3fa66a;margin-right:6px;vertical-align:middle}',
     '.bal .kapat{border:0;background:none;color:var(--sis);font-size:17px;',
     '  line-height:1;padding:4px;cursor:pointer;margin-left:2px}',
-    '@media(max-width:520px){.bal{right:14px;bottom:14px;padding:8px 13px 8px 8px}',
+    '@media(max-width:520px){.bal{right:14px;padding:8px 13px 8px 8px}',
     '  .bal i{display:none}}',
 
     /* --- panel --- */
-    '.panel{position:fixed;right:20px;bottom:20px;z-index:2147483000;',
+    '.panel{position:fixed;right:20px;bottom:var(--dip,20px);z-index:2147483000;',
     '  width:390px;max-width:calc(100vw - 32px);height:600px;max-height:calc(100vh - 40px);',
     '  display:flex;flex-direction:column;overflow:hidden;',
     '  border:1px solid var(--cizgi);border-radius:18px;background:var(--kagit);',
@@ -102,7 +102,7 @@
     '  opacity:0;transform:translateY(12px) scale(.98);pointer-events:none;',
     '  transition:opacity .3s,transform .3s cubic-bezier(.2,.9,.3,1.2)}',
     '.panel.acik{opacity:1;transform:none;pointer-events:auto}',
-    '@media(max-width:520px){.panel{right:0;bottom:0;width:100vw;max-width:100vw;',
+    '@media(max-width:520px){.panel{right:0;bottom:0!important;width:100vw;max-width:100vw;',
     '  height:100dvh;max-height:100dvh;border-radius:0;border:0}}',
 
     '.ust{display:flex;align-items:center;gap:11px;padding:14px 16px;',
@@ -172,6 +172,43 @@
   var ONERILER = ['Cildim çok kuru', 'Saçlarım dökülüyor', 'Uykuya dalmakta zorlanıyorum',
     'Bağışıklığımı desteklemek istiyorum'];
 
+  /**
+   * Sağ alt köşe boş mu?
+   *
+   * Pek çok mağazada orada zaten bir WhatsApp düğmesi duruyor; baloncuğu
+   * körlemesine oraya koyunca üstüne biniyor. Kendi öğemizi eklemeden ÖNCE
+   * o noktada ne olduğuna bakıyoruz: sabit konumlu bir şey varsa baloncuk
+   * onun üstüne çıkacak kadar yukarı kayıyor.
+   *
+   * Betik etiketine data-dip="120" yazılarak elle de belirlenebilir.
+   */
+  function dipBosluk() {
+    var elle = document.currentScript && document.currentScript.getAttribute('data-dip');
+    if (elle) return parseInt(elle, 10) || 20;
+
+    var vw = window.innerWidth, vh = window.innerHeight;
+    var enYuksek = 0;
+    /* Köşeye yakın birkaç nokta yoklanıyor: düğmenin boyu ve konumu siteden
+       siteye değişiyor, tek nokta yanıltıcı olabilir. */
+    var noktalar = [[vw - 40, vh - 40], [vw - 40, vh - 70], [vw - 70, vh - 40], [vw - 90, vh - 55]];
+    for (var i = 0; i < noktalar.length; i++) {
+      var o = document.elementFromPoint(noktalar[i][0], noktalar[i][1]);
+      while (o && o !== document.body && o !== document.documentElement) {
+        var b = getComputedStyle(o);
+        if (b.position === 'fixed' || b.position === 'sticky') {
+          var k = o.getBoundingClientRect();
+          /* Ekranın altına yapışmış, makul boyutta bir öğe mi? */
+          if (k.height > 24 && k.height < 200 && k.bottom > vh - 140) {
+            enYuksek = Math.max(enYuksek, vh - k.top);
+          }
+          break;
+        }
+        o = o.parentElement;
+      }
+    }
+    return enYuksek ? Math.round(enYuksek + 16) : 20;
+  }
+
   /* ------------------------------------------------------------------- kurulum */
   function kur() {
     var yuva = document.createElement('div');
@@ -182,6 +219,9 @@
     golge.appendChild(bicim);
 
     var kok = el('div', 'kok');
+    /* Ölçüm kendi öğemiz sayfaya girmeden yapılmalı, yoksa kendimizi
+       ölçmüş oluruz. */
+    kok.style.setProperty('--dip', dipBosluk() + 'px');
     golge.appendChild(kok);
     document.body.appendChild(yuva);
 
