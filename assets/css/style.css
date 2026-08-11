@@ -1079,21 +1079,40 @@ main { position: relative; z-index: 10; }
 .medya-kart h3 { font-family: var(--serif); font-weight: 500; font-size: 22px; margin: 0 0 10px; }
 .medya-kart p { margin: 0; font-size: 14.5px; color: var(--ink-2); }
 
-/* Video Arşivi kartındaki küçük resim şeridi. Gömülü oynatıcı yerine yalnızca
-   kapak görselleri: kart ne olduğunu tek bakışta anlatır, sayfa ağırlaşmaz,
-   arka plandaki sakinlik bozulmaz. Kaynak dosya haftalık olarak yenilenir. */
-.medya-kucukler {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 10px; margin-top: 22px;
+/* Video Arşivi kartındaki kapak. Gömülü oynatıcı yerine tek bir kapak
+   görseli: kart ne olduğunu tek bakışta anlatır, sayfa ağırlaşmaz, arka
+   plandaki sakinlik bozulmaz. Üç küçük kare denendi ama kanalın kapak
+   yazıları bölünüp okunmaz hâle geliyordu; tek geniş kapak hem okunuyor
+   hem de sayfanın sakin diliyle çakışmıyor. Dosya haftalık tazelenir. */
+.medya-onizleme {
+  position: relative; display: block; margin-top: 22px;
+  border-radius: 12px; overflow: hidden;
+  border: 1px solid var(--cizgi);
+  transition: border-color .5s;
 }
-.medya-kucukler img {
-  display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover;
-  border-radius: 10px; border: 1px solid var(--cizgi);
-  filter: saturate(.86) contrast(.97);
-  transition: filter .6s var(--yumusak), border-color .5s;
+.medya-onizleme img {
+  display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover;
+  filter: saturate(.9) contrast(.96);
+  transition: filter .6s var(--yumusak), transform .8s var(--yay);
 }
-.medya-kart:hover .medya-kucukler img { filter: none; border-color: var(--cizgi-kuv); }
-@media (max-width: 700px) { .medya-kucukler { gap: 8px; margin-top: 18px; } }
+.medya-onizleme .oynat {
+  position: absolute; inset: 0; margin: auto;
+  width: 52px; height: 52px; border-radius: 50%;
+  background: rgba(18, 16, 12, .58);
+  backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+  border: 1px solid rgba(255, 255, 255, .3);
+  transition: background .4s, transform .5s var(--yay);
+}
+.medya-onizleme .oynat::before {
+  content: ''; position: absolute; inset: 0; margin: auto;
+  width: 0; height: 0; margin-left: 21px;
+  border-left: 15px solid rgba(255, 255, 255, .94);
+  border-top: 9px solid transparent; border-bottom: 9px solid transparent;
+}
+.medya-kart:hover .medya-onizleme { border-color: var(--cizgi-kuv); }
+.medya-kart:hover .medya-onizleme img { filter: none; transform: scale(1.03); }
+.medya-kart:hover .medya-onizleme .oynat { background: rgba(18, 16, 12, .74); transform: scale(1.08); }
+@media (max-width: 700px) { .medya-onizleme { margin-top: 18px; } }
 
 /* ------------------------------------------------------------ 17. KAPANIŞ */
 .kapanis { padding-block: clamp(120px, 22vh, 220px); }
