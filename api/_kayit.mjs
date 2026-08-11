@@ -28,6 +28,7 @@ export async function kaydet(veri) {
   const kayit = {
     zaman: new Date().toISOString(),
     oturum: veri.oturum,
+    kaynak: veri.kaynak || '',        // sohbetin başladığı site
     ziyaretci: ipOzet(veri.ip),
     acil: !!veri.acil,
     uyari: veri.uyari ?? [],

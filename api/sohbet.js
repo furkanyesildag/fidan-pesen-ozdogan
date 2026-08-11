@@ -32,6 +32,31 @@ function hizSiniri(ip) {
   return kayit.adet <= 12;
 }
 
+/* Asistan dogalmarkam.com'a da gömüleceği için uç nokta artık başka bir alan
+   adından çağrılıyor. Tarayıcı bunu ancak sunucu açıkça izin verirse yapar.
+   İzin listeyle veriliyor: yıldız kullanılsaydı herhangi bir site bizim
+   anahtarımızla model çalıştırabilirdi. */
+const IZINLI_KOKEN = new Set([
+  'https://fidanpesen.com',
+  'https://www.fidanpesen.com',
+  'https://dogalmarkam.com',
+  'https://www.dogalmarkam.com',
+  'https://fidan-pesen-ozdogan.vercel.app',
+]);
+
+function korsBasliklari(req, res) {
+  const koken = req.headers.origin;
+  if (koken && IZINLI_KOKEN.has(koken)) {
+    res.setHeader('Access-Control-Allow-Origin', koken);
+    res.setHeader('Vary', 'Origin');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Max-Age', '86400');
+    return true;
+  }
+  return !koken;                     // kökensiz istek: aynı site ya da sunucu
+}
+
 const ACIL_YANIT =
   'Yazdıklarınız hayati olabilecek belirtiler içeriyor. Lütfen vakit kaybetmeden ' +
   '**112 Acil**\'i arayın.\n\nBu tek istisnada sizi kendi hattımıza değil 112\'ye ' +
@@ -41,7 +66,9 @@ const ACIL_YANIT =
   '[WhatsApp destek hattımız](https://wa.me/905336320313) size açık. Geçmiş olsun.';
 
 export default async function handler(req, res) {
-  if (req.method === 'OPTIONS') { res.status(204).end(); return; }
+  const kokenTamam = korsBasliklari(req, res);
+  if (req.method === 'OPTIONS') { res.status(kokenTamam ? 204 : 403).end(); return; }
+  if (!kokenTamam) { res.status(403).json({ hata: 'Bu köken için izin yok.' }); return; }
   if (req.method !== 'POST') { res.status(405).json({ hata: 'Yalnızca POST' }); return; }
 
   const anahtar = process.env.DEEPSEEK_API_KEY;
@@ -60,6 +87,9 @@ export default async function handler(req, res) {
   if (typeof govde === 'string') { try { govde = JSON.parse(govde); } catch { govde = {}; } }
   const gelen = Array.isArray(govde?.mesajlar) ? govde.mesajlar : [];
   const oturum = String(govde?.oturum || '').slice(0, 40) || 'oturumsuz';
+  /* Konuşmanın hangi siteden geldiği kayda giriyor: dogalmarkam.com'daki
+     sohbetlerle fidanpesen.com'dakileri ayırt edebilmek için. */
+  const kaynak = (req.headers.origin || req.headers.referer || '').slice(0, 120);
 
   const mesajlar = gelen
     .filter((m) => m && (m.rol === 'kullanici' || m.rol === 'asistan') && typeof m.metin === 'string')
@@ -92,7 +122,7 @@ export default async function handler(req, res) {
     gonder('parca', ACIL_YANIT);
     gonder('bitti', { urunler: [], acil: true, whatsapp: true });
     res.end();
-    await kaydet({ oturum, ip, mesajlar, yanit: ACIL_YANIT, acil: true, urunler: [] });
+    await kaydet({ oturum, ip, kaynak, mesajlar, yanit: ACIL_YANIT, acil: true, urunler: [] });
     return;
   }
 
@@ -224,7 +254,7 @@ export default async function handler(req, res) {
   res.end();
 
   await kaydet({
-    oturum, ip, mesajlar,
+    oturum, ip, kaynak, mesajlar,
     yanit: tamYanit,
     urunler: kartlar.map((k) => k.ad),
     uyari: guvenlik.uyari,
