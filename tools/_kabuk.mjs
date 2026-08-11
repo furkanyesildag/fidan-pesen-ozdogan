@@ -82,6 +82,14 @@ export function latinceIsaretle(m) {
     });
 }
 
+/** Belgede tümü büyük harf yazılmış başlıkları normal düzene çevirir. */
+export function baslikDuzelt(m) {
+  const harf = m.replace(/[^A-Za-zÇĞİıÖŞÜçğöşü]/g, '');
+  if (!harf || harf !== harf.toLocaleUpperCase('tr-TR')) return m;
+  const kucuk = m.toLocaleLowerCase('tr-TR');
+  return kucuk.charAt(0).toLocaleUpperCase('tr-TR') + kucuk.slice(1);
+}
+
 export function paragrafYaz(metin) {
   return `<p>${ustSimge(latinceIsaretle(kacis(metin)))}</p>`;
 }

@@ -257,6 +257,17 @@ DESTEK BİLGİSİ (gerçek bilgiler, uydurma)
    literatür derlemesidir ve içlerinde hastalık adı geçen ifadeler vardır;
    asistanın ağzından çıktığında sağlık beyanına dönüşür. Asistan bitkiyi
    anlatmaz, "bunun ayrıntılı monografisi şurada" der ve bağlantıyı verir. */
+const REHBER = `Medikal herbalizm ve fitoterapi nedir: /medikal-herbalizm
+Bitkilerdeki etken maddeler (flavonoid, tanen, saponin, alkaloid, terpen): /bitki-kimyasi
+Vitaminler ve mineraller (B12, D, C, demir, çinko, magnezyum…): /vitamin-mineral
+Hünnap ve hünnap özü: /hunnap-ozu
+Pancar pekmezi: /pancar-pekmezi
+Uçucu yağlar ve aromaterapi: /ucucu-yaglar
+Cilt bakımı: /cilt-bakimi
+Saç bakımı: /sac-bakimi
+Gıda takviyeleri: /gida-takviyeleri
+Geleneksel tıp ve mizaç: /geleneksel-tip`;
+
 const MONOGRAFI = `Acı Bakla (Lupinus albus): /monografi/aci-bakla
 Adaçayı (Salvia officinalis): /monografi/adacayi
 Adi Ardıç (Juniperus communis): /monografi/adi-ardic

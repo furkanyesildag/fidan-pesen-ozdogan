@@ -24,7 +24,7 @@ import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
-  SITE, BUGUN, BUGUN_YAZI, kacis, duz, kimlik, govdeYaz, cinsleriKur,
+  SITE, BUGUN, BUGUN_YAZI, kacis, duz, kimlik, govdeYaz, cinsleriKur, baslikDuzelt,
   latinceIsaretle, bas, dip, YAZAR_KART, SORUMLULUK, KISI_LD, KURULUS_LD,
 } from './_kabuk.mjs';
 
@@ -169,7 +169,7 @@ function sssUret(agac) {
       if (!b.govde?.length) continue;
       const c = cevap(b.govde);
       if (c.length < 90) continue;
-      const ad = b.baslik.replace(/\s*\(.*?\)\s*$/, '').trim();
+      const ad = baslikDuzelt(b.baslik).replace(/\s*\(.*?\)\s*$/, '').trim();
       soru.push([`${ad} nedir?`, c]);
       if (soru.length >= 12) return soru;
     }
@@ -206,7 +206,7 @@ function sayfaUret(s, komsular) {
         citation: kitap.kaynakca.slice(0, 60).map(duz),
         hasPart: agac.filter((u) => !u.sentetik || u.alt.length).map((u) => ({
           '@type': 'WebPageElement',
-          name: u.baslik,
+          name: baslikDuzelt(u.baslik),
           url: `${SITE}/${s.yol}#${u.kimlik}`,
         })),
       },
@@ -234,11 +234,11 @@ function sayfaUret(s, komsular) {
   const govde = agac.map((u) => {
     const kendi = u.govde.length ? `\n        ${govdeYaz(u.govde)}` : '';
     const alt = u.alt.map((b) => `
-        <h3 id="${b.kimlik}">${kacis(b.baslik)}</h3>
+        <h3 id="${b.kimlik}">${kacis(baslikDuzelt(b.baslik))}</h3>
         ${govdeYaz(b.govde)}`).join('\n');
     return `
       <section id="${u.kimlik}">
-        <h2>${kacis(u.baslik)}</h2>${kendi}
+        <h2>${kacis(baslikDuzelt(u.baslik))}</h2>${kendi}
 ${alt}
       </section>`;
   }).join('\n');
@@ -312,7 +312,7 @@ ${SORUMLULUK}
     <aside class="icindekiler" aria-label="İçindekiler">
       <h2>İçindekiler</h2>
       <ol>
-${icindekiler.map(([k, b]) => `        <li><a href="#${k}">${kacis(b)}</a></li>`).join('\n')}
+${icindekiler.map(([k, b]) => `        <li><a href="#${k}">${kacis(baslikDuzelt(b))}</a></li>`).join('\n')}
       </ol>
     </aside>
   </div>
