@@ -336,8 +336,8 @@ function sayfaUret(videolar, guncelleme) {
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@PesenFidan">
 <link rel="preconnect" href="https://i.ytimg.com" crossorigin>
-<link rel="stylesheet" href="/assets/css/style.css?v=16">
-<link rel="stylesheet" href="/assets/css/makale.css?v=16">
+<link rel="stylesheet" href="/assets/css/style.css?v=17">
+<link rel="stylesheet" href="/assets/css/makale.css?v=17">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44' fill='none'><path d='M22 36V14' stroke='%23a8842c' stroke-width='3' stroke-linecap='round'/><path d='M22 22.6c-6 0-9.6-3.6-9.6-9.6 6 0 9.6 3.6 9.6 9.6Z' stroke='%23a8842c' stroke-width='2.8' stroke-linejoin='round'/><path d='M22 18c0-6.6 3.8-10.4 10.4-10.4 0 6.6-3.8 10.4-10.4 10.4Z' stroke='%23a8842c' stroke-width='2.8' stroke-linejoin='round'/></svg>">
 <script type="application/ld+json">
 ${JSON.stringify(ld, null, 2)}
@@ -476,9 +476,9 @@ ${JSON.stringify(ld, null, 2)}
   </div>
 </footer>
 
-<script src="/assets/js/sayfa.js?v=16"></script>
-<script src="/assets/js/tema.js?v=16"></script>
-<script src="/assets/js/asistan-baloncuk.js?v=16" defer></script>
+<script src="/assets/js/sayfa.js?v=17"></script>
+<script src="/assets/js/tema.js?v=17"></script>
+<script src="/assets/js/asistan-baloncuk.js?v=17" defer></script>
 <script>
 /* Tıklanana kadar YouTube'dan hiçbir şey yüklenmez (facade deseni):
    kapak görseli i.ytimg.com'dan gelir, oynatıcı yalnızca tıklamada eklenir. */
@@ -518,10 +518,21 @@ try {
   const ANA = path.join(KOK_DIZIN, 'index.html');
   const secilen = hepsi.filter((v) => !v.kisa)[0];
   if (secilen) {
+    const kucuk = `https://i.ytimg.com/vi/${secilen.id}/mqdefault.jpg`;
+    const buyuk = `https://i.ytimg.com/vi/${secilen.id}/hq720.jpg`;
+    // hq720 her videoda bulunmaz; yoksa srcset yazmıyoruz ki kırık
+    // görsel çıkmasın. mqdefault her zaman vardır ve 16:9'dur.
+    let buyukVar = false;
+    try { buyukVar = (await fetch(buyuk, { method: 'HEAD', headers: { 'user-agent': UA } })).ok; }
+    catch { /* ağ hatasında küçük görselle yetin */ }
     const serit =
       '<!-- KUCUKLER:BAS --><span class="medya-onizleme" aria-hidden="true">\n' +
-      `          <img src="https://i.ytimg.com/vi/${secilen.id}/hqdefault.jpg" alt=""\n` +
-      '               width="480" height="360" loading="lazy" decoding="async">\n' +
+      `          <img src="${kucuk}"\n` +
+      (buyukVar
+        ? `               srcset="${kucuk} 320w,\n                       ${buyuk} 1280w"\n` +
+          '               sizes="(max-width: 700px) 88vw, 420px"\n'
+        : '') +
+      '               alt="" width="1280" height="720" loading="lazy" decoding="async">\n' +
       '          <span class="oynat"></span>\n' +
       '        </span><!-- KUCUKLER:SON -->';
     const ana = await readFile(ANA, 'utf8');
