@@ -45,15 +45,27 @@ export async function kaydet(veri) {
 
   const isler = [];
 
-  const kvUrl = process.env.KV_REST_API_URL;
-  const kvTok = process.env.KV_REST_API_TOKEN;
+  const kvUrl = process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL;
+  const kvTok = process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN;
   if (kvUrl && kvTok) {
+    /* Boru hattı ile üç iş birden: konuşmayı listeye ekle, listeyi son
+       KAYIT_TAVANI kayıtla sınırla (sonsuza kadar büyümesin) ve günlük
+       sayacı artır. Komut dizisi biçimi Upstash ve Vercel KV'de aynıdır. */
+    const tavan = Number(process.env.KAYIT_TAVANI) || 5000;
+    const gun = kayit.zaman.slice(0, 10);
     isler.push(
-      fetch(`${kvUrl}/rpush/sohbet:kayit`, {
+      fetch(`${kvUrl}/pipeline`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${kvTok}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify(kayit),
-      }).catch((e) => console.error('KV kaydı başarısız:', e.message))
+        body: JSON.stringify([
+          ['LPUSH', 'sohbet:kayit', JSON.stringify(kayit)],
+          ['LTRIM', 'sohbet:kayit', 0, tavan - 1],
+          ['INCR', `sohbet:sayac:${gun}`],
+          ['EXPIRE', `sohbet:sayac:${gun}`, 60 * 60 * 24 * 400],
+        ]),
+      })
+        .then((y) => { if (!y.ok) throw new Error('HTTP ' + y.status); })
+        .catch((e) => console.error('KV kaydı başarısız:', e.message))
     );
   }
 

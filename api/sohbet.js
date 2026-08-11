@@ -13,37 +13,18 @@
  */
 import { urunGetirPuanli, guvenlikTara, istemKur, sade, URUNLER } from './_istem.mjs';
 import { kaydet } from './_kayit.mjs';
+import {
+  kotaKontrol, kokenTamam as kokenIzinli, botMu, SINIR_MESAJI, IZINLI_KOKEN,
+} from './_kota.mjs';
 
 const API = 'https://api.deepseek.com/chat/completions';
 const MODEL = process.env.DEEPSEEK_MODEL || 'deepseek-chat';
 const AZAMI_MESAJ = 24;          // geçmişte tutulacak azami mesaj
 const AZAMI_UZUNLUK = 1500;      // tek mesajda azami karakter
 
-/* Çok kaba bir hız sınırı: aynı IP dakikada 12 istekten fazlasını yapamaz.
-   Sunucusuz örnekler arasında paylaşılmaz ama kötüye kullanımın önünü keser. */
-const pencere = new Map();
-function hizSiniri(ip) {
-  const simdi = Date.now();
-  const kayit = pencere.get(ip) ?? { adet: 0, bas: simdi };
-  if (simdi - kayit.bas > 60000) { kayit.adet = 0; kayit.bas = simdi; }
-  kayit.adet++;
-  pencere.set(ip, kayit);
-  if (pencere.size > 500) pencere.clear();
-  return kayit.adet <= 12;
-}
-
-/* Asistan dogalmarkam.com'a da gömüleceği için uç nokta artık başka bir alan
-   adından çağrılıyor. Tarayıcı bunu ancak sunucu açıkça izin verirse yapar.
-   İzin listeyle veriliyor: yıldız kullanılsaydı herhangi bir site bizim
-   anahtarımızla model çalıştırabilirdi. */
-const IZINLI_KOKEN = new Set([
-  'https://fidanpesen.com',
-  'https://www.fidanpesen.com',
-  'https://dogalmarkam.com',
-  'https://www.dogalmarkam.com',
-  'https://fidan-pesen-ozdogan.vercel.app',
-]);
-
+/* Asistan dogalmarkam.com'a da gömüldüğü için uç nokta başka bir alan adından
+   çağrılıyor; tarayıcı bunu ancak sunucu açıkça izin verirse yapar. İzinli
+   köken listesi ve kötüye kullanım koruması _kota.mjs'de. */
 function korsBasliklari(req, res) {
   const koken = req.headers.origin;
   if (koken && IZINLI_KOKEN.has(koken)) {
@@ -66,9 +47,9 @@ const ACIL_YANIT =
   '[WhatsApp destek hattımız](https://wa.me/905336320313) size açık. Geçmiş olsun.';
 
 export default async function handler(req, res) {
-  const kokenTamam = korsBasliklari(req, res);
-  if (req.method === 'OPTIONS') { res.status(kokenTamam ? 204 : 403).end(); return; }
-  if (!kokenTamam) { res.status(403).json({ hata: 'Bu köken için izin yok.' }); return; }
+  const korsTamam = korsBasliklari(req, res);
+  if (req.method === 'OPTIONS') { res.status(korsTamam ? 204 : 403).end(); return; }
+  if (!korsTamam) { res.status(403).json({ hata: 'Bu köken için izin yok.' }); return; }
   if (req.method !== 'POST') { res.status(405).json({ hata: 'Yalnızca POST' }); return; }
 
   const anahtar = process.env.DEEPSEEK_API_KEY;
@@ -78,8 +59,10 @@ export default async function handler(req, res) {
   }
 
   const ip = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || 'bilinmeyen';
-  if (!hizSiniri(ip)) {
-    res.status(429).json({ hata: 'Çok fazla istek. Bir dakika sonra tekrar deneyin.' });
+
+  /* Betikle atılan istekler modele hiç ulaşmasın: her istek ücretlendiriliyor. */
+  if (!kokenIzinli(req) || botMu(req)) {
+    res.status(403).json({ hata: 'Bu istek kabul edilmedi.' });
     return;
   }
 
@@ -105,6 +88,13 @@ export default async function handler(req, res) {
   }
 
   const sonMesaj = mesajlar[mesajlar.length - 1].content;
+
+  const kota = await kotaKontrol({ ip, oturum, sonMesaj });
+  if (!kota.gecti) {
+    res.setHeader('Retry-After', String(kota.bekle || 60));
+    res.status(429).json({ hata: SINIR_MESAJI[kota.sebep] || SINIR_MESAJI.dakika });
+    return;
+  }
   const tumMetin = mesajlar.filter((m) => m.role === 'user').map((m) => m.content).join(' ');
   const guvenlik = guvenlikTara(tumMetin);
 
