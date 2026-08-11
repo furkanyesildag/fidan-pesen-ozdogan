@@ -1308,19 +1308,26 @@ main { position: relative; z-index: 10; }
     var(--kutu-koyu);
   backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
 }
+/* İletişim künyesindeki portre, kapaktakiyle aynı görsel ve aynı kemer
+   biçimi. Önce ayrı bir fotoğraf ve düz köşeli yatay bir kutuydu; iki
+   portre yan yana görülmese de aynı sayfada iki farklı dil konuşuyordu. */
 .kunye-portre {
   margin: 0 0 22px;
-  aspect-ratio: 5 / 4;
-  overflow: hidden; border-radius: 14px;
-  border: 1px solid var(--cizgi);
+  aspect-ratio: 4 / 4.7;
+  overflow: hidden;
+  border-radius: 50% 50% 20px 20px / 42% 42% 20px 20px;
+  border: 1px solid rgba(var(--aksan-rgb), .38);
+  box-shadow: inset 0 0 0 1px var(--parlak-2);
+  transition: border-color .9s var(--yumusak);
 }
 .kunye-portre img {
-  width: 100%; height: 100%;
-  object-fit: cover; object-position: 66% 24%;
-  filter: saturate(.9) brightness(.92);
-  transition: transform 1.1s var(--yumusak);
+  width: 100%; height: 100%; display: block;
+  object-fit: cover; object-position: 62% 22%;
+  filter: saturate(.92) contrast(1.03);
+  transform: scale(1.02);
+  transition: transform 1.2s var(--yumusak), filter .9s;
 }
-.kunye-kart:hover .kunye-portre img { transform: scale(1.05); }
+.kunye-kart:hover .kunye-portre img { transform: scale(1.06); filter: saturate(1) contrast(1.05); }
 .kunye-kart h3 {
   font-family: var(--serif); font-weight: 500; font-size: 19px;
   margin: 0 0 20px; line-height: 1.35;
