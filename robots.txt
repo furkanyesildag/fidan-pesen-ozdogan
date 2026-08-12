@@ -58,7 +58,6 @@ Allow: /
 
 Sitemap: https://fidanpesen.com/sitemap.xml
 
-# Yönetim ekranı
+# Uç noktalar taranmasın
 User-agent: *
-Disallow: /kayitlar
 Disallow: /api/

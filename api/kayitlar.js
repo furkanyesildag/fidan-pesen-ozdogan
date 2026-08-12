@@ -13,6 +13,8 @@
  *   /api/kayitlar?anahtar=...&bicim=csv  tabloya aktarmak için
  * ---------------------------------------------------------------------------
  */
+import { createHash } from 'node:crypto';
+
 const KOK = process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL || '';
 const JETON = process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN || '';
 
@@ -24,6 +26,31 @@ function esitMi(a, b) {
   let fark = 0;
   for (let i = 0; i < x.length; i++) fark |= x.charCodeAt(i) ^ y.charCodeAt(i);
   return fark === 0;
+}
+
+/**
+ * Yanlış anahtar denemelerini sınırlar. Anahtar 32 karakterlik rastgele bir
+ * dizi olduğu için kaba kuvvetle bulunması pratikte imkânsız; yine de
+ * sınırsız deneme hakkı bırakmak doğru değil. Aynı IP saatte 10 kez
+ * yanılırsa bir saat boyunca kapatılır.
+ */
+async function denemeSayaci(ip, basarili) {
+  if (!KOK || !JETON) return true;
+  const anahtar = 'kayit:deneme:' + createHash('sha256')
+    .update(String(ip) + (process.env.KAYIT_TUZU || 'fpo')).digest('hex').slice(0, 16);
+  try {
+    if (basarili) {
+      await fetch(`${KOK}/del/${anahtar}`, { headers: { Authorization: `Bearer ${JETON}` } });
+      return true;
+    }
+    const y = await fetch(`${KOK}/pipeline`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${JETON}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify([['INCR', anahtar], ['EXPIRE', anahtar, 3600]]),
+    });
+    const s = await y.json();
+    return Number(s[0]?.result) <= 10;
+  } catch { return true; }          // depo düşerse erişimi büsbütün kesme
 }
 
 function csvKacis(m) {
@@ -40,11 +67,25 @@ export default async function handler(req, res) {
     return;
   }
 
-  const anahtar = String(req.query?.anahtar || '');
+  /* Anahtar öncelikle başlıkla alınır: adres çubuğuna yazıldığında tarayıcı
+     geçmişine, sunucu erişim günlüklerine ve dışarı verilen bağlantıların
+     Referer başlığına düşüyor. Sorgu biçimi elle açmak isteyenler için
+     duruyor ama ekran başlığı kullanıyor. */
+  const anahtar = String(req.headers['x-anahtar'] || req.query?.anahtar || '');
+  const ip = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || 'bilinmeyen';
+
   if (!esitMi(anahtar, beklenen)) {
+    const devam = await denemeSayaci(ip, false);
+    res.setHeader('Cache-Control', 'no-store');
+    if (!devam) {
+      res.setHeader('Retry-After', '3600');
+      res.status(429).json({ hata: 'Çok fazla hatalı deneme. Bir saat sonra tekrar deneyin.' });
+      return;
+    }
     res.status(401).json({ hata: 'Anahtar geçersiz.' });
     return;
   }
+  await denemeSayaci(ip, true);
 
   if (!KOK || !JETON) {
     res.status(503).json({

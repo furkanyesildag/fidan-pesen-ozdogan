@@ -163,10 +163,22 @@
     });
   }
 
-  function adres(bicim) {
-    var a = encodeURIComponent(anahtarKutu.value.trim());
+  /* Anahtar adres çubuğuna yazılmıyor; istek başlığıyla gönderiliyor.
+     Sorguya konsaydı tarayıcı geçmişine ve sunucu erişim günlüklerine
+     düşerdi. CSV de bu yüzden bağlantıyla değil, indirilip dosyaya
+     çevrilerek veriliyor. */
+  function iste(bicim) {
     var n = encodeURIComponent(adetKutu.value);
-    return '/api/kayitlar?anahtar=' + a + '&adet=' + n + (bicim ? '&bicim=' + bicim : '');
+    return fetch('/api/kayitlar?adet=' + n + (bicim ? '&bicim=' + bicim : ''), {
+      headers: { 'x-anahtar': anahtarKutu.value.trim() },
+      cache: 'no-store',
+    }).then(function (y) {
+      if (y.status === 401) throw new Error('Anahtar geçersiz.');
+      if (y.status === 429) throw new Error('Çok fazla hatalı deneme. Bir saat sonra tekrar deneyin.');
+      if (y.status === 503) return y.json().then(function (j) { throw new Error(j.hata); });
+      if (!y.ok) throw new Error('Sunucu hatası (' + y.status + ')');
+      return y;
+    });
   }
 
   form.addEventListener('submit', function (e) {
@@ -176,20 +188,26 @@
     try { localStorage.setItem('fpo_kayit_anahtar', a); } catch (er) {}
     liste.innerHTML = ''; ozet.hidden = true;
     durum.hidden = false; durum.textContent = 'Getiriliyor...';
-    fetch(adres(''))
-      .then(function (y) {
-        if (y.status === 401) throw new Error('Anahtar geçersiz.');
-        if (y.status === 503) return y.json().then(function (j) { throw new Error(j.hata); });
-        if (!y.ok) throw new Error('Sunucu hatası (' + y.status + ')');
-        return y.json();
-      })
+    iste('')
+      .then(function (y) { return y.json(); })
       .then(function (j) { ciz(j.kayitlar || []); })
       .catch(function (er) { durum.hidden = false; durum.textContent = er.message; });
   });
 
   document.getElementById('csv').addEventListener('click', function () {
     if (!anahtarKutu.value.trim()) { anahtarKutu.focus(); return; }
-    window.location.href = adres('csv');
+    durum.hidden = false; durum.textContent = 'CSV hazırlanıyor...';
+    iste('csv')
+      .then(function (y) { return y.blob(); })
+      .then(function (b) {
+        var u = URL.createObjectURL(b);
+        var a = document.createElement('a');
+        a.href = u; a.download = 'sohbetler.csv';
+        document.body.appendChild(a); a.click(); a.remove();
+        URL.revokeObjectURL(u);
+        durum.hidden = true;
+      })
+      .catch(function (er) { durum.textContent = er.message; });
   });
 
   if (anahtarKutu.value) form.dispatchEvent(new Event('submit'));
