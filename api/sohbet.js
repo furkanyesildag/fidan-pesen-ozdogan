@@ -49,37 +49,52 @@ function korsBasliklari(req, res) {
  * Uzunluk sınırlı: adres taşarsa bazı telefonlarda bağlantı hiç açılmıyor.
  */
 const WA_NUMARA = '905336320313';
+
+/* Cümlenin başındaki selamlama: "merhaba baş ağrılarım var" gibi mesajlarda
+   selam ayrı bir mesaj olmadığı için elenmiyor, cümleye yapışık geliyordu. */
+const WA_SELAM = /^(?:merhaba(?:lar)?|selam(?:un aleyk[üu]m)?|iyi (?:g[üu]nler|ak[şs]amlar)|g[üu]nayd[ıi]n|ho[şs] ?geldin(?:iz)?)\b[\s,.!:;-]*/i;
+/* Tek başına gelen ve temsilciye hiçbir şey anlatmayan yanıtlar. */
+const WA_DOLGU = /^(?:merhaba(?:lar)?|selam|iyi g[üu]nler|iyi ak[şs]amlar|g[üu]nayd[ıi]n|te[şs]ekk[üu]r(?:ler)?|sa[ğg] ?ol(?:un)?|evet|hay[ıi]r|yok|var|tamam|olur|peki|ok|okey|h[ıi]|hmm|\.|\?)$/i;
+
+/**
+ * wa.me bağlantısına gömülecek hazır mesaj.
+ *
+ * Amaç, temsilcinin konuşmayı sıfırdan başlatmaması. Kullanıcının yazdıkları
+ * madde madde aktarılıyor; düz virgüllü bir dizi yerine liste, WhatsApp'ta
+ * belirgin biçimde daha okunur oluyor.
+ *
+ * Uzunluk sınırlı: adres taşarsa bazı telefonlarda bağlantı hiç açılmıyor.
+ */
 function waMesaji(kullaniciMesajlari, urunler) {
-  const temiz = (m) => String(m || '').replace(/\s+/g, ' ').trim();
-  /* Selamlaşma ve tek kelimelik onaylar temsilciye hiçbir şey anlatmıyor;
-     daha anlamlı bir cümle varsa bunlar atılıyor. Hepsi buysa atılmıyor,
-     çünkü boş bir konu satırı daha kötü olurdu. */
-  const DOLGU = /^(merhaba|selam|selamun aleykum|iyi günler|iyi akşamlar|günaydın|teşekkür(ler)?|sağ ?ol(un)?|evet|hayır|yok|var|tamam|olur|peki|ok|okey|hı|hmm|\.|\?)$/i;
+  const buyutTr = (m) => (m ? m.charAt(0).toLocaleUpperCase('tr-TR') + m.slice(1) : m);
   const gorulen = new Set();
   const hepsi = [];
-  for (const m of kullaniciMesajlari) {
-    const t = temiz(m);
+  for (const ham of kullaniciMesajlari) {
+    let t = String(ham || '').replace(/\s+/g, ' ').trim().replace(WA_SELAM, '').trim();
+    if (t.length < 2) continue;
     const anahtar = t.toLocaleLowerCase('tr-TR');
-    if (t.length < 2 || gorulen.has(anahtar)) continue;
+    if (gorulen.has(anahtar)) continue;
     gorulen.add(anahtar);
-    hepsi.push(t);
+    hepsi.push(buyutTr(t));
   }
-  const anlamli = hepsi.filter((t) => !DOLGU.test(t));
-  const satirlar = anlamli.length ? anlamli : hepsi;
-
-  /* Konu satırı 320 karakteri aşmasın; aşarsa baştan itibaren sığdığı kadarı
-     alınır, çünkü konuyu belirleyen ilk cümlelerdir. */
-  let konu = '';
-  for (const t of satirlar) {
-    const aday = konu ? konu + ' · ' + t : t;
-    if (aday.length > 320) { konu += ' …'; break; }
-    konu = aday;
-  }
+  const anlamli = hepsi.filter((t) => !WA_DOLGU.test(t));
+  const satirlar = (anlamli.length ? anlamli : hepsi).slice(0, 6);
 
   const govde = ['Merhaba, Fidan Hoca\u2019nın asistanından geliyorum.'];
-  if (konu) govde.push('', 'Asistana anlattıklarım: ' + konu);
+  if (satirlar.length) {
+    const madde = [];
+    let uzunluk = 0;
+    for (const t of satirlar) {
+      const k = t.length > 160 ? t.slice(0, 159).trimEnd() + '…' : t;
+      if (uzunluk + k.length > 340) break;
+      uzunluk += k.length;
+      madde.push('• ' + k);
+    }
+    govde.push('', 'Asistana anlattıklarım:', ...madde);
+  }
   if (urunler && urunler.length) {
-    govde.push('', 'Bana önerilen: ' + urunler.slice(0, 3).map((u) => u.ad).join(', '));
+    govde.push('', urunler.length > 1 ? 'Bana önerilenler:' : 'Bana önerilen:',
+      ...urunler.slice(0, 3).map((u) => '• ' + u.ad));
   }
   govde.push('', 'Bu konuda bilgi almak istiyorum.');
   return `https://wa.me/${WA_NUMARA}?text=${encodeURIComponent(govde.join('\n'))}`;
