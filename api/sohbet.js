@@ -38,21 +38,51 @@ function korsBasliklari(req, res) {
   return !koken;                     // kökensiz istek: aynı site ya da sunucu
 }
 
-/** wa.me bağlantısına gömülecek hazır mesaj. Uzunluk sınırlı tutuluyor:
- *  adres çubuğu taşarsa bazı telefonlarda bağlantı hiç açılmıyor. */
+/**
+ * wa.me bağlantısına gömülecek hazır mesaj.
+ *
+ * Yalnızca son mesaj kullanılırsa bağlam kayboluyordu: asistan soru sorup
+ * kullanıcı "yok" diye cevap verdiğinde WhatsApp'a "Sorduğum konu: yok"
+ * gidiyordu. Bu yüzden kullanıcının konuşma boyunca yazdıklarının tamamı
+ * alınıp sırayla yazılıyor; konuyu belirleyen ilk cümleler öncelikli.
+ *
+ * Uzunluk sınırlı: adres taşarsa bazı telefonlarda bağlantı hiç açılmıyor.
+ */
 const WA_NUMARA = '905336320313';
-function waMesaji(soru, urunler) {
-  const kirp = (m, n) => {
-    const t = String(m || '').replace(/\s+/g, ' ').trim();
-    return t.length > n ? t.slice(0, n - 1).trimEnd() + '…' : t;
-  };
-  const satir = ['Merhaba, Fidan Hoca\u2019nın asistanından geliyorum.'];
-  if (soru) satir.push('', 'Sorduğum konu: ' + kirp(soru, 220));
-  if (urunler && urunler.length) {
-    satir.push('', 'Bana önerilen: ' + urunler.slice(0, 3).map((u) => u.ad).join(', '));
+function waMesaji(kullaniciMesajlari, urunler) {
+  const temiz = (m) => String(m || '').replace(/\s+/g, ' ').trim();
+  /* Selamlaşma ve tek kelimelik onaylar temsilciye hiçbir şey anlatmıyor;
+     daha anlamlı bir cümle varsa bunlar atılıyor. Hepsi buysa atılmıyor,
+     çünkü boş bir konu satırı daha kötü olurdu. */
+  const DOLGU = /^(merhaba|selam|selamun aleykum|iyi günler|iyi akşamlar|günaydın|teşekkür(ler)?|sağ ?ol(un)?|evet|hayır|yok|var|tamam|olur|peki|ok|okey|hı|hmm|\.|\?)$/i;
+  const gorulen = new Set();
+  const hepsi = [];
+  for (const m of kullaniciMesajlari) {
+    const t = temiz(m);
+    const anahtar = t.toLocaleLowerCase('tr-TR');
+    if (t.length < 2 || gorulen.has(anahtar)) continue;
+    gorulen.add(anahtar);
+    hepsi.push(t);
   }
-  satir.push('', 'Bu konuda bilgi almak istiyorum.');
-  return `https://wa.me/${WA_NUMARA}?text=${encodeURIComponent(satir.join('\n'))}`;
+  const anlamli = hepsi.filter((t) => !DOLGU.test(t));
+  const satirlar = anlamli.length ? anlamli : hepsi;
+
+  /* Konu satırı 320 karakteri aşmasın; aşarsa baştan itibaren sığdığı kadarı
+     alınır, çünkü konuyu belirleyen ilk cümlelerdir. */
+  let konu = '';
+  for (const t of satirlar) {
+    const aday = konu ? konu + ' · ' + t : t;
+    if (aday.length > 320) { konu += ' …'; break; }
+    konu = aday;
+  }
+
+  const govde = ['Merhaba, Fidan Hoca\u2019nın asistanından geliyorum.'];
+  if (konu) govde.push('', 'Asistana anlattıklarım: ' + konu);
+  if (urunler && urunler.length) {
+    govde.push('', 'Bana önerilen: ' + urunler.slice(0, 3).map((u) => u.ad).join(', '));
+  }
+  govde.push('', 'Bu konuda bilgi almak istiyorum.');
+  return `https://wa.me/${WA_NUMARA}?text=${encodeURIComponent(govde.join('\n'))}`;
 }
 
 const ACIL_YANIT =
@@ -260,7 +290,8 @@ export default async function handler(req, res) {
      başlatmak yerine kişinin ne sorduğunu ve hangi ürünün önerildiğini
      görüyor; kullanıcı da aynı şeyi ikinci kez anlatmak zorunda kalmıyor.
      Metin gönderilmeden önce WhatsApp'ta görünür ve düzenlenebilir. */
-  const waMetni = waMesaji(sonMesaj, kartlar);
+  const waMetni = waMesaji(
+    mesajlar.filter((m) => m.role === 'user').map((m) => m.content), kartlar);
 
   gonder('bitti', {
     urunler: kartlar.slice(0, 3),
