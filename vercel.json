@@ -76,25 +76,25 @@
   ],
   "redirects": [
     {
-      "source": "/:yol*",
+      "source": "/(.*)",
       "has": [
         {
           "type": "host",
           "value": "www.fidanpesen.com"
         }
       ],
-      "destination": "https://fidanpesen.com/:yol*",
+      "destination": "https://fidanpesen.com/$1",
       "permanent": true
     },
     {
-      "source": "/:yol*",
+      "source": "/(.*)",
       "has": [
         {
           "type": "host",
           "value": "fidan-pesen-ozdogan.vercel.app"
         }
       ],
-      "destination": "https://fidanpesen.com/:yol*",
+      "destination": "https://fidanpesen.com/$1",
       "permanent": true
     }
   ],
