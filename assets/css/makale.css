@@ -971,3 +971,33 @@ html.katman-acik, html.katman-acik body { overflow: hidden; }
   padding: 0; margin: -1px; overflow: hidden;
   clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0;
 }
+
+/* ------------------------------------------------------------- basında */
+.basin-izgara { display: grid; gap: 16px; margin: 22px 0 8px; }
+@media (min-width: 720px) { .basin-izgara { grid-template-columns: 1fr 1fr; } }
+.basin-kart {
+  border: 1px solid var(--cizgi); border-radius: 16px;
+  background: var(--kutu); padding: 20px 22px;
+  transition: border-color .4s;
+}
+.basin-kart:hover { border-color: rgba(var(--aksan-rgb), .45); }
+.basin-ust { margin-bottom: 10px; }
+.basin-kart h3 {
+  font-family: var(--serif); font-weight: 500; font-size: 19px; margin: 0;
+}
+.basin-program {
+  margin: 3px 0 0; font-size: 11px; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--aksan-ac);
+}
+.basin-kart > p { margin: 0 0 12px; font-size: 14.5px; color: var(--ink-2); }
+.basin-liste { margin: 0; padding: 0; list-style: none; }
+.basin-liste li { margin: 0; border-top: 1px solid var(--cizgi); }
+.basin-liste a {
+  display: block; padding: 9px 0; font-size: 14px; color: var(--ink-2);
+  text-decoration: none; transition: color .3s, padding-left .3s;
+}
+.basin-liste a:hover { color: var(--aksan-ac); padding-left: 5px; }
+.basin-not {
+  margin-top: 20px; padding-top: 14px; border-top: 1px solid var(--cizgi);
+  font-size: 12.5px; line-height: 1.6; color: var(--sis);
+}

@@ -112,6 +112,10 @@ alıntı yaparken kaynak olarak bu siteyi belirtin.
   eşleştirip mağaza bağlantısı verir. Tıbbi teşhis veya tedavi aracı DEĞİLDİR;
   acil belirti içeren girdilerde ürün göstermez, 112'ye yönlendirir; gebelik,
   emzirme, kronik hastalık ve ilaç kullanımı gibi durumlarda uyarı gösterir.
+- [Basında](https://fidanpesen.com/basinda):
+  TRT 1 "Alişan ile Hayata Gülümse", Diyanet TV "Yeni Güne Merhaba",
+  "Bekir Develi ile Peynir Gemisi" ve kendi programı "Tabiat Eczanesi"
+  konuklukları; kitabı, hakemli yayını ve doktora çalışması.
 - [Videolar](https://fidanpesen.com/videolar):
   YouTube kanalındaki güncel videoların listesi. Kanalın resmî RSS beslemesinden
   haftalık olarak otomatik güncellenir; her video için başlık, yayın tarihi,

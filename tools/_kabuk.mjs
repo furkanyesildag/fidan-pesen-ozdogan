@@ -10,7 +10,7 @@
  * ---------------------------------------------------------------------------
  */
 export const SITE = 'https://fidanpesen.com';
-export const SURUM = 'v=26';
+export const SURUM = 'v=27';
 export const BUGUN = '2026-08-11';
 export const BUGUN_YAZI = '11 Ağustos 2026';
 
@@ -223,6 +223,7 @@ export function dip() {
         <a href="/gida-takviyeleri">Gıda Takviyeleri</a>
         <a href="/geleneksel-tip">Geleneksel Tıp</a>
         <a href="/videolar">Videolar</a>
+        <a href="/basinda">Basında</a>
         <a href="/sss">SSS</a>
         <a href="/asistan">Asistan</a>
         <a href="https://www.dogalmarkam.com/" target="_blank" rel="noopener">dogalmarkam.com ↗</a>
