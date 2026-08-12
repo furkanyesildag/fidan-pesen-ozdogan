@@ -97,5 +97,11 @@
       "destination": "https://fidanpesen.com/:yol*",
       "permanent": true
     }
+  ],
+  "rewrites": [
+    {
+      "source": "/kayitlar",
+      "destination": "/api/panel"
+    }
   ]
 }

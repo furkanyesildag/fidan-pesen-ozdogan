@@ -13,7 +13,7 @@
  *   /api/kayitlar?anahtar=...&bicim=csv  tabloya aktarmak için
  * ---------------------------------------------------------------------------
  */
-import { createHash } from 'node:crypto';
+import { createHash, createHmac } from 'node:crypto';
 
 const KOK = process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL || '';
 const JETON = process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN || '';
@@ -53,6 +53,19 @@ async function denemeSayaci(ip, basarili) {
   } catch { return true; }          // depo düşerse erişimi büsbütün kesme
 }
 
+/* Panelden gelen istekler imzalı çerezle de doğrulanabilir; kullanıcı
+   anahtarı bir kez girdikten sonra her seferinde yeniden yazmasın. */
+function cerezGecerli(req, beklenen) {
+  const dogru = createHmac('sha256', String(beklenen))
+    .update('panel-' + (process.env.KAYIT_TUZU || 'fpo')).digest('hex');
+  const ham = req.headers.cookie || '';
+  for (const parca of ham.split(';')) {
+    const [ad, ...kalan] = parca.trim().split('=');
+    if (ad === 'fpo_panel') return esitMi(kalan.join('='), dogru);
+  }
+  return false;
+}
+
 function csvKacis(m) {
   const s = String(m ?? '').replace(/"/g, '""');
   return `"${s}"`;
@@ -74,7 +87,7 @@ export default async function handler(req, res) {
   const anahtar = String(req.headers['x-anahtar'] || req.query?.anahtar || '');
   const ip = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || 'bilinmeyen';
 
-  if (!esitMi(anahtar, beklenen)) {
+  if (!esitMi(anahtar, beklenen) && !cerezGecerli(req, beklenen)) {
     const devam = await denemeSayaci(ip, false);
     res.setHeader('Cache-Control', 'no-store');
     if (!devam) {

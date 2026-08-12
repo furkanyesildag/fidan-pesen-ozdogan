@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+/* OTOMATİK TAŞINDI — yönetim ekranının HTML'i.
+   api/ altında ve alt çizgiyle başladığı için uç nokta olarak yayınlanmaz;
+   yalnızca api/panel.js kimlik doğruladıktan sonra gönderir. */
+export const PANEL_HTML = `<!DOCTYPE html>
 <html lang="tr">
 <head>
 <meta charset="utf-8">
@@ -115,7 +118,7 @@
     if (!u) return 'bilinmiyor';
     if (u.indexOf('dogalmarkam') > -1) return 'dogalmarkam.com';
     if (u.indexOf('fidanpesen') > -1) return 'fidanpesen.com';
-    return u.replace(/^https?:\/\//, '').split('/')[0];
+    return u.replace(/^https?:\\/\\//, '').split('/')[0];
   }
 
   function ciz(kayitlar) {
@@ -210,10 +213,24 @@
       .catch(function (er) { durum.textContent = er.message; });
   });
 
-  if (anahtarKutu.value) form.dispatchEvent(new Event('submit'));
+  /* Sayfaya çerezle girildiyse anahtar zaten doğrulanmış demektir; kutuyu
+     hiç göstermeden kayıtlar getirilir. Çerez yoksa kutu görünür. */
+  durum.textContent = 'Getiriliyor...';
+  iste('')
+    .then(function (y) { return y.json(); })
+    .then(function (j) {
+      form.querySelector('#anahtar').hidden = true;
+      form.querySelector('button[type=submit]').hidden = true;
+      ciz(j.kayitlar || []);
+    })
+    .catch(function () {
+      durum.textContent = 'Anahtarı girip Getir’e basın.';
+      if (anahtarKutu.value) form.dispatchEvent(new Event('submit'));
+    });
 })();
 </script>
 
 <script src="/assets/js/tema.js?v=25"></script>
 </body>
 </html>
+`;
