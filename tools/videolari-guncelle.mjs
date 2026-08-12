@@ -236,7 +236,84 @@ function sayfaUret(videolar, guncelleme) {
         '@id': `${url}/#webpage`,
         url,
         name: 'Videolar | Dr. Ecz. Fidan Pesen Özdoğan',
-        description: 'YouTube kanalındaki güncel videolar: şifalı bitkiler, mizaç, doğal bakım tarifleri ve geleneksel tıp anlatımları tek sayfada.<!DOCTYPE html>
+        description: 'YouTube kanalındaki güncel videolar: şifalı bitkiler, mizaç, doğal bakım tarifleri ve geleneksel tıp anlatımları tek sayfada.',
+        inLanguage: 'tr-TR',
+        isPartOf: { '@id': `${SITE}/#website` },
+        about: { '@id': `${SITE}/#fidan-pesen-ozdogan` },
+        dateModified: guncelleme,
+        breadcrumb: { '@id': `${url}/#breadcrumb` },
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `${url}/#breadcrumb`,
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Ana sayfa', item: `${SITE}/` },
+          { '@type': 'ListItem', position: 2, name: 'Videolar' },
+        ],
+      },
+      {
+        '@type': 'ItemList',
+        '@id': `${url}/#liste`,
+        name: 'Dr. Ecz. Fidan Pesen Özdoğan videoları',
+        numberOfItems: videolar.length,
+        itemListOrder: 'https://schema.org/ItemListOrderDescending',
+        itemListElement: videolar.map((v, i) => ({
+          '@type': 'ListItem',
+          position: i + 1,
+          item: {
+            '@type': 'VideoObject',
+            '@id': `https://www.youtube.com/watch?v=${v.id}`,
+            name: v.baslik,
+            description: v.aciklama || v.baslik,
+            thumbnailUrl: [v.kucukResim],
+            uploadDate: v.yayin,
+            contentUrl: v.bag,
+            embedUrl: `https://www.youtube.com/embed/${v.id}`,
+            inLanguage: 'tr-TR',
+            creator: { '@id': `${SITE}/#fidan-pesen-ozdogan` },
+            publisher: { '@id': `${SITE}/#fidan-pesen-ozdogan` },
+            keywords: v.etiketler.join(', ') || undefined,
+            ...(v.gorunum ? {
+              interactionStatistic: {
+                '@type': 'InteractionCounter',
+                interactionType: 'https://schema.org/WatchAction',
+                userInteractionCount: v.gorunum,
+              },
+            } : {}),
+          },
+        })),
+      },
+      {
+        '@type': 'Person',
+        '@id': `${SITE}/#fidan-pesen-ozdogan`,
+        name: 'Fidan Pesen Özdoğan',
+        honorificPrefix: 'Dr. Ecz.',
+        url: `${SITE}/`,
+        sameAs: [
+          'https://www.dogalmarkam.com/',
+          'https://www.instagram.com/fidanpesen/',
+          'https://www.instagram.com/dogalmarkambor/',
+          'https://www.youtube.com/@fidanpesen',
+          'https://x.com/pesenfidan',
+          'https://www.facebook.com/dogalmarkambor/',
+          'https://tr.linkedin.com/in/fidan-pesen-ozdogan-a4392b125',
+        ],
+      },
+      {
+        '@type': 'WebSite',
+        '@id': `${SITE}/#website`,
+        url: `${SITE}/`,
+        name: 'Dr. Ecz. Fidan Pesen Özdoğan',
+        inLanguage: 'tr-TR',
+        publisher: { '@id': `${SITE}/#fidan-pesen-ozdogan` },
+      },
+    ],
+  };
+
+  const baslik = 'Videolar | Dr. Ecz. Fidan Pesen Özdoğan';
+  const aciklama = 'YouTube kanalındaki güncel videolar: şifalı bitkiler, mizaç, doğal bakım tarifleri ve geleneksel tıp anlatımları tek sayfada.';
+
+  return `<!DOCTYPE html>
 <html lang="tr">
 <head>
 <meta charset="utf-8">
@@ -321,6 +398,7 @@ ${JSON.stringify(ld, null, 2)}
   </div>
 
   <div class="kap video-kap">
+    <h2 class="gorsel-gizli">Video listesi</h2>
     <ul class="video-izgara">${kartlar}
     </ul>
 

@@ -963,3 +963,11 @@ html.katman-acik, html.katman-acik body { overflow: hidden; }
   border-top: 1px solid var(--cizgi);
   font-size: 13px; line-height: 1.6; color: var(--sis);
 }
+
+/* Yalnızca ekran okuyucular için başlık: sayfada görünmez ama başlık
+   düzeninde boşluk bırakmaz. Video listesinde h1'den h3'e atlanıyordu. */
+.gorsel-gizli {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0;
+}
