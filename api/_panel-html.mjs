@@ -10,8 +10,8 @@ export const PANEL_HTML = `<!DOCTYPE html>
 <title>Sohbet Kayıtları | Dr. Ecz. Fidan Pesen</title>
 <meta name="robots" content="noindex, nofollow, noarchive">
 <meta name="theme-color" content="#fbf8f1">
-<link rel="stylesheet" href="/assets/css/style.css?v=27">
-<link rel="stylesheet" href="/assets/css/makale.css?v=27">
+<link rel="stylesheet" href="/assets/css/style.css?v=28">
+<link rel="stylesheet" href="/assets/css/makale.css?v=28">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44' fill='none'><path d='M22 36V14' stroke='%23a8842c' stroke-width='3' stroke-linecap='round'/><path d='M22 22.6c-6 0-9.6-3.6-9.6-9.6 6 0 9.6 3.6 9.6 9.6Z' stroke='%23a8842c' stroke-width='2.8' stroke-linejoin='round'/><path d='M22 18c0-6.6 3.8-10.4 10.4-10.4 0 6.6-3.8 10.4-10.4 10.4Z' stroke='%23a8842c' stroke-width='2.8' stroke-linejoin='round'/></svg>">
 <style>
   .kyt-kap { max-width: 1020px; margin: 0 auto; padding: clamp(28px,5vw,54px) clamp(16px,4vw,28px) 90px; }
@@ -230,7 +230,7 @@ export const PANEL_HTML = `<!DOCTYPE html>
 })();
 </script>
 
-<script src="/assets/js/tema.js?v=27"></script>
+<script src="/assets/js/tema.js?v=28"></script>
 </body>
 </html>
 `;

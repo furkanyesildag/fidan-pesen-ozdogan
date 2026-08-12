@@ -10,7 +10,7 @@
  * ---------------------------------------------------------------------------
  */
 export const SITE = 'https://fidanpesen.com';
-export const SURUM = 'v=27';
+export const SURUM = 'v=28';
 export const BUGUN = '2026-08-11';
 export const BUGUN_YAZI = '11 Ağustos 2026';
 

@@ -991,7 +991,10 @@ html.katman-acik, html.katman-acik body { overflow: hidden; }
 }
 .basin-kart > p { margin: 0 0 12px; font-size: 14.5px; color: var(--ink-2); }
 .basin-liste { margin: 0; padding: 0; list-style: none; }
-.basin-liste li { margin: 0; border-top: 1px solid var(--cizgi); }
+.basin-liste li { margin: 0; padding: 0; border-top: 1px solid var(--cizgi); }
+/* Makale gövdesindeki madde işareti bu listeye düşüyordu; satırlar zaten
+   çizgiyle ayrılıyor, iki ayraç birden fazla. */
+.makale .basin-liste li::before { content: none; }
 .basin-liste a {
   display: block; padding: 9px 0; font-size: 14px; color: var(--ink-2);
   text-decoration: none; transition: color .3s, padding-left .3s;
