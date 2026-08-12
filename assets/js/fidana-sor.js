@@ -347,9 +347,11 @@
       akis.appendChild(k); kaydir();
     }
 
-    function waGoster() {
+    function waGoster(bag) {
       var a = document.createElement('a');
-      a.className = 'wa'; a.href = WA; a.target = '_blank'; a.rel = 'noopener';
+      /* Sunucu hazır metinli bir bağlantı yolluyorsa o kullanılır: müşteri
+         temsilcisi kişinin ne sorduğunu ve ne önerildiğini görerek başlar. */
+      a.className = 'wa'; a.href = bag || WA; a.target = '_blank'; a.rel = 'noopener';
       a.textContent = 'Müşteri temsilcimize WhatsApp’tan yazın';
       akis.appendChild(a); kaydir();
     }
@@ -410,7 +412,7 @@
               if (bekle.parentNode) bekle.remove();
               gecmis.push({ rol: 'asistan', metin: toplam });
               urunleriGoster(d.urunler);
-              if (d.whatsapp) waGoster();
+              if (d.whatsapp) waGoster(d.waBag);
             }
           }
         }

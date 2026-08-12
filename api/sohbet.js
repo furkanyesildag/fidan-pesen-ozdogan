@@ -38,6 +38,23 @@ function korsBasliklari(req, res) {
   return !koken;                     // kökensiz istek: aynı site ya da sunucu
 }
 
+/** wa.me bağlantısına gömülecek hazır mesaj. Uzunluk sınırlı tutuluyor:
+ *  adres çubuğu taşarsa bazı telefonlarda bağlantı hiç açılmıyor. */
+const WA_NUMARA = '905336320313';
+function waMesaji(soru, urunler) {
+  const kirp = (m, n) => {
+    const t = String(m || '').replace(/\s+/g, ' ').trim();
+    return t.length > n ? t.slice(0, n - 1).trimEnd() + '…' : t;
+  };
+  const satir = ['Merhaba, Fidan Hoca\u2019nın asistanından geliyorum.'];
+  if (soru) satir.push('', 'Sorduğum konu: ' + kirp(soru, 220));
+  if (urunler && urunler.length) {
+    satir.push('', 'Bana önerilen: ' + urunler.slice(0, 3).map((u) => u.ad).join(', '));
+  }
+  satir.push('', 'Bu konuda bilgi almak istiyorum.');
+  return `https://wa.me/${WA_NUMARA}?text=${encodeURIComponent(satir.join('\n'))}`;
+}
+
 const ACIL_YANIT =
   'Yazdıklarınız hayati olabilecek belirtiler içeriyor. Lütfen vakit kaybetmeden ' +
   '**112 Acil**\'i arayın.\n\nBu tek istisnada sizi kendi hattımıza değil 112\'ye ' +
@@ -239,10 +256,17 @@ export default async function handler(req, res) {
   const destektenSozEtti = /whatsapp|wa\.me|destek hatt|ekibimiz|533\s?632/i.test(tamYanit);
   const waGoster = kartlar.length > 0 || destektenSozEtti || guvenlik.uyari.length > 0;
 
+  /* WhatsApp'a hazır metinle gidiliyor. Müşteri temsilcisi konuşmayı sıfırdan
+     başlatmak yerine kişinin ne sorduğunu ve hangi ürünün önerildiğini
+     görüyor; kullanıcı da aynı şeyi ikinci kez anlatmak zorunda kalmıyor.
+     Metin gönderilmeden önce WhatsApp'ta görünür ve düzenlenebilir. */
+  const waMetni = waMesaji(sonMesaj, kartlar);
+
   gonder('bitti', {
     urunler: kartlar.slice(0, 3),
     uyari: guvenlik.uyari,
     whatsapp: waGoster,
+    waBag: waGoster ? waMetni : null,
   });
 
   /* Kayıt yanıt kapanmadan yazılıyor. res.end() sonrasına bırakıldığında
