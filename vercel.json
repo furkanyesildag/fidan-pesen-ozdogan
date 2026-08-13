@@ -82,11 +82,28 @@
       ]
     },
     {
-      "source": "/(feed.xml|.well-known/(.*))",
+      "source": "/feed.xml",
       "headers": [
         {
           "key": "Cache-Control",
           "value": "public, max-age=3600"
+        },
+        {
+          "key": "Content-Type",
+          "value": "application/rss+xml; charset=utf-8"
+        }
+      ]
+    },
+    {
+      "source": "/.well-known/:yol*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        },
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
         }
       ]
     }
