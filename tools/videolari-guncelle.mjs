@@ -342,8 +342,9 @@ function sayfaUret(videolar, guncelleme) {
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@PesenFidan">
 <link rel="preconnect" href="https://i.ytimg.com" crossorigin>
-<link rel="stylesheet" href="/assets/css/style.css?v=32">
-<link rel="stylesheet" href="/assets/css/makale.css?v=32">
+<link rel="stylesheet" href="/assets/css/style.css?v=33">
+<link rel="stylesheet" href="/assets/css/makale.css?v=33">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44' fill='none'>
 <link rel="apple-touch-icon" href="/assets/img/simge-180.png">
 <link rel="manifest" href="/site.webmanifest"><path d='M22 36V14' stroke='%23a8842c' stroke-width='3' stroke-linecap='round'/><path d='M22 22.6c-6 0-9.6-3.6-9.6-9.6 6 0 9.6 3.6 9.6 9.6Z' stroke='%23a8842c' stroke-width='2.8' stroke-linejoin='round'/><path d='M22 18c0-6.6 3.8-10.4 10.4-10.4 0 6.6-3.8 10.4-10.4 10.4Z' stroke='%23a8842c' stroke-width='2.8' stroke-linejoin='round'/></svg>">
@@ -394,7 +395,7 @@ ${JSON.stringify(ld, null, 2)}
         güncellenir.
       </p>
       <div class="makale-kimlik">
-        <img src="/assets/img/portre-kunye.jpg" alt="Dr. Ecz. Fidan Pesen Özdoğan" width="40" height="40" loading="lazy" decoding="async">
+        <img src="/assets/img/portre-kunye-176.webp" alt="Dr. Ecz. Fidan Pesen Özdoğan" width="40" height="40" loading="lazy" decoding="async">
         <span><b>${videolar.length}</b> video · ${videolar.filter((v) => v.kisa).length} Shorts</span>
         <span>Güncelleme: <time datetime="${guncelleme}">${tarihYaz(guncelleme)}</time></span>
       </div>
@@ -490,13 +491,13 @@ ${JSON.stringify(ld, null, 2)}
   </div>
 </footer>
 
-<script src="/assets/js/sayfa.js?v=32"></script>
-<script src="/assets/js/tema.js?v=32"></script>
+<script src="/assets/js/sayfa.js?v=33"></script>
+<script src="/assets/js/tema.js?v=33"></script>
 <!-- Vercel Web Analytics ve Speed Insights: çerezsiz, kişisel veri
      toplamaz; KVKK açısından onay bandı gerektirmez. -->
 <script defer src="/_vercel/insights/script.js"></script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
-<script src="/assets/js/asistan-baloncuk.js?v=32" defer></script>
+<script src="/assets/js/asistan-baloncuk.js?v=33" defer></script>
 <script>
 /* Tıklanana kadar YouTube'dan hiçbir şey yüklenmez (facade deseni):
    kapak görseli i.ytimg.com'dan gelir, oynatıcı yalnızca tıklamada eklenir. */

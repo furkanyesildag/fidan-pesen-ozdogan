@@ -10,7 +10,7 @@
  * ---------------------------------------------------------------------------
  */
 export const SITE = 'https://fidanpesen.com';
-export const SURUM = 'v=32';
+export const SURUM = 'v=33';
 export const BUGUN = '2026-08-11';
 export const BUGUN_YAZI = '11 Ağustos 2026';
 
@@ -254,7 +254,7 @@ export function dip() {
 }
 
 export const YAZAR_KART = `<div class="yazar-kart">
-        <img src="/assets/img/portre-kunye.jpg" alt="Dr. Ecz. Fidan Pesen Özdoğan" width="88" height="88" loading="lazy" decoding="async">
+        <img src="/assets/img/portre-kunye.webp" alt="Dr. Ecz. Fidan Pesen Özdoğan" width="88" height="88" loading="lazy" decoding="async">
         <div>
           <h2>Dr. Ecz. Fidan Pesen Özdoğan</h2>
           <p>Hacettepe Üniversitesi Eczacılık Fakültesi mezunu. Gazi Üniversitesi

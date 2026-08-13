@@ -27,7 +27,7 @@
   var KOK = 'https://fidanpesen.com';
   var UC = KOK + '/api/sohbet';
   var WA = 'https://wa.me/905336320313';
-  var AVATAR = KOK + '/assets/img/asistan-avatar.jpg';
+  var AVATAR = KOK + '/assets/img/asistan-avatar.webp';
 
   if (window.__fidanaSor) return;               // iki kez yüklenirse tek çalış
   window.__fidanaSor = true;
