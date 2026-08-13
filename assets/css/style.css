@@ -1621,3 +1621,36 @@ main { position: relative; z-index: 10; }
   :root[data-tema="acik"] .kunye-kart,
   :root[data-tema="acik"] .marka-kart { background: var(--kutu-duz); box-shadow: 0 10px 24px -18px var(--golge); }
 }
+
+
+/* ------------------------------------------------------- 18. SIK SORULANLAR */
+.sss-bolum .sss-liste { max-width: 780px; margin: 0 auto; }
+.sss-bolum .sss-oge {
+  border: 1px solid var(--cizgi); border-radius: 14px;
+  background: var(--kutu); margin-bottom: 10px;
+  transition: border-color .4s;
+}
+.sss-bolum .sss-oge[open], .sss-oge:hover { border-color: rgba(var(--aksan-rgb), .4); }
+.sss-bolum .sss-oge summary {
+  cursor: pointer; list-style: none;
+  padding: 17px 22px; padding-right: 46px; position: relative;
+  font-family: var(--serif); font-size: 17.5px; font-weight: 500;
+  color: var(--ink);
+}
+.sss-bolum .sss-oge summary::-webkit-details-marker { display: none; }
+/* Açılır ok: başlığın sağında, açılınca döner. */
+.sss-bolum .sss-oge summary::after {
+  content: ''; position: absolute; right: 22px; top: 50%;
+  width: 8px; height: 8px; margin-top: -6px;
+  border-right: 1.5px solid var(--aksan); border-bottom: 1.5px solid var(--aksan);
+  transform: rotate(45deg); transition: transform .3s;
+}
+.sss-bolum .sss-oge[open] summary::after { transform: rotate(225deg); margin-top: -2px; }
+.sss-bolum .sss-cevap { padding: 0 22px 20px; }
+.sss-bolum .sss-cevap p {
+  margin: 0; font-size: 15.5px; line-height: 1.7; color: var(--ink-2);
+}
+@media (max-width: 620px) {
+  .sss-bolum .sss-oge summary { font-size: 16px; padding: 15px 18px; padding-right: 42px; }
+  .sss-bolum .sss-cevap { padding: 0 18px 17px; }
+}
