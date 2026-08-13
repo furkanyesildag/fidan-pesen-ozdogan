@@ -1,0 +1,22 @@
+{
+  "name": "Dr. Ecz. Fidan Pesen Özdoğan",
+  "short_name": "Fidan Pesen",
+  "description": "Fitoterapi, geleneksel tıp, mizaç ve tıbbi bitki monografileri.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#fbf8f1",
+  "theme_color": "#fbf8f1",
+  "lang": "tr",
+  "icons": [
+    {
+      "src": "/assets/img/simge-180.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/img/simge-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

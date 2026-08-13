@@ -1,0 +1,8 @@
+# security.txt · fidanpesen.com
+# Güvenlik açığı bildirimi için iletişim bilgisi.
+# https://securitytxt.org
+
+Contact: mailto:iletisim@dogalmarkam.com
+Expires: 2027-08-13T00:00:00.000Z
+Preferred-Languages: tr, en
+Canonical: https://fidanpesen.com/.well-known/security.txt

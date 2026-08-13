@@ -10,7 +10,7 @@
  * ---------------------------------------------------------------------------
  */
 export const SITE = 'https://fidanpesen.com';
-export const SURUM = 'v=31';
+export const SURUM = 'v=32';
 export const BUGUN = '2026-08-11';
 export const BUGUN_YAZI = '11 Ağustos 2026';
 
@@ -131,6 +131,7 @@ export function bas({ yol, baslik, aciklama, ldJson }) {
 <meta name="description" content="${kacis(aciklama)}">
 <link rel="canonical" href="${url}">
 <link rel="alternate" type="application/rss+xml" title="Dr. Ecz. Fidan Pesen Özdoğan" href="/feed.xml">
+<link rel="alternate" type="text/plain" href="/llms.txt" title="Yapay zekâ için site özeti">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <meta name="author" content="Dr. Ecz. Fidan Pesen Özdoğan">
 <meta name="theme-color" content="#fbf8f1">
@@ -158,6 +159,8 @@ export function bas({ yol, baslik, aciklama, ldJson }) {
 <link rel="stylesheet" href="/assets/css/style.css?${SURUM}">
 <link rel="stylesheet" href="/assets/css/makale.css?${SURUM}">
 <link rel="icon" href="${SIMGE}">
+<link rel="apple-touch-icon" href="/assets/img/simge-180.png">
+<link rel="manifest" href="/site.webmanifest">
 <script type="application/ld+json">
 ${JSON.stringify(ldJson, null, 2)}
 </script>

@@ -299,6 +299,11 @@
     if (e) e.preventDefault();
     sonOdak = document.activeElement;
     katman.hidden = false;
+    /* inert, alt ağacı hem odak sırasından hem erişilebilirlik ağacından
+       çıkarır. Yalnızca aria-hidden kullanmak yetmiyordu: kapanışta
+       aria-hidden hemen, gizleme 260 ms sonra uygulandığı için arada
+       "gizli sayılan ama odaklanılabilen" bir pencere kalıyordu. */
+    katman.removeAttribute('inert');
     katman.setAttribute('aria-hidden', 'false');
     document.documentElement.classList.add('katman-acik');
     requestAnimationFrame(function () {
@@ -310,6 +315,7 @@
 
   function katmanKapat() {
     katman.classList.remove('gorunur');
+    katman.setAttribute('inert', '');
     katman.setAttribute('aria-hidden', 'true');
     document.documentElement.classList.remove('katman-acik');
     setTimeout(function () { katman.hidden = true; }, 260);
