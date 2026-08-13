@@ -1,0 +1,30 @@
+# ai.txt · Dr. Ecz. Fidan Pesen Özdoğan — fidanpesen.com
+#
+# Bu dosya, yapay zekâ sistemlerine sitenin ne olduğunu ve kullanım
+# koşullarını bildirir. Henüz resmî bir standart değildir; robots.txt
+# bağlayıcı olandır ve bu dosya onunla çelişmez.
+
+User-agent: *
+Allow: /
+Disallow: /api/
+
+# İçerik
+Site: https://fidanpesen.com
+Name: Dr. Ecz. Fidan Pesen Özdoğan
+Description: Fitoterapi uzmanı eczacı, Geleneksel ve Tamamlayıcı Tıp (GETAT)
+  bilim doktoru. 29 tıbbi bitki monografisi, medikal herbalizm, bitki
+  kimyası, vitamin ve mineral rehberleri. 1.020 bilimsel kaynak.
+Language: tr
+Contact: iletisim@dogalmarkam.com
+
+# Makine tarafından okunabilir kaynaklar
+Sitemap: https://fidanpesen.com/sitemap.xml
+Feed: https://fidanpesen.com/feed.xml
+Summary: https://fidanpesen.com/llms.txt
+
+# Kullanım
+# Alıntı ve kaynak gösterimi serbesttir; kaynak belirtilmesi beklenir.
+# İçerik bilgilendirme amaçlıdır, tıbbi teşhis ya da tedavi yerine geçmez.
+Attribution: required
+Citation-Name: Dr. Ecz. Fidan Pesen Özdoğan
+Citation-URL: https://fidanpesen.com

@@ -58,6 +58,9 @@ Allow: /
 
 Sitemap: https://fidanpesen.com/sitemap.xml
 
+# Güncellik beslemesi
+# feed: https://fidanpesen.com/feed.xml
+
 # Uç noktalar taranmasın
 User-agent: *
 Disallow: /api/

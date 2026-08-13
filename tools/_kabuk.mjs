@@ -10,7 +10,7 @@
  * ---------------------------------------------------------------------------
  */
 export const SITE = 'https://fidanpesen.com';
-export const SURUM = 'v=28';
+export const SURUM = 'v=29';
 export const BUGUN = '2026-08-11';
 export const BUGUN_YAZI = '11 Ağustos 2026';
 
@@ -130,6 +130,7 @@ export function bas({ yol, baslik, aciklama, ldJson }) {
 <title>${kacis(baslik)}</title>
 <meta name="description" content="${kacis(aciklama)}">
 <link rel="canonical" href="${url}">
+<link rel="alternate" type="application/rss+xml" title="Dr. Ecz. Fidan Pesen Özdoğan" href="/feed.xml">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <meta name="author" content="Dr. Ecz. Fidan Pesen Özdoğan">
 <meta name="theme-color" content="#fbf8f1">
