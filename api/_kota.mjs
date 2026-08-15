@@ -34,9 +34,9 @@ export const REDIS_VAR = Boolean(KOK && JETON);
 const sayi = (ad, varsayilan) => Number(process.env[ad]) || varsayilan;
 export const SINIR = {
   dakika:   sayi('KOTA_DAKIKA', 8),
-  saat:     sayi('KOTA_SAAT', 40),
-  gun:      sayi('KOTA_GUN', 120),
-  oturum:   sayi('KOTA_OTURUM', 80),
+  saat:     sayi('KOTA_SAAT', 80),
+  gun:      sayi('KOTA_GUN', 250),
+  oturum:   sayi('KOTA_OTURUM', 150),
   genelGun: sayi('KOTA_GENEL_GUN', 4000),
 };
 
