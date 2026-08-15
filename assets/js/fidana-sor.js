@@ -296,7 +296,17 @@
     /* --- doğrudan WhatsApp düğmesi: baloncuğun hemen üstünde --- */
     var waDugme = document.createElement('a');
     waDugme.className = 'wa-dugme';
-    waDugme.href = WA;
+    /* Hangi sayfadan yazıldığı mesaja giriyor: ürün sayfasındaysa temsilci
+       hangi ürün için sorulduğunu ilk satırda görüyor, müşteri de baştan
+       anlatmak zorunda kalmıyor. Tek tık, ara adım yok. */
+    waDugme.href = (function () {
+      var baslik = (document.title || '').replace(/\s*[|·–-]\s*Doğal ?markam.*$/i, '').trim();
+      var satir = ['Merhaba, doğalmarkam.com üzerinden yazıyorum.'];
+      var markaMi = /^do[ğg]al ?markam/i.test(baslik) || baslik.length > 90;
+      if (baslik && !markaMi) satir.push('', 'Baktığım sayfa: ' + baslik);
+      satir.push('', 'Bilgi almak istiyorum.');
+      return WA + '?text=' + encodeURIComponent(satir.join('\n'));
+    })();
     waDugme.target = '_blank';
     waDugme.rel = 'noopener';
     waDugme.setAttribute('aria-label', 'WhatsApp ile yazın');
