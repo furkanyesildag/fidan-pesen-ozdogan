@@ -375,7 +375,12 @@ export function istemKur(urunler, uyarilar, protokol) {
       + 'Hocamızın bu başlıkta kullandığı ürünler şunlardır. Öneriyi BUNLARDAN '
       + 'yap, katalogdan başka ürün uydurma:\n'
       + protokol.urunler.map((u) => `  • ${u.ad}`).join('\n')
-      + '\n\nZORUNLU SIRA: (1) Ürünleri tam adıyla söyle ve ne olduklarını '
+      + '\n\nÖNCE KİŞİYİ TANI: Kullanıcı derdini yeni anlattıysa ve henüz hiçbir '
+      + 'ayrıntı vermediyse, ürün saymadan ÖNCE tek bir kısa soru sor (ne kadar '
+      + 'süredir, daha önce ne denendi, düzenli ilaç var mı). Cevabı gelince '
+      + 'yukarıdaki ürünlerden öner. Kullanıcı zaten ayrıntı verdiyse ya da '
+      + 'doğrudan ürün istediyse soru sorma, hemen öner.'
+      + '\n\nÖNERİRKEN ZORUNLU SIRA: (1) Ürünleri tam adıyla söyle ve ne olduklarını '
       + 'katalogdaki bilgiye dayanarak kısaca anlat. (2) "Bu hastalığı '
       + 'iyileştirir/geçirir/tedavi eder" ANLAMINA GELEN HİÇBİR CÜMLE KURMA; '
       + 'bunlar takviye edici gıdadır ve hekim tedavisinin yerine geçmez, bunu '

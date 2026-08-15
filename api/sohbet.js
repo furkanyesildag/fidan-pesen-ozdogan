@@ -279,10 +279,16 @@ export default async function handler(req, res) {
     return enPuan >= 0.6 ? enIyi : null;
   }
 
-  /* Protokol eşleştiyse ürünler doğrudan kart olur. Modelin adı doğru
-     yazmasına bırakılmıyor: Hocamızın bu başlık için seçtiği ürünler bunlar
-     ve kullanıcı her hâlükârda bağlantıyı görmeli. */
-  for (const u of protokolUrun.slice(0, 3)) ekle(u);
+  /* Protokol ürünleri kart olur — ama yalnızca yanıt gerçekten ürün
+     anlatıyorsa. Asistan önce tanıma sorusu sorduğunda kart çıkarsa
+     "soruyu sordu ama zaten önermiş" gibi tuhaf bir sonuç doğuyor. */
+  const yanitSadece = sade(tamYanit);
+  const urunAnlatiyor = protokolUrun.some((u) => {
+    const kelime = sade(u.ad).split(' ')
+      .filter((k) => k.length > 4 && !['dogalmarkam', 'pharma', 'karisik', 'bitki', 'cayi'].includes(k));
+    return kelime.some((k) => yanitSadece.includes(k));
+  });
+  if (urunAnlatiyor) for (const u of protokolUrun.slice(0, 3)) ekle(u);
 
   for (const ad of [...tamYanit.matchAll(/^\s*ÜRÜN:\s*(.+?)\s*$/gm)].map((m) => m[1])) {
     const n = sade(ad);
