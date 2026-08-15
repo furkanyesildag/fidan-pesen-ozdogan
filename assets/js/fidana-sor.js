@@ -88,7 +88,7 @@
     '  transition:transform .4s cubic-bezier(.2,.9,.3,1.2),box-shadow .4s,border-color .4s}',
     '.bal:hover{transform:translateY(-3px);border-color:rgba(var(--altin-rgb),.5);',
     '  box-shadow:0 22px 52px -16px rgba(26,34,30,.4)}',
-    '.bal img{width:40px;height:40px;border-radius:50%;object-fit:cover;flex:0 0 auto;',
+    '.bal img{width:42px;height:42px;border-radius:50%;object-fit:cover;flex:0 0 auto;',
     '  border:1px solid rgba(var(--altin-rgb),.3)}',
     '.bal b{display:block;font-family:var(--serif);font-weight:500;font-size:15px;letter-spacing:.01em}',
     '.bal i{display:block;font-size:11.5px;font-style:normal;color:var(--sis);margin-top:1px}',
@@ -98,28 +98,28 @@
     '  line-height:1;padding:4px;cursor:pointer;margin-left:2px;opacity:.5}',
     '.bal .kapat:hover{opacity:1}',
     '@media(max-width:520px){',
-    '  .bal{right:14px;width:58px;height:58px;padding:0;justify-content:center;border-radius:50%}',
+    '  .bal{right:14px;width:60px;height:60px;padding:0;justify-content:center;border-radius:50%}',
     '  .bal span{display:none}.bal .kapat{display:none}',
-    '  .bal img{width:46px;height:46px}}',
+    '  .bal img{width:48px;height:48px}}',
 
     /* --- doğrudan WhatsApp düğmesi ---
        Mağazanın kendi yeşil balonunun yerini alıyor. Asistan "hangi ürün
        bana uygun" sorusunu çözüyor; bu düğme ise doğrudan insana ulaşmak
        isteyene. İkisi yan yana ve aynı dilde duruyor. */
-    '.wa-dugme{position:fixed;right:20px;bottom:var(--ust-dip,88px);z-index:2147482999;',
-    '  width:52px;height:52px;border-radius:50%;display:flex;align-items:center;',
-    '  justify-content:center;background:#fff;border:1px solid rgba(37,211,102,.45);',
-    '  box-shadow:0 14px 34px -12px rgba(26,34,30,.3);cursor:pointer;text-decoration:none;',
-    '  transition:transform .4s cubic-bezier(.2,.9,.3,1.2),box-shadow .4s,background .35s}',
-    '.wa-dugme:hover{transform:translateY(-3px);background:#25d366;',
-    '  box-shadow:0 20px 44px -14px rgba(37,211,102,.55)}',
-    '.wa-dugme svg{width:27px;height:27px;fill:#25d366;transition:fill .35s}',
-    '.wa-dugme:hover svg{fill:#fff}',
+    '.wa-dugme{position:fixed;right:20px;bottom:var(--ust-dip,92px);z-index:2147482999;',
+    '  width:58px;height:58px;border-radius:50%;display:flex;align-items:center;',
+    '  justify-content:center;background:#25d366;border:0;',
+    '  box-shadow:0 14px 34px -12px rgba(37,211,102,.5);cursor:pointer;text-decoration:none;',
+    '  transition:transform .4s cubic-bezier(.2,.9,.3,1.2),box-shadow .4s,filter .35s}',
+    '.wa-dugme:hover{transform:translateY(-3px);filter:brightness(1.07);',
+    '  box-shadow:0 22px 48px -14px rgba(37,211,102,.65)}',
+    '.wa-dugme svg{width:32px;height:32px;fill:#fff}',
+    '@media(max-width:520px){.wa-dugme svg{width:30px;height:30px}}',
     '.wa-ipucu{position:absolute;right:60px;white-space:nowrap;background:var(--murekkep);',
     '  color:#f4f1e8;font-size:12px;padding:6px 11px;border-radius:8px;opacity:0;',
     '  pointer-events:none;transition:opacity .3s,transform .3s;transform:translateX(6px)}',
     '.wa-dugme:hover .wa-ipucu{opacity:1;transform:none}',
-    '@media(max-width:520px){.wa-dugme{right:14px;width:50px;height:50px}',
+    '@media(max-width:520px){.wa-dugme{right:14px;width:56px;height:56px}',
     '  .wa-ipucu{display:none}}',
 
     /* --- panel --- */
@@ -279,7 +279,7 @@
     kok.style.setProperty('--dip', dip + 'px');
     /* Asistan baloncuğu tabanda; WhatsApp düğmesi onun üstünde durur.
        68 piksel, baloncuğun yüksekliği artı aradaki boşluk. */
-    kok.style.setProperty('--ust-dip', (dip + 68) + 'px');
+    kok.style.setProperty('--ust-dip', (dip + 72) + 'px');
     golge.appendChild(kok);
     document.body.appendChild(yuva);
 
