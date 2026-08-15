@@ -293,6 +293,11 @@
       '<span><b>Fidan’a Sor</b>' +
       '<i><span class="nokta"></span>Size nasıl yardımcı olabilirim?</i></span>' +
       '<button class="kapat" type="button" aria-label="Kapat">×</button>';
+    /* Kullanıcı baloncuğu kapattıysa o oturumda bir daha gösterilmiyor;
+       WhatsApp düğmesi yine de duruyor, insana ulaşma yolu kapanmasın. */
+    var balGizli = false;
+    try { balGizli = sessionStorage.getItem('fidana_kapali') === '1'; } catch (e) {}
+    if (balGizli) bal.style.display = 'none';
     kok.appendChild(bal);
 
     /* --- doğrudan WhatsApp düğmesi: baloncuğun hemen üstünde --- */
@@ -485,7 +490,7 @@
     }
     function kapa() {
       panel.classList.remove('acik');
-      bal.style.display = '';
+      bal.style.display = balGizli ? 'none' : '';
       waDugme.style.display = '';
     }
 
@@ -520,10 +525,6 @@
        onclick="FidanaSor.ac()" yazmak yeterli. */
     window.FidanaSor = { ac: ac, kapat: kapa };
   }
-
-  try {
-    if (sessionStorage.getItem('fidana_kapali') === '1') return;
-  } catch (e) {}
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', kur);
