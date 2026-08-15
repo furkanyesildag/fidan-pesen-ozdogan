@@ -25,8 +25,12 @@ import { sade, URUNLER } from './_istem.mjs';
 
 /** Ürün numarasından katalogdaki ürünü bulur (042 → "...Karışık Bitki Çayı 042 KTL..."). */
 export function kodlaBul(kod) {
-  const k = String(kod).replace(/^0+/, '');
-  const kalip = new RegExp('(^|\\s)0*' + k + '(\\s|$)');
+  /* Ürün adları "... Karışık Bitki Çayı 030 İYT 30 Gr" biçiminde: kod üç
+     haneli, sonundaki "30 Gr" ise gramaj. Kodu üç haneye tamamlamadan
+     aramak gramaja takılıyordu ve 030 istendiğinde "30 Gr" içeren ilk ürün
+     dönüyordu. Artık tam üç haneli kod aranıyor. */
+  const k = String(kod).replace(/\D/g, '').padStart(3, '0');
+  const kalip = new RegExp('(^|\\s)' + k + '(\\s|$)');
   return URUNLER.find((u) => kalip.test(u.ad)) || null;
 }
 
