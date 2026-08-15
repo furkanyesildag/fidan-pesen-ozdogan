@@ -156,6 +156,32 @@ export const PROTOKOL = [
     anahtar: ['asiri aktif mesane', 'sik idrara cikiyorum'] },
   { ad: 'Lenf ödemi', seviye: 'oner', kod: ['022', '030'],
     anahtar: ['lenf odem', 'lenfodem'] },
+  /* --------------------------------- kozmetik: kategori üzerinden eşleşir.
+     Bu başlıklarda ürün numarası yok; kategori adı veriliyor ve o
+     kategorideki ürünler öneriliyor. Hepsi düşük riskli, soru sormadan
+     önerilebilir. */
+  { ad: 'Yoğun saç dökülmesi', seviye: 'oner', kategori: 'Saç Bakımı · Yoğun Saç Dökülmesi',
+    anahtar: ['sac dokul', 'sacim dokul', 'saclarim dokul', 'sac dokulmesi', 'kellik',
+      'sac seyrel', 'sacim aziliyor', 'sac kaybi'] },
+  { ad: 'Saç dolgunlaştırma', seviye: 'oner', kategori: 'Saç Bakımı · Saç Dolgunlaştırıcı',
+    anahtar: ['sac dolgun', 'saclarim ince', 'sac incelme', 'sac hacim'] },
+  { ad: 'Akneli ciltler', seviye: 'oner', kategori: 'Cilt Bakımı · Akneli Ciltler',
+    anahtar: ['sivilce', 'akne', 'siyah nokta', 'yuzumde sivilce'] },
+  { ad: 'Cilt lekeleri', seviye: 'oner', kategori: 'Cilt Bakımı · Leke Karşıtı',
+    anahtar: ['cilt lekesi', 'lekelerim', 'melasma', 'yuzumde leke', 'cilt leke'] },
+  { ad: 'Kırışıklık karşıtı bakım', seviye: 'oner', kategori: 'Cilt Bakımı · Kırışıklık Karşıtı',
+    anahtar: ['kirisiklik', 'ince cizgi', 'yaslanma karsiti', 'cildim sarkiyor'] },
+  { ad: 'Cilt nemlendirme', seviye: 'oner', kategori: 'Cilt Bakımı · Cilt Nemlendirme',
+    anahtar: ['cildim kuru', 'kuru cilt', 'nemlendirici', 'cilt kurulugu'] },
+  { ad: 'Rozalı ciltler', seviye: 'oner', kategori: 'Cilt Bakımı · Rozalı Ciltler',
+    anahtar: ['rozasea', 'rozali', 'roza cilt', 'cildim kizariyor', 'hassas cilt'] },
+  { ad: 'Göz altı morluk ve torbalanma', seviye: 'oner',
+    kategori: 'Cilt Bakımı · Gözaltı Morluk ve Torbalanma',
+    anahtar: ['goz alti morluk', 'goz alti torba', 'gozaltim mor'] },
+  { ad: 'Gözenekli ciltler', seviye: 'oner', kategori: 'Cilt Bakımı · Gözenekli Ciltler',
+    anahtar: ['gozenek', 'gozeneklerim'] },
+  { ad: 'Güneş koruyucu', seviye: 'oner', kategori: 'Cilt Bakımı · Güneş Kremi',
+    anahtar: ['gunes kremi', 'gunes koruyucu', 'spf'] },
 ];
 
 /* Etkileşim uyarısı gerektiren ürün numaraları. Kantaron ve ginkgo içerenler. */
@@ -176,7 +202,12 @@ export function protokolBul(metin) {
   }
   if (!bulunan) return null;
 
-  const urunler = (bulunan.kod || []).map(kodlaBul).filter(Boolean);
+  let urunler = (bulunan.kod || []).map(kodlaBul).filter(Boolean);
+  /* Kozmetik başlıklarında ürün numarası yok; kategorideki ürünler alınır.
+     Stokta olmayanlar elenir, en fazla üç tane. */
+  if (!urunler.length && bulunan.kategori) {
+    urunler = URUNLER.filter((u) => u.kategori === bulunan.kategori && u.stokta !== false).slice(0, 3);
+  }
   const etkilesim = (bulunan.kod || []).some((k) => ETKILESIMLI.has(k));
   return { ad: bulunan.ad, seviye: bulunan.seviye, urunler, etkilesim };
 }

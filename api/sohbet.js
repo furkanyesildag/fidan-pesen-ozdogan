@@ -258,13 +258,36 @@ export default async function handler(req, res) {
     }
   };
 
+  /* Model bazen katalogdaki tam adı değil kategori adını ya da kendi
+     kısaltmasını yazıyor ("Doğalmarkam Saç Dolgunlaştırıcı"). Tam eşleşme
+     tutmazsa kelime örtüşmesine bakılıyor: yazdığı addaki anlamlı kelimelerin
+     kaçı ürün adında geçiyor. Böylece kullanıcı bağlantısız kalmıyor. */
+  const DOLGU_KELIME = new Set(['dogalmarkam', 'dogal', 'markam', 'fp', 'pharma',
+    'karisik', 'bitki', 'cayi', 'gr', 'ml', 'set', 'seti', 'paket', 've', 'ile']);
+  const kelimeler = (m) => sade(m).split(' ').filter((k) => k.length > 2 && !DOLGU_KELIME.has(k));
+
+  function benzerBul(ad, havuz) {
+    const a = kelimeler(ad);
+    if (!a.length) return null;
+    let enIyi = null, enPuan = 0;
+    for (const u of havuz) {
+      const b = new Set(kelimeler(u.ad).concat(kelimeler(u.kategori || '')));
+      const ortak = a.filter((k) => b.has(k)).length;
+      const puan = ortak / a.length;
+      if (puan > enPuan) { enPuan = puan; enIyi = u; }
+    }
+    return enPuan >= 0.6 ? enIyi : null;
+  }
+
   for (const ad of [...tamYanit.matchAll(/^\s*ÜRÜN:\s*(.+?)\s*$/gm)].map((m) => m[1])) {
     const n = sade(ad);
     ekle(
       URUNLER.find((x) => x.ad === ad) ||
       URUNLER.find((x) => sade(x.ad) === n) ||
       URUNLER.find((x) => sade(x.ad).includes(n) || n.includes(sade(x.ad))) ||
-      secilen.find((x) => sade(x.ad).includes(n))
+      secilen.find((x) => sade(x.ad).includes(n)) ||
+      benzerBul(ad, secilen) ||
+      benzerBul(ad, URUNLER)
     );
   }
 
