@@ -184,7 +184,11 @@ export default async function handler(req, res) {
   /* --- ürün getirme: son mesaj ağırlıklı, geçmiş destekleyici --- */
   const puanli = urunGetirPuanli(`${sonMesaj} ${sonMesaj} ${tumMetin}`, 10);
   const secilen = puanli.map((x) => x.u);
-  const sistem = istemKur(secilen, guvenlik.uyari);
+  /* Hocamızın danışmanlık notundaki konu → ürün eşlemesi. Bulunursa modele
+     hangi ürünlerin kullanılacağı doğrudan söyleniyor; ağır başlıklarda ise
+     ürün saymaması söyleniyor. */
+  const protokol = protokolBul(tumMetin);
+  const sistem = istemKur(secilen, guvenlik.uyari, protokol);
 
   let tamYanit = '';
   try {
@@ -244,6 +248,9 @@ export default async function handler(req, res) {
      ürün adı geçiyor mu diye bakılır. Böylece kullanıcı hiçbir durumda
      bağlantısız kalmaz. */
   const kartlar = [];
+  /* Protokol ürünleri kart olarak da gösterilsin: model adı yazmayı unutsa
+     bile kullanıcı bağlantısız kalmasın. Yönlendirme seviyesinde kart yok. */
+  const protokolUrun = (protokol && protokol.seviye === 'oner') ? protokol.urunler : [];
   const ekle = (u) => {
     if (u && !kartlar.some((k) => k.bag === u.bag)) {
       kartlar.push({ ad: u.ad, kategori: u.kategori, bag: u.bag, gorsel: u.gorsel, fiyat: u.fiyat });
@@ -261,6 +268,10 @@ export default async function handler(req, res) {
   }
 
   const govdeMetni = sade(tamYanit.replace(/^\s*ÜRÜN:.*$/gm, ''));
+
+  if (!kartlar.length && protokolUrun.length) {
+    for (const u of protokolUrun.slice(0, 3)) ekle(u);
+  }
 
   if (!kartlar.length) {
     for (const u of secilen) {

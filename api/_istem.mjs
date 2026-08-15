@@ -317,7 +317,7 @@ Panax Ginseng (Panax ginseng): /monografi/panax-ginseng
 Çoban Çantası (Capsella bursa-pastoris): /monografi/coban-cantasi
 Çörek Otu (Nigella sativa): /monografi/corek-otu`;
 
-export function istemKur(urunler, uyarilar) {
+export function istemKur(urunler, uyarilar, protokol) {
   /* En alakalı ilk dörde açıklamanın TAMAMI verilir; asistanın içerik listesini
      ve kullanım şeklini eksiksiz aktarabilmesi için gerekli. Geri kalanlar
      yalnızca alternatif olarak dursun diye kısa tutulur. */
@@ -348,7 +348,42 @@ export function istemKur(urunler, uyarilar) {
       'Doktor, eczane veya başka bir yere yönlendirme yapma; tek adres Hocamızın ekibi.'
     : '';
 
-  return `${KIMLIK}\n\n${KURALLAR}\n\nKATALOG (bu konuşma için seçilmiş ürünler):\n\n${katalog}\n\nTÜM KATEGORİLER: ${KATEGORILER.join(', ')}\n\nSİTEDEKİ REHBER SAYFALAR (konu: bağlantı):\n${REHBER}\n\nSİTEDEKİ BİTKİ MONOGRAFİLERİ (ad: bağlantı):\n${MONOGRAFI}\nKullanıcı bu bitkilerden birini sorarsa, bitkiyi kendin anlatma; \"Hocamızın bu bitki için hazırladığı ayrıntılı monografi sitemizde var\" deyip bağlantıyı ver. Monografiden hastalık, tedavi veya etki cümlesi aktarma. Aynısı rehber sayfalar için de geçerli: konuyu kendin anlatma, bağlantıyı ver. Ürün önerisi her zaman katalogdan yapılır.${uyariBlok}`;
+  /* Protokol bloğu: Hocamızın kendi danışmanlık notundan gelen konu → ürün
+     eşlemesi. Modelin 169 ürün arasından doğru olanı bulmasını ummak yerine
+     hangi ürünlerin kullanılacağı burada açıkça yazılı; ağır başlıklarda ise
+     ürün saymanın yasak olduğu söyleniyor. */
+  let protokolBlok = '';
+  if (protokol && protokol.seviye === 'yonlendir') {
+    protokolBlok = `\n\nPROTOKOL — "${protokol.ad}"\n`
+      + 'Bu başlıkta ÜRÜN ADI SAYMA, ürün kartı çıkarma, "şunu kullanın" deme. '
+      + 'Sırayla şunu yap: (1) kısa bir geçmiş olsun, (2) hekiminin tedavisinin '
+      + 'esas olduğunu ve ona ara verilmemesi gerektiğini söyle, (3) bu başlıkta '
+      + 'desteğin kişiye göre belirlenmesi gerektiğini, Hocamızın ekibinin '
+      + 'kullanılan ilaçlarla uyumu değerlendireceğini söyle, (4) WhatsApp '
+      + 'hattına yönlendir. Doktor, eczane, hastane adı verme; tek adres '
+      + 'Hocamızın ekibi.';
+  } else if (protokol && protokol.urunler?.length) {
+    protokolBlok = `\n\nPROTOKOL — "${protokol.ad}"\n`
+      + 'Hocamızın bu başlıkta kullandığı ürünler şunlardır. Öneriyi BUNLARDAN '
+      + 'yap, katalogdan başka ürün uydurma:\n'
+      + protokol.urunler.map((u) => `  • ${u.ad}`).join('\n')
+      + '\n\nZORUNLU SIRA: (1) Ürünleri tam adıyla söyle ve ne olduklarını '
+      + 'katalogdaki bilgiye dayanarak kısaca anlat. (2) "Bu hastalığı '
+      + 'iyileştirir/geçirir/tedavi eder" ANLAMINA GELEN HİÇBİR CÜMLE KURMA; '
+      + 'bunlar takviye edici gıdadır ve hekim tedavisinin yerine geçmez, bunu '
+      + 'açıkça yaz. (3) MUTLAKA düzenli kullandığı bir ilaç olup olmadığını sor. '
+      + '(4) Kullanmadan önce Hocamızın ekibine danışmasını, uygunluğun kişiye '
+      + 'göre değerlendirileceğini söyle ve WhatsApp hattına yönlendir. '
+      + 'Doz, süre ve sıklık verme.'
+      + (protokol.etkilesim
+        ? '\n\nETKİLEŞİM UYARISI: Bu üründe kantaron ya da ginkgo var. Kan '
+          + 'sulandırıcı, antidepresan, doğum kontrol hapı ya da bağışıklık '
+          + 'baskılayıcı kullanıyorsa bu ürünlerin etkileşime girebileceğini '
+          + 'AÇIKÇA söyle ve ekibe danışmadan başlamamasını iste.'
+        : '');
+  }
+
+  return `${KIMLIK}\n\n${KURALLAR}\n\nKATALOG (bu konuşma için seçilmiş ürünler):\n\n${katalog}\n\nTÜM KATEGORİLER: ${KATEGORILER.join(', ')}\n\nSİTEDEKİ REHBER SAYFALAR (konu: bağlantı):\n${REHBER}\n\nSİTEDEKİ BİTKİ MONOGRAFİLERİ (ad: bağlantı):\n${MONOGRAFI}\nKullanıcı bu bitkilerden birini sorarsa, bitkiyi kendin anlatma; \"Hocamızın bu bitki için hazırladığı ayrıntılı monografi sitemizde var\" deyip bağlantıyı ver. Monografiden hastalık, tedavi veya etki cümlesi aktarma. Aynısı rehber sayfalar için de geçerli: konuyu kendin anlatma, bağlantıyı ver. Ürün önerisi her zaman katalogdan yapılır.${protokolBlok}${uyariBlok}`;
 }
 
 export { URUNLER };
