@@ -81,7 +81,7 @@
     '  font-size:15px;line-height:1.6;color:var(--murekkep)}',
 
     /* --- baloncuk --- */
-    '.bal{position:fixed;left:20px;bottom:var(--dip,20px);z-index:2147483000;',
+    '.bal{position:fixed;right:20px;bottom:var(--dip,20px);z-index:2147483000;',
     '  display:flex;align-items:center;gap:11px;padding:8px 18px 8px 8px;',
     '  border:1px solid var(--cizgi);border-radius:99px;background:var(--beyaz);',
     '  box-shadow:0 16px 42px -14px rgba(26,34,30,.30);cursor:pointer;',
@@ -98,7 +98,7 @@
     '  line-height:1;padding:4px;cursor:pointer;margin-left:2px;opacity:.5}',
     '.bal .kapat:hover{opacity:1}',
     '@media(max-width:520px){',
-    '  .bal{left:14px;width:58px;height:58px;padding:0;justify-content:center;border-radius:50%}',
+    '  .bal{right:14px;width:58px;height:58px;padding:0;justify-content:center;border-radius:50%}',
     '  .bal span{display:none}.bal .kapat{display:none}',
     '  .bal img{width:46px;height:46px}}',
 
@@ -106,7 +106,7 @@
        Mağazanın kendi yeşil balonunun yerini alıyor. Asistan "hangi ürün
        bana uygun" sorusunu çözüyor; bu düğme ise doğrudan insana ulaşmak
        isteyene. İkisi yan yana ve aynı dilde duruyor. */
-    '.wa-dugme{position:fixed;left:20px;bottom:var(--ust-dip,88px);z-index:2147482999;',
+    '.wa-dugme{position:fixed;right:20px;bottom:var(--ust-dip,88px);z-index:2147482999;',
     '  width:52px;height:52px;border-radius:50%;display:flex;align-items:center;',
     '  justify-content:center;background:#fff;border:1px solid rgba(37,211,102,.45);',
     '  box-shadow:0 14px 34px -12px rgba(26,34,30,.3);cursor:pointer;text-decoration:none;',
@@ -115,15 +115,15 @@
     '  box-shadow:0 20px 44px -14px rgba(37,211,102,.55)}',
     '.wa-dugme svg{width:27px;height:27px;fill:#25d366;transition:fill .35s}',
     '.wa-dugme:hover svg{fill:#fff}',
-    '.wa-ipucu{position:absolute;left:60px;white-space:nowrap;background:var(--murekkep);',
+    '.wa-ipucu{position:absolute;right:60px;white-space:nowrap;background:var(--murekkep);',
     '  color:#f4f1e8;font-size:12px;padding:6px 11px;border-radius:8px;opacity:0;',
-    '  pointer-events:none;transition:opacity .3s,transform .3s;transform:translateX(-6px)}',
+    '  pointer-events:none;transition:opacity .3s,transform .3s;transform:translateX(6px)}',
     '.wa-dugme:hover .wa-ipucu{opacity:1;transform:none}',
-    '@media(max-width:520px){.wa-dugme{left:14px;width:50px;height:50px}',
+    '@media(max-width:520px){.wa-dugme{right:14px;width:50px;height:50px}',
     '  .wa-ipucu{display:none}}',
 
     /* --- panel --- */
-    '.panel{position:fixed;left:20px;bottom:var(--dip,20px);z-index:2147483000;',
+    '.panel{position:fixed;right:20px;bottom:var(--dip,20px);z-index:2147483000;',
     '  width:396px;max-width:calc(100vw - 32px);height:620px;',
     '  max-height:calc(100vh - var(--dip,20px) - 20px);',
     '  display:flex;flex-direction:column;overflow:hidden;',
@@ -240,10 +240,11 @@
 
     var vh = window.innerHeight;
     var enYuksek = 0;
-    /* Baloncuk sol altta durduğu için o köşe yoklanıyor. Tek nokta yanıltıcı
+    /* Baloncuk sağ altta durduğu için o köşe yoklanıyor. Tek nokta yanıltıcı
        olabildiğinden birkaç noktaya bakılıyor: çerez şeridi, sepet çubuğu ya
        da yukarı çık düğmesi gibi öğeler farklı yüksekliklerde oluyor. */
-    var noktalar = [[40, vh - 40], [40, vh - 70], [70, vh - 40], [90, vh - 55]];
+    var vw = window.innerWidth;
+    var noktalar = [[vw - 40, vh - 40], [vw - 40, vh - 70], [vw - 70, vh - 40], [vw - 90, vh - 55]];
     for (var i = 0; i < noktalar.length; i++) {
       var o = document.elementFromPoint(noktalar[i][0], noktalar[i][1]);
       while (o && o !== document.body && o !== document.documentElement) {
