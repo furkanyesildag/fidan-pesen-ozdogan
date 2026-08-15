@@ -81,7 +81,7 @@
     '  font-size:15px;line-height:1.6;color:var(--murekkep)}',
 
     /* --- baloncuk --- */
-    '.bal{position:fixed;left:20px;bottom:var(--bal-dip,84px);z-index:2147483000;',
+    '.bal{position:fixed;left:20px;bottom:var(--dip,20px);z-index:2147483000;',
     '  display:flex;align-items:center;gap:11px;padding:8px 18px 8px 8px;',
     '  border:1px solid var(--cizgi);border-radius:99px;background:var(--beyaz);',
     '  box-shadow:0 16px 42px -14px rgba(26,34,30,.30);cursor:pointer;',
@@ -106,7 +106,7 @@
        Mağazanın kendi yeşil balonunun yerini alıyor. Asistan "hangi ürün
        bana uygun" sorusunu çözüyor; bu düğme ise doğrudan insana ulaşmak
        isteyene. İkisi yan yana ve aynı dilde duruyor. */
-    '.wa-dugme{position:fixed;left:20px;bottom:var(--dip,20px);z-index:2147482999;',
+    '.wa-dugme{position:fixed;left:20px;bottom:var(--ust-dip,88px);z-index:2147482999;',
     '  width:52px;height:52px;border-radius:50%;display:flex;align-items:center;',
     '  justify-content:center;background:#fff;border:1px solid rgba(37,211,102,.45);',
     '  box-shadow:0 14px 34px -12px rgba(26,34,30,.3);cursor:pointer;text-decoration:none;',
@@ -123,9 +123,9 @@
     '  .wa-ipucu{display:none}}',
 
     /* --- panel --- */
-    '.panel{position:fixed;left:20px;bottom:var(--bal-dip,84px);z-index:2147483000;',
+    '.panel{position:fixed;left:20px;bottom:var(--dip,20px);z-index:2147483000;',
     '  width:396px;max-width:calc(100vw - 32px);height:620px;',
-    '  max-height:calc(100vh - var(--bal-dip,84px) - 20px);',
+    '  max-height:calc(100vh - var(--dip,20px) - 20px);',
     '  display:flex;flex-direction:column;overflow:hidden;',
     '  border:1px solid var(--cizgi);border-radius:20px;background:var(--kagit);',
     '  box-shadow:0 34px 90px -26px rgba(26,34,30,.5);',
@@ -276,8 +276,9 @@
        ölçmüş oluruz. */
     var dip = dipBosluk();
     kok.style.setProperty('--dip', dip + 'px');
-    /* WhatsApp düğmesi altta kalır, asistan baloncuğu onun üstüne çıkar. */
-    kok.style.setProperty('--bal-dip', (dip + 64) + 'px');
+    /* Asistan baloncuğu tabanda; WhatsApp düğmesi onun üstünde durur.
+       68 piksel, baloncuğun yüksekliği artı aradaki boşluk. */
+    kok.style.setProperty('--ust-dip', (dip + 68) + 'px');
     golge.appendChild(kok);
     document.body.appendChild(yuva);
 
