@@ -202,7 +202,8 @@ export function protokolBul(metin) {
   }
   if (!bulunan) return null;
 
-  let urunler = (bulunan.kod || []).map(kodlaBul).filter(Boolean);
+  let urunler = (bulunan.kod || []).map(kodlaBul)
+    .filter((u) => u && u.stokta !== false);
   /* Kozmetik başlıklarında ürün numarası yok; kategorideki ürünler alınır.
      Stokta olmayanlar elenir, en fazla üç tane. */
   if (!urunler.length && bulunan.kategori) {

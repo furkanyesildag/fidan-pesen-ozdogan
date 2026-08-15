@@ -279,6 +279,11 @@ export default async function handler(req, res) {
     return enPuan >= 0.6 ? enIyi : null;
   }
 
+  /* Protokol eşleştiyse ürünler doğrudan kart olur. Modelin adı doğru
+     yazmasına bırakılmıyor: Hocamızın bu başlık için seçtiği ürünler bunlar
+     ve kullanıcı her hâlükârda bağlantıyı görmeli. */
+  for (const u of protokolUrun.slice(0, 3)) ekle(u);
+
   for (const ad of [...tamYanit.matchAll(/^\s*ÜRÜN:\s*(.+?)\s*$/gm)].map((m) => m[1])) {
     const n = sade(ad);
     ekle(
@@ -292,10 +297,6 @@ export default async function handler(req, res) {
   }
 
   const govdeMetni = sade(tamYanit.replace(/^\s*ÜRÜN:.*$/gm, ''));
-
-  if (!kartlar.length && protokolUrun.length) {
-    for (const u of protokolUrun.slice(0, 3)) ekle(u);
-  }
 
   if (!kartlar.length) {
     for (const u of secilen) {
