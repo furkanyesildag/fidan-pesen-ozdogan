@@ -16,6 +16,7 @@ import { kaydet } from './_kayit.mjs';
 import {
   kotaKontrol, kokenTamam as kokenIzinli, botMu, SINIR_MESAJI, IZINLI_KOKEN,
 } from './_kota.mjs';
+import { protokolBul } from './_protokol.mjs';
 
 const API = 'https://api.deepseek.com/chat/completions';
 const MODEL = process.env.DEEPSEEK_MODEL || 'deepseek-chat';
