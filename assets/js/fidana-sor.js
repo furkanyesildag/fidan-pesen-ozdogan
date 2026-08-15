@@ -81,7 +81,7 @@
     '  font-size:15px;line-height:1.6;color:var(--murekkep)}',
 
     /* --- baloncuk --- */
-    '.bal{position:fixed;left:20px;bottom:var(--dip,20px);z-index:2147483000;',
+    '.bal{position:fixed;left:20px;bottom:var(--bal-dip,84px);z-index:2147483000;',
     '  display:flex;align-items:center;gap:11px;padding:8px 18px 8px 8px;',
     '  border:1px solid var(--cizgi);border-radius:99px;background:var(--beyaz);',
     '  box-shadow:0 16px 42px -14px rgba(26,34,30,.30);cursor:pointer;',
@@ -102,10 +102,30 @@
     '  .bal span{display:none}.bal .kapat{display:none}',
     '  .bal img{width:46px;height:46px}}',
 
+    /* --- doğrudan WhatsApp düğmesi ---
+       Mağazanın kendi yeşil balonunun yerini alıyor. Asistan "hangi ürün
+       bana uygun" sorusunu çözüyor; bu düğme ise doğrudan insana ulaşmak
+       isteyene. İkisi yan yana ve aynı dilde duruyor. */
+    '.wa-dugme{position:fixed;left:20px;bottom:var(--dip,20px);z-index:2147482999;',
+    '  width:52px;height:52px;border-radius:50%;display:flex;align-items:center;',
+    '  justify-content:center;background:#fff;border:1px solid rgba(37,211,102,.45);',
+    '  box-shadow:0 14px 34px -12px rgba(26,34,30,.3);cursor:pointer;text-decoration:none;',
+    '  transition:transform .4s cubic-bezier(.2,.9,.3,1.2),box-shadow .4s,background .35s}',
+    '.wa-dugme:hover{transform:translateY(-3px);background:#25d366;',
+    '  box-shadow:0 20px 44px -14px rgba(37,211,102,.55)}',
+    '.wa-dugme svg{width:27px;height:27px;fill:#25d366;transition:fill .35s}',
+    '.wa-dugme:hover svg{fill:#fff}',
+    '.wa-ipucu{position:absolute;left:60px;white-space:nowrap;background:var(--murekkep);',
+    '  color:#f4f1e8;font-size:12px;padding:6px 11px;border-radius:8px;opacity:0;',
+    '  pointer-events:none;transition:opacity .3s,transform .3s;transform:translateX(-6px)}',
+    '.wa-dugme:hover .wa-ipucu{opacity:1;transform:none}',
+    '@media(max-width:520px){.wa-dugme{left:14px;width:50px;height:50px}',
+    '  .wa-ipucu{display:none}}',
+
     /* --- panel --- */
-    '.panel{position:fixed;left:20px;bottom:var(--dip,20px);z-index:2147483000;',
+    '.panel{position:fixed;left:20px;bottom:var(--bal-dip,84px);z-index:2147483000;',
     '  width:396px;max-width:calc(100vw - 32px);height:620px;',
-    '  max-height:calc(100vh - var(--dip,20px) - 20px);',
+    '  max-height:calc(100vh - var(--bal-dip,84px) - 20px);',
     '  display:flex;flex-direction:column;overflow:hidden;',
     '  border:1px solid var(--cizgi);border-radius:20px;background:var(--kagit);',
     '  box-shadow:0 34px 90px -26px rgba(26,34,30,.5);',
@@ -254,7 +274,10 @@
     var kok = el('div', 'kok');
     /* Ölçüm kendi öğemiz sayfaya girmeden yapılmalı, yoksa kendimizi
        ölçmüş oluruz. */
-    kok.style.setProperty('--dip', dipBosluk() + 'px');
+    var dip = dipBosluk();
+    kok.style.setProperty('--dip', dip + 'px');
+    /* WhatsApp düğmesi altta kalır, asistan baloncuğu onun üstüne çıkar. */
+    kok.style.setProperty('--bal-dip', (dip + 64) + 'px');
     golge.appendChild(kok);
     document.body.appendChild(yuva);
 
@@ -269,6 +292,20 @@
       '<i><span class="nokta"></span>Size nasıl yardımcı olabilirim?</i></span>' +
       '<button class="kapat" type="button" aria-label="Kapat">×</button>';
     kok.appendChild(bal);
+
+    /* --- doğrudan WhatsApp düğmesi: baloncuğun hemen üstünde --- */
+    var waDugme = document.createElement('a');
+    waDugme.className = 'wa-dugme';
+    waDugme.href = WA;
+    waDugme.target = '_blank';
+    waDugme.rel = 'noopener';
+    waDugme.setAttribute('aria-label', 'WhatsApp ile yazın');
+    waDugme.innerHTML =
+      '<svg viewBox="0 0 24 24" aria-hidden="true">' +
+      '<path d="M17.5 14.4c-.3-.2-1.8-.9-2-1-.3-.1-.5-.2-.7.1l-.9 1.2c-.2.2-.3.2-.6.1-1.5-.7-2.6-1.6-3.5-3-.3-.5.3-.5.8-1.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-1.2 1.3-1.1 3 .2 4.9 1.4 2.1 3 3.4 5.4 4.2 1.6.5 2.3.4 3-.1.4-.3.9-1 1-1.6.1-.5 0-.7-.2-.8Z"/>' +
+      '<path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Z"/>' +
+      '</svg><span class="wa-ipucu">WhatsApp ile yazın</span>';
+    kok.appendChild(waDugme);
 
     /* --- panel --- */
     var panel = el('div', 'panel');
@@ -430,16 +467,23 @@
     function ac() {
       panel.classList.add('acik');
       bal.style.display = 'none';
+      waDugme.style.display = 'none';
       if (!acildi) { acildi = true; balonEkle('o', ACILIS); onerileriGoster(); }
       setTimeout(function () { kutu.focus(); }, 260);
     }
-    function kapa() { panel.classList.remove('acik'); bal.style.display = ''; }
+    function kapa() {
+      panel.classList.remove('acik');
+      bal.style.display = '';
+      waDugme.style.display = '';
+    }
 
     bal.addEventListener('click', function (e) {
       if (e.target.closest('.kapat')) {
         e.stopPropagation();
         try { sessionStorage.setItem('fidana_kapali', '1'); } catch (er) {}
-        yuva.remove();
+        /* Baloncuk kapatılsa da WhatsApp düğmesi kalsın: insana ulaşma
+           yolunu kapatmak doğru olmaz. */
+        bal.remove();
         return;
       }
       ac();
